@@ -1,0 +1,180 @@
+.navResponsive
+{
+    border-color: #52937E;
+    text-align: center;
+    line-height: 40px;
+    height: 70px;
+}
+
+
+.menuResponsive a{
+    text-decoration: none;
+    color: #52937E;
+   margin-top: 40px;
+}
+.menuResponsive
+{
+    margin: 20px 30px 0 0;
+}
+
+
+#toggle1{
+    margin: 0 40px 0 0;
+    font-size: 26px;
+    line-height: 70px;
+    display: none;
+    width: 25px;
+    float: left;
+}
+
+#toggle2
+{
+    display: none;
+}
+
+/*effect nav*/
+.cellMenu {
+    transition: 0.3s ease;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 20px 0;
+    margin: 10px;
+}
+.cellMenu:hover {
+    border-top: 2px solid #52937E;
+    border-bottom: 2px solid #52937E;
+    padding: 6px 0;
+}
+
+
+/*-----------------------------------------------------------------------------RESPONSIVE--------------------------------*/
+@media only screen and (max-width :600px)
+{
+    .navResponsive{
+        height: 300px;
+    }
+    #imageCouvertureResponsive
+    {
+        display: block;
+    }
+    #toggle1{
+        margin: 0 40px 0 0;
+        font-size: 26px;
+        line-height: 70px;
+        width: 25px;
+        display: block;
+        float: left;
+    }
+    #imageFooterResponsive
+    {
+
+         display: block;
+    }
+
+    #logo
+    {
+        top: 140px;
+        align-items: center;
+        font-size: 30px;
+    }
+
+    #ex
+    {
+
+    }
+    #imageCouverture
+    {
+        display: none;
+    }
+    #imageFooter
+    {
+        display: none;
+    }
+
+    label
+    {
+        display: block;
+        cursor: pointer;
+    }
+
+    .menuResponsive
+    {
+        text-align: center;
+        width: 100%;
+        display: none;
+        padding-top: 70px;
+        border: black;
+        margin: 0;
+    }
+
+    .menuResponsive a {
+        display: block;
+        border-bottom: 1px solid #52937E;
+        margin: 0;
+    }
+    .menuResponsive a:hover{
+        background-color: #afc9a4;
+        color: dimgrey;
+        box-shadow: #52937E;
+    }
+
+    #toggle2:checked + .menuResponsive
+    {
+        display: block;
+    }
+    #footerinfo
+    {
+        margin-top:50px;
+        margin-bottom: 50px;
+        position: relative;
+        background-color: #f4f2f7;
+    }
+
+/*----------HOME ACCESS----------*/
+
+    #homepageLogo
+    {
+        font-family: 'Satisfy', cursive;
+        font-size: 35px;
+        font-style: italic;
+        position: absolute;
+        color: black;
+        top: 15%;
+    }
+
+    #accroche
+    {
+        position: absolute;
+        top: 23%;
+        font-size: 9px;
+        left: 33%;
+    }
+
+    #blockHP{
+        margin: 0;
+        height: auto;
+    }
+    #containerHomePage{
+        width: 100%;
+        position: inherit;
+        overflow-wrap: break-spaces;
+        left: 0;
+        border: salmon solid;
+        height: auto;
+        display: none;
+    }
+
+    #login
+    {
+        position: relative;
+        font-size: 10px;
+        width: 100%;
+        left: 0;
+        margin: 0;
+        text-align: center;
+    }
+
+
+
+}
+

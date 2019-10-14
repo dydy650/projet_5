@@ -1,0 +1,49 @@
+
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Accueil
+{% endblock %}
+{% block welcomeUser %}
+    Hello Sandy !
+{% endblock %}
+{% block navbar %}
+
+
+    <div class="row">
+    <div class="col-md-4 col-lg-3">
+        <div class="portfolio-content">
+            <figure>
+                <div class="square"><h3><a href="index.php?action=actualites" class="titleHome">Actualité</a></h3></div>
+
+            </figure>
+
+        </div><!-- .portfolio-content -->
+    </div><!-- .col -->
+
+    <div class="col-md-4 col-lg-3">
+        <div class="portfolio-content">
+            <figure>
+                <div class="square"><h3><a href="index.php?action=posts" class="titleHome">Mes posts</a></h3>
+                </div>
+
+            </figure>
+
+        </div><!-- .portfolio-content -->
+    </div><!-- .col -->
+
+    <div class="col-md-4 col-lg-3">
+        <div class="portfolio-content">
+            <figure>
+                <div class="square"><h3><a href="index.php?action=newPost" class="titleHome">Nouveau Post</a></h3></div>
+            </figure>
+
+        </div><!-- .portfolio-content -->
+    </div><!-- .col -->
+</div><!-- .row -->
+    {% endblock %}
+
+{% block content %}
+
+
+{% endblock %}

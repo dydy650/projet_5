@@ -1,0 +1,51 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Nouveau Post
+{% endblock %}
+
+{% block navbar %}
+    <div class="row">
+        <div class="col-12 col-sm-6 col-lg-8">
+            <h1>Nouveau publication</h1>
+            <div class="mainContent">
+                <div class="PostContent">
+
+                    <form action="index.php?action=addPost" method="post">
+                         <div>
+                            <label for="contentNewPost"></label><br/>
+                            <textarea id="contentNewPost"  name="contentNewPost" value="Exprimez vous" ></textarea>
+
+                             <label for="categories" ></label><br/>
+                            <select id="categories" name="categories" value="catégorie">
+                                <option value="choix1">Garde Enfant</option>
+                                <option value="choix2">Immobilier Loc / vente</option>
+                                <option value="choix3">Vente / Troc</option>
+                                <option value="choix4">Lifestyle</option>
+                                <option value="choix4">Sortie / Loisirs</option>
+                                <option value="choix4">Humeur du jour</option>
+                                <option value="choix4">Sport</option>
+                                <option value="choix4">Bons plans</option>
+                                <option value="choix4">Aide / SOS</option>
+                            </select>
+                             <br>
+
+                         </div>
+                        <div>
+                            <input type="submit" id="publierPost" class="btn btn-secondary btn-lg btn-block" value="Publier"/><br>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4">
+            <div class="secondContent">
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+
+{% block content %}
+
+
+{% endblock %}

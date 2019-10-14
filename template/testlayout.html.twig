@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="FR" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8"/>
+
+
+</head>
+<body>
+<img id="imageCouverture" src="P5\public\img\image1.jpg">
+<div id="logo">Pépites</div>
+<header>
+    <nav id="menu" class="nav justify-content-center">
+        <ul class="nav nav-tabs">
+            <li class="nav-item"><a class="nav-link active" id="home-tab" href="<?= $this->baseUrl ?>public\index.php?action=home" title="Acceuil">Acceuil</a>
+            </li>
+            <li class="nav-item"><a class="nav-link active" id="chapitre-tab"  href="<?= $this->baseUrl ?>public\index.php?action=categorie" title="Catégorie">Catégorie</a>
+            </li>
+            <li class="nav-item"><a class="nav-link active" id="about-tab" href="<?= $this->baseUrl ?>public\index.php?action=aboutUs" title="A propos">A propos</a>
+            </li>
+            <li class="nav-item"><a class="nav-link active" id="about-tab" href="<?= $this->baseUrl ?>public\index.php?action=contact" title="Contact">Contacts</a>
+            </li>
+        </ul>
+    </nav>
+
+</header>
+<?php if (isset($_SESSION['message'])) { ?>
+<p class="alert alert-<?= $_SESSION['message']['type'] ?>"><?= $_SESSION['message']['message'] ?></p>
+<?php unset($_SESSION['message']) ?>
+<?php } ?>
+<article>
+>
+</article>
+
+<footer>
+
+
+
+</footer>
+</body>
+</html>
+

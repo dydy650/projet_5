@@ -1,0 +1,45 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+   Mes Posts
+{% endblock %}
+{% block welcomeUser %}
+   Vos publications
+{% endblock %}
+
+{% block navbar %}
+
+<div class="row">
+    <div class="col-12 col-sm-6 col-lg-8">
+        <div class="mainContent">
+
+            <div class="post">
+                {% for posts in post %}
+                    {{ post.categorie }}
+                    {{ post.content }}
+                    {{ posts.content }}
+                    {{ posts }}
+                    {{ post.post_at}}
+                {% endfor %}
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-6 col-md-4">
+        <div class="secondContent">
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block content %}
+    {% for post in posts %}
+        <ul>
+            <li>{{ post.content }}</li>
+        </ul>
+    {% endfor %}
+
+{% endblock %}

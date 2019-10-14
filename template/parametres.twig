@@ -1,0 +1,60 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Parametres
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-12 col-sm-6 col-lg-8" id="parametresInfos">
+            <h1>Parametres</h1>
+            <div class="mainContent">
+                <div id="avatar">
+               <span style="font-size: 60px; color: white;">
+                  <i class="fas fa-user"></i>
+                  <img alt="coco" id="coco" src="public\img\coco.png">
+               </span>
+
+                </div>
+                <br>
+                <h2 class="titleParameters">Général</h2>
+                <div class="contentParameters">
+                    <p> nom</p>
+                    <p>prenom</p>
+                    <p> date de naissance</p>
+                    <p>id</p>
+                    <p>votre code parrainage</p>
+                </div>
+
+                <h2 class="titleParameters">Connexion</h2>
+                <div class="contentParameters">
+                    <p> Identifiant</p>
+                    <p>mot de passe</p>
+                </div>
+                <h2 class="titleParameters">Posts signalés</h2>
+                <div class="contentParameters">
+                    <p>at_date</p>
+                    <p>categorie</p>
+                    <p>post</p>
+                </div>
+                <h2 class="titleParameters">Commentaire signalés</h2>
+                <div class="contentParameters">
+                    <p>at_date</p>
+                    <p>categorie</p>
+                    <p>post</p>
+                    <p>comment</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div class="secondContent">
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,508 @@
+/*@font-face {
+    font-family: 'the_secretregular';
+    src: url(".\public\fonts\The-Secret-Free-Handwritten-Font\The Secret - Free Handwritten Font\The Secret - Free Handwritten Font\TheSecretRegular.woff") format('woff');
+}*/
+
+#deconnexion{
+    position: absolute;
+    top: 5px;
+    right:20px;
+    color: grey;
+    font-size: 13px;
+}
+#deconnexion a:hover
+{
+    color: #52937E;
+}
+
+i{
+    color: whitesmoke;
+    height: 50px;
+    width: 50px;
+    align-items: center;
+    position: absolute;
+    left: 100px;
+}
+
+.logospace
+{
+    height: 200px;
+    width: 200px;
+}
+
+#ex
+{
+    color: red;
+}
+
+/*-----layout---*/
+#imageCouverture
+{
+    width: 100%;
+    height: auto;
+}
+#imageCouvertureResponsive
+{
+    width: 100%;
+    height: auto;
+    display: none;
+}
+#imageFooter
+{
+    width: 100%;
+    height: auto;
+}
+#imageFooterResponsive
+{
+    width: 100%;
+    height: auto;
+    display: none;
+}
+
+
+.link{
+    list-style-type: none;
+    display: inline;
+    margin: 0;
+
+}
+
+/*-----------------------------HOMEPAGE----------------------------------------------------- */
+
+#homepageimg
+{
+    width: 100%;
+    height: auto;
+}
+
+#homepageLogo
+{
+    font-family: 'Satisfy', cursive;
+    font-size: 100px;
+    font-style: italic;
+    position: absolute;
+    left: 35%;
+    top: 50%;
+    height: auto;
+}
+#accroche
+{
+    left: 52%;
+    position: absolute;
+    width: auto;
+    top: 67%;
+}
+#accroche2
+{
+    position: absolute;
+    padding: 10px;
+    font-size: 12px;
+    width: auto;
+}
+
+#containerHomePage{
+    width: 37%;
+    position: absolute;
+    top: 80%;
+    left: 30%;
+    max-height: 400px;
+    min-height: 100px ;
+}
+#blockHP{
+    width: 100%;
+}
+
+#login
+{
+    margin-top: 100px;
+    text-align: center;
+    height: 500px;
+    display: block;
+}
+
+label p
+{
+    font-size: 14px;
+    color: black;
+}
+body
+{
+    background-color: #f4f2f7;
+}
+
+#logo{
+    font-family: 'Satisfy', cursive;
+    font-size: 100px;
+    font-style: italic;
+    position: absolute;
+    left: 40%;
+    top: 50%;
+    text-decoration:none;
+}
+
+/*effect logo*/
+
+/*FIN effect*/
+
+
+a, a:hover, a:visited, a:active
+{
+    color:#000;
+    text-decoration:none;
+}
+
+
+#footerinfo {
+    width: 35%;
+    position: absolute;
+    height: auto;
+    font-size: 9px;
+    left: 31%;
+    text-align: center;
+}
+
+.PostContent {
+    background-color: gold;
+}
+
+h2
+{
+
+    color: #52937E;
+    border-bottom-color: azure;
+}
+
+p
+{
+    color: #52937E;
+    font-style: italic;
+}
+#menu {
+    position: absolute;
+}
+
+#presentation{
+        text-align: center;
+        height: 800px;
+        padding-top: 50px;
+        padding-left:20px;
+        padding-right:20px;
+    }
+
+
+.nav-item a:hover
+{
+    color: #afc9a4;
+
+}
+#mainTitle
+{
+    color:whitesmoke;
+    font-size: 40px;
+    position: absolute;
+    top: 40%;
+    left: 40%;
+}
+
+
+#image1
+{
+    opacity: 0.6;
+    box-shadow: #C5E1D7 0px 0px 10px 5px;
+}
+
+#menu
+{
+    position: relative;
+    margin-top: 20px;
+}
+
+.nav-link active:hover
+{
+    background-color: #52937E;
+}
+
+body
+{
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+
+#home
+{
+    position: relative;
+
+}
+
+#containerCategories
+{
+    width: 99%;
+    align-items: center;
+    align-content: center;
+}
+
+.containerhome
+{
+    width: 100%;
+    align-items:  center;
+    background-color: #52937E;
+}
+.col-sm
+{
+    font-family: 'Satisfy', cursive;;
+    font-style: italic;
+    text-align: center;
+    border: solid 1px;
+    width: 100px;
+    height: 200px;
+    margin: 5px;
+}
+
+.col-sm-4
+{
+    height: 100px;
+    width: auto;
+    border: solid 1px;
+    overflow: hidden;
+    min-width: 100px;
+}
+.containerCategories
+{
+    align-items: center;
+}
+.square
+{
+    height: 250px;
+    width: 250px;
+    border-radius: 130px;
+    background-color: #afc9a4;
+    align-items: center;
+    padding-top: 5px;
+}
+
+.square {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+.square:hover{
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-box-shadow: 4px 9px 66px 0px rgba(0,0,0,0.36);
+    -moz-box-shadow: 4px 9px 66px 0px rgba(0,0,0,0.36);
+    box-shadow: 4px 9px 66px 0px rgba(0,0,0,0.36);
+    background-color: #afc9a4;
+}
+
+.titleCategory
+{
+    display:flex;
+    font-style: italic;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    padding-top: 45%;
+    color:white;
+    font-family: 'Satisfy', cursive;
+}
+#container_page{
+
+    background-color: white;
+    width: 100%;
+    padding: 15px;
+}
+.row
+{
+
+    padding-top: 25px;
+    max-width: 1200px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    margin:auto;
+
+
+}
+.portfolio-content
+{
+    align-items: center;
+    display:flex;
+    flex-direction: column ;
+    justify-content: center;
+}
+
+.titleHome
+{
+    display:flex;
+    font-style: italic;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    margin-top: 45%;
+    color: #f4f2f7;
+    font-family: 'Satisfy', cursive;
+
+}
+
+
+.square1
+{
+    height: 250px;
+    width: 250px;
+    border-radius: 130px;
+    background-color: gainsboro;
+    align-items: center;
+
+}
+
+.square1 {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+.square1:hover{
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-box-shadow: 4px 9px 66px 0px rgba(0,0,0,0.36);
+    -moz-box-shadow: 4px 9px 66px 0px rgba(0,0,0,0.36);
+    box-shadow: 4px 9px 66px 0px rgba(0,0,0,0.36);
+    background-color: #afc9a4;
+}
+
+
+#contact
+{
+    text-align: center;
+}
+
+.mainContent
+{
+    background-color: whitesmoke;
+    padding: 15px;
+    min-height: 100px;
+}
+
+.secondContent
+{
+    background-color: #f8e3e3;
+    min-height: 100px;
+}
+
+.PostContent
+{
+    background-color: whitesmoke;
+    height: 400px;
+    width: 600px;
+    padding: 15px;
+    border-radius: 2%;
+}
+#contentNewPost
+{
+    height: 200px;
+    width: 100%;
+    border-radius: 2%;
+}
+
+#publierPost
+{
+    margin-top: 30px;
+}
+
+#avatar
+{
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    background: white;
+    background-color: #52937E;
+
+
+}
+#avatar i{
+    left: 52px;
+    top: 90px;
+    z-index: 2;
+}
+
+#coco
+{
+    width: 96px;
+    position: relative;
+    left: 5px;
+    top: -9px;
+    z-index: 4;
+}
+#aboutUs
+{
+    height: 100%;
+    margin: 15px;
+}
+
+.secondContent
+{
+    align-items: center;
+}
+
+
+
+
+
+/*.mainContent h2:hover
+{
+    background-color: #afc9a4;
+}
+/*------------------------------------------------------------------RESPONSIVE MEDIA QUERY----------------------------------------------*/
+
+/*
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+@media (min-width: 1281px) {
+
+
+}
+/*
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+@media (min-width: 1025px) and (max-width: 1280px) {
+
+}
+/*
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) {
+
+
+}
+/*
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+
+}
+/*
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+@media (min-width: 481px) and (max-width: 767px) {
+
+}
+/*
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+@media (min-width: 320px) and (max-width: 480px) {
+
+}
+
+@media (max-width: 320px) {
+
+}
+
