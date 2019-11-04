@@ -13,26 +13,51 @@
 
 {% block content %}
 
-    <div class="row">
+    <div class="row" xmlns="http://www.w3.org/1999/html">
+
         <div class="col-12 col-sm-6 col-lg-8">
+           // {% for post in posts %}
             <div class="mainContent">
                 <div class="post">
                     <ul>
-                        {% for post in posts %}
-                            <li>{{ post.categorie }}</li>
-                            <li>{{ post.content }}</li>
-                            <li>{{ post.post_at }}</li>
-                        {% endfor %}
+                            <li class="postUsername"></li>
+                            <li>{{ post['id'] }}</li>
+                            <li class="postCategory">{{ post.id_category }}</li>
+                             <li class="postContent">{{ post.content }}</li><br/>
+
+                        <div class="commentPart">
+                            <div class="listcommentsPart">
+                                <p><label for="comment">-------------------Commentaires------------------------</label></p>
+                                {% for comment in comments %}
+                                    <div class="comments">
+                                        {{ comment.username }} <p>le {{ comment.comment_at }}</p>
+                                        -->
+                                        {{ comment.content }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <form action=index.php?action=addComment&amp;id={{ post.id }}>
+                            <label class="reponsePost" for="responsePost"></label>
+                            <input id="responsePost" type="text" name="responsePost" value="Répondez" class="responsePost" />
+                                <i id="shareComment"  class="fas fa-paper-plane"></i>
+                         </form>
+                        <a class="linkComment" href="index.php?action=singlePost&id={{ post.id }}" >Voir les commentaires</a>
                     </ul>
 
                 </div>
             </div>
-
+            {% endfor %}
         </div>
+
         <div class="col-6 col-md-4">
             <div class="secondContent">
             </div>
         </div>
+
     </div>
+
+
+
 
 {% endblock %}

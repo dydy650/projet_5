@@ -5,12 +5,11 @@ namespace App\model\Entity;
 class Post
 {
     private $id;
+    private $id_category;
     private $username;
     private $content;
     private $post_at;
-    private $categorie;
     private $is_signaled;
-
     /**
      * @return mixed
      */
@@ -26,6 +25,24 @@ class Post
     public function setId($id)
     {
         $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIdCategory()
+    {
+        return $this->id_category;
+    }
+
+    /**
+     * @param mixed $id_category
+     * @return Post
+     */
+    public function setIdCategory($id_category)
+    {
+        $this->id_category = $id_category;
         return $this;
     }
 
@@ -86,24 +103,6 @@ class Post
     /**
      * @return mixed
      */
-    public function getCategorie()
-    {
-        return $this->categorie;
-    }
-
-    /**
-     * @param mixed $categorie
-     * @return Post
-     */
-    public function setCategorie($categorie)
-    {
-        $this->categorie = $categorie;
-        return $this;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getIsSignaled()
     {
         return $this->is_signaled;
@@ -118,6 +117,5 @@ class Post
         $this->is_signaled = $is_signaled;
         return $this;
     }
-
 }
 

@@ -7,26 +7,27 @@
 {% block navbar %}
     <div class="row">
         <div class="col-12 col-sm-6 col-lg-8">
-            <h1>Nouveau publication</h1>
+            <h1>Nouvelle publication</h1>
             <div class="mainContent">
                 <div class="PostContent">
-
                     <form action="index.php?action=addPost" method="post">
                          <div>
                             <label for="contentNewPost"></label><br/>
                             <textarea id="contentNewPost"  name="contentNewPost" value="Exprimez vous" ></textarea>
 
-                             <label for="categories" ></label><br/>
-                            <select id="categories" name="categories" value="catégorie">
-                                <option value="choix1">Garde Enfant</option>
-                                <option value="choix2">Immobilier Loc / vente</option>
-                                <option value="choix3">Vente / Troc</option>
-                                <option value="choix4">Lifestyle</option>
-                                <option value="choix4">Sortie / Loisirs</option>
-                                <option value="choix4">Humeur du jour</option>
-                                <option value="choix4">Sport</option>
-                                <option value="choix4">Bons plans</option>
-                                <option value="choix4">Aide / SOS</option>
+                             <label for="IdCategory" ></label><br/>
+                            <select id="IdCategory" name="category" value="category">
+                                <option value="1">Garde Enfant</option>
+                                <option value="2">Immobilier Loc / vente</option>
+                                <option value="3">Vente / Troc</option>
+                                <option value="4">Lifestyle</option>
+                                <option value="5">Sortie / Loisirs</option>
+                                <option value="6">Humeur du jour</option>
+                                <option value="7">Sport</option>
+                                <option value="8">Bons plans</option>
+                                <option value="9">Aide / SOS</option>
+                                <option value="10">Voyages</option>
+                                <option value="11">Autres</option>
                             </select>
                              <br>
 
@@ -36,7 +37,9 @@
                         </div>
                     </form>
                 </div>
+
             </div>
+
         </div>
         <div class="col-6 col-md-4">
             <div class="secondContent">

@@ -1,45 +1,58 @@
 {% extends 'layout.html.twig' %}
 
 {% block title %}
-   Mes Posts
+    Mes Posts
 {% endblock %}
 {% block welcomeUser %}
-   Vos publications
+    Vos publications
 {% endblock %}
 
 {% block navbar %}
+{% endblock %}
 
-<div class="row">
-    <div class="col-12 col-sm-6 col-lg-8">
-        <div class="mainContent">
+{% block content %}
 
-            <div class="post">
-                {% for posts in post %}
-                    {{ post.categorie }}
-                    {{ post.content }}
-                    {{ posts.content }}
-                    {{ posts }}
-                    {{ post.post_at}}
-                {% endfor %}
+    <div class="row">
 
+        <div class="col-12 col-sm-6 col-lg-8">
+
+                <div class="mainContent">
+                    <div class="singlePost">
+
+                            <p class="postUsername">{{ post.username }}</p>
+                            <p>{{ post.post_at }}</p>
+                            <p class="postCategory">{{ post.categorie }}</p>
+                            <p class="postContent">{{ post.content }}</p>
+                            <br/>
+                    </div><br/>
+                    <div class="commentPart">
+                        <div class="listcommentsPart">
+                    <p><label for="comment">Commentaires</label></p>
+                            {% for comment in comments %}
+                            <div class="comments">
+                                {{ comment.username }} <p>le {{ comment.comment_at }}</p>
+                                 -->
+                                {{ comment.content }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="writeCommentPart">
+                        <form action="<?= $this->baseUrl ?>index.php?action=addComment&amp;id={{ post.id }}"
+                          method="post">
+                            <textarea class="form-control" id="comment" name="comment" value="Répondez"></textarea><br>
+                                <input class="btn btn-outline-secondary" type="submit" value="partager"/>
+                        </form>
+                        </div>
+                    </div>
+
+                </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div class="secondContent">
             </div>
         </div>
 
     </div>
-    <div class="col-6 col-md-4">
-        <div class="secondContent">
-        </div>
-    </div>
-</div>
-
-
-{% endblock %}
-
-{% block content %}
-    {% for post in posts %}
-        <ul>
-            <li>{{ post.content }}</li>
-        </ul>
-    {% endfor %}
 
 {% endblock %}

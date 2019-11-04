@@ -5,16 +5,6 @@ namespace App\model\Entity;
 class User
 {
     private $id;
-    private $username;
-    private $password;
-    private $nom;
-    private $prenom;
-    private $birthday_date;
-    private $city;
-    private $email;
-    private $uniqid;
-    private $id_parrain;
-    private $is_admin;
 
     /**
      * @return mixed
@@ -163,36 +153,36 @@ class User
     /**
      * @return mixed
      */
-    public function getUniqid()
+    public function getCodeParrainagePerso()
     {
-        return $this->uniqid;
+        return $this->code_parrainage_perso;
     }
 
     /**
-     * @param mixed $uniqid
+     * @param mixed $code_parrainage_perso
      * @return User
      */
-    public function setUniqid($uniqid)
+    public function setCodeParrainagePerso($code_parrainage_perso)
     {
-        $this->$uniqid = $uniqid;
+        $this->code_parrainage_perso = $code_parrainage_perso;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getId_parrain()
+    public function getCodeParrain()
     {
-        return $this->id_parrain;
+        return $this->code_parrain;
     }
 
     /**
-     * @param $code_parrainage_used
+     * @param mixed $code_parrain
      * @return User
      */
-    public function setId_parrain($id_parrain)
+    public function setCodeParrain($code_parrain)
     {
-        $this->id_parrain= $id_parrain;
+        $this->code_parrain = $code_parrain;
         return $this;
     }
 
@@ -213,6 +203,16 @@ class User
         $this->is_admin = $is_admin;
         return $this;
     }
+    private $username;
+    private $password;
+    private $nom;
+    private $prenom;
+    private $birthday_date;
+    private $city;
+    private $email;
+    private $code_parrainage_perso;
+    private $code_parrain;
+    private $is_admin;
 
 
 }

@@ -1,4 +1,5 @@
 <?php
+session_start ();
 require_once 'vendor/autoload.php';
 use \App\controller\BlogController;
 use \App\controller\AdminController;
@@ -21,78 +22,64 @@ if (isset($_GET['action'])){
 
 switch ($page){
     case 'home':
-        $blogController->home ();
-       //echo $twig->render ('home.twig');
+        $blogController->home();
         break;
     case 'contact':
-        echo $twig->render ('contact.twig');
+        $blogController->contact();
         break;
     case 'categories':
-        echo $twig->render ('categories.twig');
+        $blogController->listCategories();
         break;
     case 'aboutUs':
-        echo $twig->render ('aboutUs.twig');
+        $blogController->aboutUs();
         break;
     case 'parametres':
-        echo $twig->render ('parametres.twig');
+        $blogController->parametres();
         break;
     case 'homeAccess':
-        echo $twig->render ('homeAccess.twig');
+        $blogController->homeAccess();
+        break;
+    case 'login':
+        $blogController->login();
         break;
     case 'newUser':
-        //$adminController->addUser ();
-        echo $twig->render ('newUser.twig');
+        $adminController->newUser ();
+       // echo $twig->render ('newUser.twig');
         break;
     case 'addUser':
-        $adminController->addUser ();
+        $adminController->createUser();
         break;
     case 'actualites':
-        echo $twig->render ('actu.twig');
+        $blogController->listPostsWithComs();
+        //echo $twig->render ('actu.twig');
         break;
     case 'posts':
         //$blogController->post ();
-        $blogController->listPosts ();
+        $blogController->listPostsByUser();
+        //echo $twig->render ('myPosts.twig');
+        break;
+    case 'singlePost':
+        //$blogController->post ();
+        $blogController->singlePost();
+        //echo $twig->render ('myPosts.twig');
+        break;
+    case 'addComment':
+        //$blogController->post ();
+        $blogController->addComment();
         //echo $twig->render ('myPosts.twig');
         break;
     case 'newPost':
-        echo $twig->render ('newPost.twig');
-        break;
-    case 'addUser':
-        echo $twig->render ('homeAccess.twig');
+        $blogController->newPost();
+        //echo $twig->render ('newPost.twig');
         break;
     case 'addPost':
-        echo $twig->render ('myPosts.twig', ['posts' => posts()]);
+        $blogController->addPost ();
         break;
-    case 'garde':
-        echo $twig->render ('catGardeEnfant.twig');
+    case 'category':
+        //echo $twig->render ('catGardeEnfant.twig');
+        $blogController->category ();
         break;
-    case 'immo':
-        echo $twig->render ('catImmo.twig');
-        break;
-    case 'troc':
-        echo $twig->render ('catTroc.twig');
-        break;
-    case 'lifestyle':
-        echo $twig->render ('catLifestyle.twig');
-        break;
-    case 'sorties':
-        echo $twig->render ('catSorties.twig');
-        break;
-    case 'humeur':
-        echo $twig->render ('catHumeur.twig');
-        break;
-    case 'sport':
-        echo $twig->render ('catSport.twig');
-        break;
-    case 'bonsPlans':
-        echo $twig->render ('catBonsPlans.twig');
-        break;
-    case 'aide':
-        echo $twig->render ('catAide.twig');
-        break;
-    case 'autres':
-        echo $twig->render ('catAutres.twig');
-        break;
+
 
 
     default:

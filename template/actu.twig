@@ -4,23 +4,57 @@
    Actualités
 {% endblock %}
 {% block welcomeUser %}
-    Hello Sandy ! Voici votre actualites
+    Voici votre actualites
 {% endblock %}
 {% block navbar %}
-
+{% endblock %}
+{% block content %}
     <div class="row">
         <div class="col-12 col-sm-6 col-lg-8">
             <div class="mainContent">
+                {% for post in posts %}
+                <h1>POST {{ post.id }}</h1>
+
+                <div class="singlePost">
+                    <p class="postUsername">{{ post.username }}</p>
+                    <p>{{ post.post_at }}</p>
+                    <p class="postCategory">{{ post.name_category }}</p>
+                    <p class="postContent">{{ post.content }}</p>
+                    <br/>
+                </div><br/>
+
+                <div class="commentPart">
+                    <div class="listcommentsPart">
+                        <p><label for="comment">Commentaires</label></p>
+                        {% for comment in comments %}
+                            <div class="comments">
+                                {{ comment.username_ }} <p>le {{ comment.comment_at }}</p>
+                                -->
+                                {{ comment.content }}{{ c.content }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!--<div class="writeCommentPart">
+                        <form action="<?= $this->baseUrl ?>index.php?action=addComment&amp;id={{ post.id }}"
+                              method="post">
+                            <textarea class="form-control" id="comment" name="comment" value="Répondez"></textarea><br>
+                            <input class="btn btn-outline-secondary" type="submit" value="partager"/>
+                        </form>
+                    </div>-->
+                </div>
+                {% endfor %}
             </div>
+
         </div>
+
         <div class="col-6 col-md-4">
             <div class="secondContent">
             </div>
         </div>
     </div>
-    {% endblock %}
 
-{% block content %}
+
+
 
 
 {% endblock %}

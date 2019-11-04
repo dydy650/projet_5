@@ -381,24 +381,88 @@ body
 
 .mainContent
 {
-    background-color: whitesmoke;
+    background-color: #afc9a4;
+    color: #52937E;
     padding: 15px;
-    min-height: 100px;
-}
 
+}
+.titleCat
+{
+    font-family: 'Satisfy', cursive;
+    size: 50px;
+
+}
 .secondContent
 {
     background-color: #f8e3e3;
     min-height: 100px;
+    height: 100%;
+}
+.postUsername{
+    color: lightpink;
+    float: right;
+    margin-right: 10px;
+}
+.postContent{
+    color: black;
+}
+.postCategory{
+    color: #52937E;
+    font-size: 40px;
+    font-family: 'Satisfy', cursive;
+}
+.responsePost
+{
+    width: 90%;
+    min-height: 30px;
+    color: grey;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    margin-right: 10px;
+}
+
+
+#shareComment
+{
+    color: #52937E;
+    font-size: 25px;
+    position: absolute;
+    left: 650px;
+}
+
+#shareComment2
+{
+    font-size: 25px;
+    border-radius: 50px;
+    background-color: #52937E;
+    color: white;
+    left: 710px;
+
+
+}
+.postCategory{
+    font-style: italic;
+    font-size: 20px;
+    color: black;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .PostContent
 {
     background-color: whitesmoke;
-    height: 400px;
-    width: 600px;
+    min-height: 200px;
+    width: 100%;
     padding: 15px;
-    border-radius: 2%;
+
+}
+
+.comments
+{
+    background-color: whitesmoke;
+    margin-bottom: 15px;
+    padding: 5px;
+    border-radius: 10px;
 }
 #contentNewPost
 {
@@ -411,7 +475,13 @@ body
 {
     margin-top: 30px;
 }
-
+.singlePost
+{
+    background-color: white;
+    border-radius: 10px;
+    padding: 5px;
+    margin-bottom: 20px;
+}
 #avatar
 {
     height: 100px;
@@ -446,9 +516,40 @@ body
 {
     align-items: center;
 }
+.post ul{
+    margin: 15px;
+    border-radius: 10px;
+    background-color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+}
+.linkComment{
+    color: #52937E;
+    size: 12px;
+    font-style: italic;
+    margin:5px;
+}
+
+.post li{
+    list-style: none;
 
 
-
+}
+.post ul{
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transition: .3s ease-in-out;
+}
+.post ul:hover{
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+    -webkit-box-shadow: 4px 9px 66px 0px rgba(0,0,0,0.36);
+    -moz-box-shadow: 4px 9px 66px 0px rgba(0,0,0,0.36);
+    box-shadow: 4px 9px 66px 0px rgba(0,0,0,0.36);
+    background-color: #f4f2f7;
+}
 
 
 /*.mainContent h2:hover

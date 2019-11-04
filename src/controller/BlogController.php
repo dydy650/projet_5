@@ -3,25 +3,46 @@ namespace App\controller;
 
 use App\model\Entity\Post;
 use App\model\Entity\User;
+use App\model\Entity\Category;
+use App\model\Entity\Comment;
 use App\model\UserManager;
 use App\model\PostManager;
 use App\model\CommentManager;
-
-
+use App\model\CategoryManager;
 
 class BlogController extends AbstractController
 {
+    // MENU
     public function home()
     {
-        $this->render('./home.twig');
-        var_dump ("ok");
-
+        $this->render('./home.twig', array('infoSession'=>"contenu"));
     }
 
-    public function test()
+    public function contact()
     {
-        $this->render ('../view/test.phtml');
+        $this->render('./contact.twig');
     }
+
+    public function aboutUs()
+    {
+        $this->render('./aboutUs.twig');
+    }
+
+    public function parametres()
+    {
+        $this->render('./parametres.twig');
+    }
+
+    public function homeAccess()
+    {
+        $this->render('./homeAccess.twig');
+    }
+
+    public function newPost()
+    {
+        $this->render('./newPost.twig');
+    }
+
 
 //connexion
     public function login()
@@ -32,18 +53,24 @@ class BlogController extends AbstractController
         }
         $userManager = new UserManager();
         $user = $userManager->getUser($_POST["username"]);
+        var_dump ($user);
         $hash = md5 ($_POST["password"]);
         if ($user instanceof User && $hash === $user->getPassword()){
             $_SESSION['username'] = $user->getUsername();
             $_SESSION['is_admin'] = $user->getIsAdmin();
+
+
             if ($user->getIsAdmin () === "1") {
-                header ('Location:index.php?action=adminHome');
+                header ('Location:index.php?action=home');
+
+
             } else {
                 $_SESSION['is_admin'] = $user->getIsAdmin();
-                header ('Location:index.php?action=home');
+                header ('Location:index.php?action=XX');
             }
+
         } else {
-            throw new \Exception('Username ou mot de passe incorrection');
+            echo('Username ou mot de passe incorrection');
         }
     }
 
@@ -57,31 +84,71 @@ class BlogController extends AbstractController
 
     //POST
 
-    /*public function post()
+    /**
+     *
+     */
+    public function listPostsByUser()
+    {
+            $username = $_SESSION['username'];
+            $postManager = new PostManager();
+            $posts = $postManager->getPostsByUser($username);
+            $this->render('./myposts.twig', array("posts" => $posts));
+
+
+
+    }
+
+    public function listPostsWithComs()
+    {
+
+            $postManager = new PostManager();
+            $posts = $postManager->getPostsWithComs();
+            $this->render('./actu.twig', array("posts" => $posts));
+
+
+
+
+    }
+
+    public function singlePost()
     {
         $postManager = new PostManager();
         $commentManager = new CommentManager();
 
         $post = $postManager->getPost ($_GET['id']);
-        var_dump ($post);
         $comments = $commentManager->getComments ($_GET['id']);
-        var_dump ($comments);
-        $this->render('./myposts.twig', array("post" => $post, "comments" => $comments));
-    }*/
+        $this->render('./singlePost.twig', array("post" => $post, "comments" => $comments));
 
-
-    public function listPosts()
-    {
-        {
-            $postManager = new PostManager();
-            $posts = $postManager->getPosts ();
-            var_dump ($posts);
-            $this->render('./myposts.twig', array("posts" => $posts));
-           // var_dump (array("posts" => $posts));
-            var_dump ("ok2");// je veux appeler la articlelist et celle ci aura $posts en parametre
-        }
 
     }
+
+
+
+    //----------------------------------------------------POST CATEGORIES-----------------------------------------------------
+
+    public function listCategories()
+    {
+        $categoryManager = new CategoryManager();
+        $categories = $categoryManager->getCategories ();
+        //echo "<pre>";
+        $this->render ('categories.twig', array("categories" => $categories));
+    }
+
+
+    public function category(){
+        $postManager = new PostManager;
+        $posts = $postManager->getPostsByCategory ($_GET['id_category']);
+        var_dump ($posts);
+        $this->render('./postViewCategory.twig', array("posts" => $posts));
+
+    }
+
+
+
+
+        /**
+         *
+         */
 
 
     public function addPost()
@@ -97,9 +164,10 @@ class BlogController extends AbstractController
             $post = new Post();
             $post
                 ->setContent ($_POST['contentNewPost'])
-                ->setCategorie ($_POST['categories'])
+                ->setIdCategory ($_POST['idCategory'])
                 ->setUsername ($_SESSION['username']);
             $id = $postManager->savePost ($post);
+            var_dump ($post);
             if ($id){
                 $this->addFlash('success','Votre post a été créé');
             }else{
@@ -132,7 +200,19 @@ class BlogController extends AbstractController
 
     public function addComment()
     {
-
+        $commentManager = new CommentManager();
+        $comment = new Comment(); // je creé un Objet qui regroupe toute les infos de mon commentaire que je vais utiliser ensuite dans ma methode postComment
+        $comment
+            ->setUsername ($_SESSION['username'])
+            ->setContent ($_POST['responsePost'])
+            ->setPostId ($id);
+        $affectedLines = $commentManager->saveComment($comment);
+        if ($affectedLines === false) {
+            $this->addFlash('danger','Impossible d\'ajouter le commentaire');
+        } else {
+            $this->addFlash('success','Commentaire ajouté');
+            header ('Location: index.php?action=singlePost&id=' . $post_id);
+        }
     }
 
     public function deleteComment()
