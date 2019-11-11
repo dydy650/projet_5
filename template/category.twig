@@ -4,14 +4,15 @@
     Actualités
 {% endblock %}
 {% block welcomeUser %}
-    {{ post.category.NameCategory }}
+    {% for post in posts %}
+        {{ post.category.NameCategory }}
+    {% endfor %}
 {% endblock %}
 {% block navbar %}
 {% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-12 col-sm-6 col-lg-8">
-
             <div class="mainContent">
                 {% for post in posts %}
                     <h1>post {{ post.id }}</h1>
@@ -26,12 +27,12 @@
                     <div class="commentPart">
                         <div class="listcommentsPart">
                             <p><label for="comment">Commentaires</label></p>
-                            {% for post in posts %}
+                            {% for comment in post.comments %}
                                 <div class="comments">
-                                    <p>Commentaire liés au post_id{{ post.comment.PostId }}</p>
-                                    {{ post.comment.username }} <p>le {{ post.comment.commentAt }}</p>
+                                    <p>Commentaire liés au post_id{{ comment.PostId }}</p>
+                                    {{ comment.username }} <p>le {{ comment.commentAt }}</p>
                                     -->
-                                    {{ post.comment.content }}
+                                    {{ comment.content }}
                                 </div>
                             {% endfor %}
                         </div>

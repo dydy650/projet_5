@@ -179,15 +179,17 @@ ORDER BY p.post_at DESC
 
     /*----------------------------------- getPost-- CATEGORIES----------------------------------------------*/
 
-    public function getPostsWithComsByCat($category) //Liste des posts avec leurs commentaires
+
+    public function getPostsWithComsByCat($id_category) //Liste des posts avec leurs commentaires
     {
-        $req =$this->db->query('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment , c.post_id, c.comment_at, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at
+        $req =$this->db->prepare('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment , c.post_id, c.comment_at, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at
 FROM post p 
     LEFT JOIN `comment` c ON p.id = c.post_id 
     INNER JOIN category ca ON p.id_category = ca.id_category 
+WHERE p.id_category = ?
 ORDER BY p.post_at DESC ');
         //requete->selection des champs par table / integration des alias / jointure avec les 2 tables
-
+        $req->execute (array($id_category));
         $req->setFetchMode(\PDO::FETCH_ASSOC); //Retourne la ligne suivante en tant qu'un tableau indexé par le nom des colonnes
         $posts = [];
         //on crée un tableau pour intégrer les post
@@ -211,6 +213,7 @@ ORDER BY p.post_at DESC ');
             }else{
                 //Si $posts[id_courant] n'existe pas, on instancie une nouvelle entitée post + category / on les hydrate /
                 // et on les ajoute au tableau en utilisant son id comme clé associatif
+
                 $category = new Category(); //on instancie l'entité
                 $category->setIdCategory ($row["id_category"]) // on l'hydrate
                 ->setNameCategory($row["name_category"]);

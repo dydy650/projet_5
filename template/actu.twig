@@ -13,8 +13,8 @@
         <div class="col-12 col-sm-6 col-lg-8">
             <div class="mainContent">
                 {% for post in posts %}
-                    <h1>post {{ post.id }}</h1>
-                <div class="singlePost">  <p class="postCategory">{{ post.category.NameCategory }}</p>
+                <div class="singlePost">
+                    <p class="postCategory">{{ post.category.NameCategory }}</p>
                     <p class="postUsername">{{ post.username }}</p>
                     <p>{{ post.postAt }}</p>
 
@@ -27,7 +27,6 @@
                         <p><label for="comment">Commentaires</label></p>
                         {% for comment in post.comments %}
                             <div class="comments">
-                                <p>Commentaire liés au post_id{{ comment.PostId }}</p>
                                 {{ comment.username }} <p>le {{ comment.commentAt }}</p>
                                 -->
                                 {{ comment.content }}

@@ -30,6 +30,7 @@ class BlogController extends AbstractController
 
     public function parametres()
     {
+
         $this->render('./parametres.twig');
     }
 
@@ -122,10 +123,12 @@ class BlogController extends AbstractController
     }
 
 
+    /**
+     * @param $category
+     */
     public function category(){
         $postManager = new PostManager;
-        $posts = $postManager->getPostsWithComsByCat ($_GET['id_category']);
-        var_dump ($posts);
+        $posts = $postManager->getPostsWithComsByCat ($_GET['id']);
         $this->render('./category.twig', array("posts" => $posts));
 
     }
