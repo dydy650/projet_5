@@ -106,31 +106,66 @@ ORDER BY p.post_at DESC ');
      * @param $username
      * @return mixed
      */
-    public function getPostsByUser($username) //on liste les posts
+    public function getPostsWithComsByUser($username) //Liste des posts avec leurs commentaires
     {
-        $datas = $this->db->prepare('
-SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS FR_date 
+        $req =$this->db->prepare('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment , c.post_id, c.comment_at, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at
 FROM post p 
-    INNER JOIN `comment` c ON p.id = c.post_id 
+    LEFT JOIN `comment` c ON p.id = c.post_id 
     INNER JOIN category ca ON p.id_category = ca.id_category 
-WHERE  p.username = ?');
-        $datas->execute(array($username));
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class);// on veux recupérer une class post
-        $posts=[];
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
+WHERE p.username = ?
+ORDER BY p.post_at DESC 
+');
+        //requete->selection des champs par table / integration des alias / jointure avec les 2 tables
+        $req->execute (array($username));
+        $req->setFetchMode(\PDO::FETCH_ASSOC); //Retourne la ligne suivante en tant qu'un tableau indexé par le nom des colonnes
+        $posts = [];
+        //on crée un tableau pour intégrer les post
+        // while pour lire toutes les lignes en faisant une boucle
+        while ($row = $req->fetch())
         {
-            $posts[] = $post; // on rajoute la ligne dans le tableau tant que $post est true
-            var_dump ($post);
+            //SI comment est NULL je n'instancie pas $comment
+            if (!empty($row["post_id"])){
+                $comment = new Comment();
+                $comment
+                    ->setPostId ($row["post_id"])
+                    ->setContent ($row["contentComment"])
+                    ->setUsername ($row["nameComment"])
+                    ->setCommentAt ($row["comment_at"]);
+            }
 
+            //Si $posts[id_courant] existe c'est que l'entité post a dejà été créée dans le tableau "posts".
+            // Dans ce cas on ajoute le commentaire au post du tableau
+            if (isset($posts["post".$row["id"]]) && isset($comment)){
+                $posts["post".$row["id"]]->addComment($comment);
+            }else{
+                //Si $posts[id_courant] n'existe pas, on instancie une nouvelle entitée post + category / on les hydrate /
+                // et on les ajoute au tableau en utilisant son id comme clé associatif
+                $category = new Category(); //on instancie l'entité
+                $category->setIdCategory ($row["id_category"]) // on l'hydrate
+                ->setNameCategory($row["name_category"]);
+
+
+                $post = new Post(); // on instancie l'entité proprietaire
+                $post->setId ($row["id"]) // on hydrate avec les autres entités
+                ->setIdCategory ($row["id_category"])
+                    ->setUsername($row["username"])
+                    ->setContent ($row["content"])
+                    ->setPostAt ($row["post_at"])
+                    ->setIsSignaled ($row["is_signaled"])
+                    ->setCategory ($category);// // on hydrate avec les autres entités
+
+                if(isset($comment)){
+                    $post->addComment ($comment);// on hydrate avec les autres entités
+                }
+
+                $posts["post".$row["id"]] = $post;
+            }
         }
-        $datas->closeCursor(); // on libere la memoire*/
-        var_dump ($username);
-        var_dump ($posts);
-
-        return $posts; //le tableau avec mes posts est prete et envoyé au controller
+        $req->closeCursor(); // on libere la memoire
+//dd ($posts['post16']);
+        return $posts;
 
     }
-
 
 
     public function getPost($id) // afficher 1 billet
@@ -144,82 +179,66 @@ WHERE  p.username = ?');
 
     /*----------------------------------- getPost-- CATEGORIES----------------------------------------------*/
 
-    /**
-     * @param $id_category
-     * @return array
-     */
-    public function getPostsByCategory($id_category)
+    public function getPostsWithComsByCat($category) //Liste des posts avec leurs commentaires
     {
-        $req =$this->db->prepare(/**/ '
-SELECT p.id, p.username, p.content, p.id_category, DATE_FORMAT(post_at, \'%d/%m/%Y \') 
-FROM post p
-INNER JOIN `category` ca ON p.id_category = ca.id_category 
-WHERE $id_category = ?
-ORDER BY post_at DESC 
-LIMIT 0, 10
-');
-        $req->execute(array($id_category));
-        $req->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        $posts=[];
-        while ($post = $req->fetch())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $req->closeCursor(); // on libere la memoire
-        return $posts; //le tableau est
-
-    }
-
-
-    /**
-     * @param $id_category
-    /**
-     * @return array
-     */
-    public function getPostsWithComsByCat($id_category) //Liste des posts avec leurs commentaires
-    {
-        $req =$this->db->prepare('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment , c.post_id, c.comment_at, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at
+        $req =$this->db->query('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment , c.post_id, c.comment_at, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at
 FROM post p 
-    INNER JOIN `comment` c ON p.id = c.post_id 
+    LEFT JOIN `comment` c ON p.id = c.post_id 
     INNER JOIN category ca ON p.id_category = ca.id_category 
-WHERE p.id_category = ?
-ORDER BY p.post_at');
-        //req->selection des champs par table / integration des alias / Kpinture avec les 2 tables
-        $req->execute ($id_category); //execution de la requete preparée
+ORDER BY p.post_at DESC ');
+        //requete->selection des champs par table / integration des alias / jointure avec les 2 tables
+
         $req->setFetchMode(\PDO::FETCH_ASSOC); //Retourne la ligne suivante en tant qu'un tableau indexé par le nom des colonnes
-        $posts = array(); //on crée un tableau pour integrer tous les post
-        while ($row = $req->fetch())  // tant qu on peut lire une ligne on fait la boucle
+        $posts = [];
+        //on crée un tableau pour intégrer les post
+        // while pour lire toutes les lignes en faisant une boucle
+        while ($row = $req->fetch())
         {
-            $category = new Category(); //on instancie l'entité
-            $category->setIdCategory ($row["id_category"]) // on l'hydrate
-            ->setNameCategory($row["name_category"]);
+            //SI comment est NULL je n'instancie pas $comment
+            if (!empty($row["post_id"])){
+                $comment = new Comment();
+                $comment
+                    ->setPostId ($row["post_id"])
+                    ->setContent ($row["contentComment"])
+                    ->setUsername ($row["nameComment"])
+                    ->setCommentAt ($row["comment_at"]);
+            }
+
+            //Si $posts[id_courant] existe c'est que l'entité post a dejà été créée dans le tableau "posts".
+            // Dans ce cas on ajoute le commentaire au post du tableau
+            if (isset($posts["post".$row["id"]]) && isset($comment)){
+                $posts["post".$row["id"]]->addComment($comment);
+            }else{
+                //Si $posts[id_courant] n'existe pas, on instancie une nouvelle entitée post + category / on les hydrate /
+                // et on les ajoute au tableau en utilisant son id comme clé associatif
+                $category = new Category(); //on instancie l'entité
+                $category->setIdCategory ($row["id_category"]) // on l'hydrate
+                ->setNameCategory($row["name_category"]);
 
 
-            $comment = new Comment();
-            $comment
-                ->setPostId ($row["post_id"])
-                ->setContent ($row["contentComment"])
-                ->setUsername ($row["nameComment"])
-                ->setCommentAt ($row["comment_at"]);
-
-
-
-            $post = new Post(); // on instancie l'entité proprietaire
-            $post->setId ($row["id"]) // on hydrate avec les autres entités
+                $post = new Post(); // on instancie l'entité proprietaire
+                $post->setId ($row["id"]) // on hydrate avec les autres entités
                 ->setIdCategory ($row["id_category"])
-                ->setUsername($row["username"])
-                ->setContent ($row["content"])
-                ->setPostAt ($row["post_at"])
-                ->setIsSignaled ($row["is_signaled"])
-                ->setCategory ($category)// // on hydrate avec les autres entités
-                ->addComment ($comment);// on hydrate avec les autres entités
-            $posts[] = $post;// on rajoute la ligne dans le tableau
+                    ->setUsername($row["username"])
+                    ->setContent ($row["content"])
+                    ->setPostAt ($row["post_at"])
+                    ->setIsSignaled ($row["is_signaled"])
+                    ->setCategory ($category);// // on hydrate avec les autres entités
 
+                if(isset($comment)){
+                    $post->addComment ($comment);// on hydrate avec les autres entités
+                }
+
+                $posts["post".$row["id"]] = $post;
+            }
         }
         $req->closeCursor(); // on libere la memoire
-
+//dd ($posts['post16']);
         return $posts;
 
     }
+
+
+
 
 }

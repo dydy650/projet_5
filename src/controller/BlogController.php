@@ -91,7 +91,7 @@ class BlogController extends AbstractController
     {
             $username = $_SESSION['username'];
             $postManager = new PostManager();
-            $posts = $postManager->getPostsByUser($username);
+            $posts = $postManager->getPostsWithComsByUser($username);
             $this->render('./myposts.twig', array("posts" => $posts));
 
 
