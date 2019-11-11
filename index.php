@@ -1,6 +1,7 @@
 <?php
 session_start ();
 require_once 'vendor/autoload.php';
+require_once 'functions.php';
 use \App\controller\BlogController;
 use \App\controller\AdminController;
 use Twig\Environment;
@@ -30,6 +31,10 @@ switch ($page){
     case 'categories':
         $blogController->listCategories();
         break;
+    case 'category':
+        //echo $twig->render ('catGardeEnfant.twig');
+        $blogController->category ();
+        break;
     case 'aboutUs':
         $blogController->aboutUs();
         break;
@@ -44,23 +49,16 @@ switch ($page){
         break;
     case 'newUser':
         $adminController->newUser ();
-       // echo $twig->render ('newUser.twig');
         break;
     case 'addUser':
         $adminController->createUser();
         break;
     case 'actualites':
         $blogController->listPostsWithComs();
-        //echo $twig->render ('actu.twig');
         break;
     case 'posts':
         //$blogController->post ();
         $blogController->listPostsByUser();
-        //echo $twig->render ('myPosts.twig');
-        break;
-    case 'singlePost':
-        //$blogController->post ();
-        $blogController->singlePost();
         //echo $twig->render ('myPosts.twig');
         break;
     case 'addComment':
@@ -70,15 +68,11 @@ switch ($page){
         break;
     case 'newPost':
         $blogController->newPost();
-        //echo $twig->render ('newPost.twig');
         break;
     case 'addPost':
         $blogController->addPost ();
         break;
-    case 'category':
-        //echo $twig->render ('catGardeEnfant.twig');
-        $blogController->category ();
-        break;
+
 
 
 

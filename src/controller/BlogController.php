@@ -110,19 +110,6 @@ class BlogController extends AbstractController
 
     }
 
-    public function singlePost()
-    {
-        $postManager = new PostManager();
-        $commentManager = new CommentManager();
-
-        $post = $postManager->getPost ($_GET['id']);
-        $comments = $commentManager->getComments ($_GET['id']);
-        $this->render('./singlePost.twig', array("post" => $post, "comments" => $comments));
-
-
-    }
-
-
 
     //----------------------------------------------------POST CATEGORIES-----------------------------------------------------
 
@@ -131,53 +118,58 @@ class BlogController extends AbstractController
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->getCategories ();
         //echo "<pre>";
-        $this->render ('categories.twig', array("categories" => $categories));
+        $this->render ('listCategories.twig', array("categories" => $categories));
     }
 
 
     public function category(){
         $postManager = new PostManager;
-        $posts = $postManager->getPostsByCategory ($_GET['id_category']);
+        $posts = $postManager->getPostsWithComsByCat ($_GET['id_category']);
         var_dump ($posts);
-        $this->render('./postViewCategory.twig', array("posts" => $posts));
+        $this->render('./category.twig', array("posts" => $posts));
 
     }
 
 
 
 
-        /**
-         *
-         */
+    /*
+ * @param $id_category
+ * @param $content
+     *  @param $username
+ */
 
-
+    /**
+     *
+     */
     public function addPost()
     {
         //une condition qui vérifie si les données $_POST sont présentes, sinon on lève une Exception
         //On instancie un nouveau billet, donc vide
         //On hydrate le billet avec les données $_POST, puisqu\'on sait qu\'elles sont présentes
         //On envoie le billet hydraté au model
-        if (empty($_POST['categories']) || empty($_POST['content'])) {
-            throw new \Exception('error : il manque des datas !');
-        } else {
+        /*if (empty($_POST['categories']) || empty($_POST['content'])) {
+            echo ('error : il manque des datas !');
+        } else {*/
             $postManager = new PostManager();
             $post = new Post();
             $post
                 ->setContent ($_POST['contentNewPost'])
-                ->setIdCategory ($_POST['idCategory'])
+                ->setIdCategory ($_POST['category'])
                 ->setUsername ($_SESSION['username']);
             $id = $postManager->savePost ($post);
+            echo "<pre>";
             var_dump ($post);
+            var_dump ($id);
             if ($id){
                 $this->addFlash('success','Votre post a été créé');
             }else{
                 $this->addFlash('danger','votre post n\'a pas pu etre enregistré');
             }
-            header ('Location: index.php?action=post&id=' . $id);
-        }
+            //header ('Location: index.php?action=home');
 
     }
-
+//
     public function deletePost()
     {
 
@@ -198,7 +190,7 @@ class BlogController extends AbstractController
 
     }
 
-    public function addComment()
+   /* public function addComment()
     {
         $commentManager = new CommentManager();
         $comment = new Comment(); // je creé un Objet qui regroupe toute les infos de mon commentaire que je vais utiliser ensuite dans ma methode postComment
@@ -213,7 +205,7 @@ class BlogController extends AbstractController
             $this->addFlash('success','Commentaire ajouté');
             header ('Location: index.php?action=singlePost&id=' . $post_id);
         }
-    }
+    }*/
 
     public function deleteComment()
     {

@@ -4,25 +4,11 @@ namespace App\model\Entity;
 
 class Comment
 {
-    private $id_comment;
-
-    /**
-     * @return mixed
-     */
-    public function getIdComment()
-    {
-        return $this->id_comment;
-    }
-
-    /**
-     * @param mixed $id_comment
-     * @return Comment
-     */
-    public function setIdComment($id_comment)
-    {
-        $this->id_comment = $id_comment;
-        return $this;
-    }
+    protected $post_id;
+    protected $username;
+    protected $content;
+    protected $comment_at;
+    protected $is_signaled;
 
     /**
      * @return mixed
@@ -45,36 +31,36 @@ class Comment
     /**
      * @return mixed
      */
-    public function getUsernameComment()
+    public function getUsername()
     {
-        return $this->username_comment;
+        return $this->username;
     }
 
     /**
-     * @param mixed $username_comment
+     * @param mixed $username
      * @return Comment
      */
-    public function setUsernameComment($username_comment)
+    public function setUsername($username)
     {
-        $this->username_comment = $username_comment;
+        $this->username = $username;
         return $this;
     }
 
     /**
      * @return mixed
      */
-    public function getContentComment()
+    public function getContent()
     {
-        return $this->content_comment;
+        return $this->content;
     }
 
     /**
-     * @param mixed $content_comment
+     * @param mixed $content
      * @return Comment
      */
-    public function setContentComment($content_comment)
+    public function setContent($content)
     {
-        $this->content_comment = $content_comment;
+        $this->content = $content;
         return $this;
     }
 
@@ -99,23 +85,19 @@ class Comment
     /**
      * @return mixed
      */
-    public function getIsSignaledComment()
+    public function getIsSignaled()
     {
-        return $this->is_signaled_comment;
+        return $this->is_signaled;
     }
 
     /**
-     * @param mixed $is_signaled_comment
+     * @param mixed $is_signaled
      * @return Comment
      */
-    public function setIsSignaledComment($is_signaled_comment)
+    public function setIsSignaled($is_signaled)
     {
-        $this->is_signaled_comment = $is_signaled_comment;
+        $this->is_signaled = $is_signaled;
         return $this;
     }
-    private $post_id;
-    private $username_comment;
-    private $content_comment;
-    private $comment_at;
-    private $is_signaled_comment;
+
 }

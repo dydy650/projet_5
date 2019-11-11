@@ -1,16 +1,60 @@
 <?php
 
 namespace App\model\Entity;
+use App\model\Entity\Comment;
+use App\model\Entity\Category;
+
 
 class Post
 {
-    private $id;
-    private $id_category;
-    private $username;
-    private $content;
-    private $post_at;
-    private $is_signaled;
+    protected $id;
+    protected $id_category;
+    protected $username;
+    protected $content;
+    protected $post_at;
+    protected $is_signaled;
+    protected $comments =array();
+    protected $category;
+
     /**
+     * @return mixed
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    public function addComment($comment)
+    {
+        $this->comments[] = $comment;
+        return $this;
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     * @return Post
+     */
+    public function setCategory($category)
+    {
+        $this->category = $category;
+        return $this;
+    }
+
+
+    /*----------------Comment & Category--------------------*/
+
+
+
+    /**-----------------------------POST----------------------------------------
      * @return mixed
      */
     public function getId()
@@ -118,4 +162,3 @@ class Post
         return $this;
     }
 }
-

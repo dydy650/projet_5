@@ -3,15 +3,24 @@ namespace App\model;
 //require_once('DBManager.php');
 use App\model\Entity\Post;
 use App\model\Entity\Category;
+use App\model\Entity\Comment;
 
 class PostManager extends DBManager
 {
 
+    /**
+     * @param Post $post
+     * @return bool
+     */
     public function savePost($post) // On recoit le billet a enregistrer
     {
-        $req = $this->db->prepare('INSERT INTO post(username, content, post_at, categorie) VALUES(?, ?, NOW())');
-        $req->execute(array($post->getUsername(),$post->getContent(),$post->getCategorie()));
+        $req = $this->db->prepare('INSERT INTO post ( id_category, username, content, post_at ) VALUES(?, ?, ?, NOW())');
+        $req->execute(array(
+            $post->getUsername(),
+            $post->getContent(),
+            $post->getIdCategory()));
         return $this->db->lastInsertId ();
+
     }
 
    /* public function getPosts() //on liste les posts
@@ -29,39 +38,65 @@ class PostManager extends DBManager
 
     }*/
 
-    public function getPostsWithComs() //on liste les posts
+    /**
+     * @return array
+     */
+    public function getPostsWithComs() //Liste des posts avec leurs commentaires
     {
-        $req =$this->db->prepare('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content_comment test, c.username_comment, c.comment_at, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at 
+        $req =$this->db->query('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment , c.post_id, c.comment_at, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at
 FROM post p 
-    INNER JOIN `comment` c ON p.id = c.post_id 
+    LEFT JOIN `comment` c ON p.id = c.post_id 
     INNER JOIN category ca ON p.id_category = ca.id_category 
-ORDER BY p.post_at');
-        $req->execute ();
-        $req->setFetchMode(\PDO::FETCH_ASSOC);
-        //var_dump ($posts);
-        $posts = array();
-       //$datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($row = $req->fetch())  // tant qu on peut lire une ligne on fait la boucle
+ORDER BY p.post_at DESC ');
+        //requete->selection des champs par table / integration des alias / jointure avec les 2 tables
+
+        $req->setFetchMode(\PDO::FETCH_ASSOC); //Retourne la ligne suivante en tant qu'un tableau indexé par le nom des colonnes
+        $posts = [];
+        //on crée un tableau pour intégrer les post
+        // while pour lire toutes les lignes en faisant une boucle
+        while ($row = $req->fetch())
         {
-            $category = new Category();
-            //hydrater la category
+            //SI comment est NULL je n'instancie pas $comment
+            if (!empty($row["post_id"])){
+                $comment = new Comment();
+                $comment
+                    ->setPostId ($row["post_id"])
+                    ->setContent ($row["contentComment"])
+                    ->setUsername ($row["nameComment"])
+                    ->setCommentAt ($row["comment_at"]);
+            }
 
-            $comment = new Comment();
-            //hydrater comment
+        //Si $posts[id_courant] existe c'est que l'entité post a dejà été créée dans le tableau "posts".
+            // Dans ce cas on ajoute le commentaire au post du tableau
+            if (isset($posts["post".$row["id"]]) && isset($comment)){
+                $posts["post".$row["id"]]->addComment($comment);
+            }else{
+                //Si $posts[id_courant] n'existe pas, on instancie une nouvelle entitée post + category / on les hydrate /
+                // et on les ajoute au tableau en utilisant son id comme clé associatif
+            $category = new Category(); //on instancie l'entité
+            $category->setIdCategory ($row["id_category"]) // on l'hydrate
+                   ->setNameCategory($row["name_category"]);
 
 
-            $post = new Post();
-            $post->setId ($row["id"])
-                ->setIdCategory ($row["id_category"]); // methode qui ait $post->setCategory($category)
+            $post = new Post(); // on instancie l'entité proprietaire
+            $post->setId ($row["id"]) // on hydrate avec les autres entités
+                ->setIdCategory ($row["id_category"])
+                ->setUsername($row["username"])
+                ->setContent ($row["content"])
+                ->setPostAt ($row["post_at"])
+                ->setIsSignaled ($row["is_signaled"])
+                ->setCategory ($category);// // on hydrate avec les autres entités
 
-            $posts[] = $post;// on rajoute la ligne dans le tableau
-            echo"<pre>";
-            var_dump ($row, $post);
-            die;
+                if(isset($comment)){
+               $post->addComment ($comment);// on hydrate avec les autres entités
+                }
+
+                $posts["post".$row["id"]] = $post;
+            }
         }
         $req->closeCursor(); // on libere la memoire
-       //var_dump ($posts);
-        return $posts; //le tableau est*/
+//dd ($posts['post16']);
+        return $posts;
 
     }
 //---------------------------------------------------------------------------------------------------------------------------//
@@ -135,177 +170,56 @@ LIMIT 0, 10
 
     }
 
-/*
-    public function getPostsCatGarde() //on liste les posts
+
+    /**
+     * @param $id_category
+    /**
+     * @return array
+     */
+    public function getPostsWithComsByCat($id_category) //Liste des posts avec leurs commentaires
     {
-        $datas =$this->db->query('
-SELECT id, username, content, categorie, DATE_FORMAT(post_at, \'%d/%m/%Y \') 
-FROM post 
-WHERE categorie = "#garde_enfant" 
-ORDER BY post_at DESC 
-LIMIT 0, 10
-');
-        $posts = array();
-        var_dump ($posts);
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
+        $req =$this->db->prepare('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment , c.post_id, c.comment_at, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at
+FROM post p 
+    INNER JOIN `comment` c ON p.id = c.post_id 
+    INNER JOIN category ca ON p.id_category = ca.id_category 
+WHERE p.id_category = ?
+ORDER BY p.post_at');
+        //req->selection des champs par table / integration des alias / Kpinture avec les 2 tables
+        $req->execute ($id_category); //execution de la requete preparée
+        $req->setFetchMode(\PDO::FETCH_ASSOC); //Retourne la ligne suivante en tant qu'un tableau indexé par le nom des colonnes
+        $posts = array(); //on crée un tableau pour integrer tous les post
+        while ($row = $req->fetch())  // tant qu on peut lire une ligne on fait la boucle
         {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
+            $category = new Category(); //on instancie l'entité
+            $category->setIdCategory ($row["id_category"]) // on l'hydrate
+            ->setNameCategory($row["name_category"]);
+
+
+            $comment = new Comment();
+            $comment
+                ->setPostId ($row["post_id"])
+                ->setContent ($row["contentComment"])
+                ->setUsername ($row["nameComment"])
+                ->setCommentAt ($row["comment_at"]);
+
+
+
+            $post = new Post(); // on instancie l'entité proprietaire
+            $post->setId ($row["id"]) // on hydrate avec les autres entités
+                ->setIdCategory ($row["id_category"])
+                ->setUsername($row["username"])
+                ->setContent ($row["content"])
+                ->setPostAt ($row["post_at"])
+                ->setIsSignaled ($row["is_signaled"])
+                ->setCategory ($category)// // on hydrate avec les autres entités
+                ->addComment ($comment);// on hydrate avec les autres entités
+            $posts[] = $post;// on rajoute la ligne dans le tableau
+
         }
-        $datas->closeCursor(); // on libere la memoire
-        return $posts; //le tableau est
+        $req->closeCursor(); // on libere la memoire
+
+        return $posts;
 
     }
-
-    public function getPostsCatImmo() //on liste les posts
-    {
-        $datas =$this->db->query('SELECT id, username, content, categorie, DATE_FORMAT(post_at, \'%d/%m/%Y \') FROM post WHERE categorie = "#immobilier" ORDER BY post_at DESC LIMIT 0, 10');
-        $posts = array();
-        var_dump ($posts);
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $datas->closeCursor(); // on libere la memoire
-        return $posts; //le tableau est
-
-    }
-
-    public function getPostsCatTroc() //on liste les posts
-    {
-        $datas =$this->db->query('SELECT id, username, content, categorie, DATE_FORMAT(post_at, \'%d/%m/%Y \') FROM post WHERE categorie = "#vente_troc" ORDER BY post_at DESC LIMIT 0, 10');
-        $posts = array();
-        var_dump ($posts);
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $datas->closeCursor(); // on libere la memoire
-        return $posts; //le tableau est
-
-    }
-
-    public function getPostsCatLifestyle() //on liste les posts
-    {
-        $datas = $this->db->query ('SELECT id, username, content, categorie, DATE_FORMAT(post_at, \'%d/%m/%Y \') FROM post WHERE categorie = "#lifestyle" ORDER BY post_at DESC LIMIT 0, 10');
-        $posts = array();
-        var_dump ($posts);
-        $datas->setFetchMode (\PDO::FETCH_CLASS, Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch ())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $datas->closeCursor (); // on libere la memoire
-        return $posts; //le tableau est
-    }
-
-    public function getPostsCatSorties() //on liste les posts
-    {
-        $datas =$this->db->query('SELECT id, username, content, categorie, DATE_FORMAT(post_at, \'%d/%m/%Y \') FROM post WHERE categorie = "#sorties_loisirs" ORDER BY post_at DESC LIMIT 0, 10');
-        $posts = array();
-        var_dump ($posts);
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $datas->closeCursor(); // on libere la memoire
-        return $posts; //le tableau est
-
-    }
-
-    public function getPostsCatHumeur() //on liste les posts
-    {
-        $datas =$this->db->query('SELECT id, username, content, categorie, DATE_FORMAT(post_at, \'%d/%m/%Y \') FROM post WHERE categorie = "#humeur_du_jour" ORDER BY post_at DESC LIMIT 0, 10');
-        $posts = array();
-        var_dump ($posts);
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $datas->closeCursor(); // on libere la memoire
-        return $posts; //le tableau est
-
-    }
-
-    public function getPostsCatSport() //on liste les posts
-    {
-        $datas =$this->db->query('SELECT id, username, content, categorie, DATE_FORMAT(post_at, \'%d/%m/%Y \') FROM post WHERE categorie = "#sport" ORDER BY post_at DESC LIMIT 0, 10');
-        $posts = array();
-        var_dump ($posts);
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $datas->closeCursor(); // on libere la memoire
-        return $posts; //le tableau est
-
-    }
-
-
-    public function getPostsCatBonsPlans() //on liste les posts
-    {
-        $datas =$this->db->query('SELECT id, username, content, categorie, DATE_FORMAT(post_at, \'%d/%m/%Y \') FROM post WHERE categorie = "#bons_plans" ORDER BY post_at DESC LIMIT 0, 10');
-        $posts = array();
-        var_dump ($posts);
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $datas->closeCursor(); // on libere la memoire
-        return $posts; //le tableau est
-
-    }
-
-    public function getPostsCatAide() //on liste les posts
-    {
-        $datas =$this->db->query('SELECT id, username, content, categorie, DATE_FORMAT(post_at, \'%d/%m/%Y \') FROM post WHERE categorie = "#aide_SOS" ORDER BY post_at DESC LIMIT 0, 10');
-        $posts = array();
-        var_dump ($posts);
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $datas->closeCursor(); // on libere la memoire
-        return $posts; //le tableau est
-
-    }
-
-    public function getPostsCatAutres() //on liste les posts
-    {
-        $datas =$this->db->query('SELECT id, username, content, categorie, DATE_FORMAT(post_at, \'%d/%m/%Y \') FROM post WHERE categorie = "#autres" ORDER BY post_at DESC LIMIT 0, 10');
-        $posts = array();
-        var_dump ($posts);
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $datas->closeCursor(); // on libere la memoire
-        return $posts; //le tableau est
-
-    }
-
-    public function getPostsCatVoyages() //on liste les posts
-    {
-        $datas =$this->db->query('SELECT id, username, content, categorie, DATE_FORMAT(post_at, \'%d/%m/%Y \') FROM post WHERE categorie = "#voyages" ORDER BY post_at DESC LIMIT 0, 10');
-        $posts = array();
-        var_dump ($posts);
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $datas->closeCursor(); // on libere la memoire
-        return $posts; //le tableau est
-
-    }*/
-
 
 }

@@ -8,8 +8,8 @@ class Category
 {
 
     private $id_category;
-    private $name_category;
-    private $icone;
+    protected $name_category;
+    protected $icone;
 
     /**
      * @return mixed

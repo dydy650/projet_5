@@ -4,7 +4,18 @@ namespace App\model\Entity;
 
 class User
 {
-    private $id;
+    protected $id;
+    protected $username;
+    protected $password;
+    protected $nom;
+    protected $prenom;
+    protected $birthday_date;
+    protected $city;
+    protected $email;
+    protected $code_parrainage_perso;
+    protected $code_parrain;
+    protected $is_admin;
+
 
     /**
      * @return mixed
@@ -203,16 +214,7 @@ class User
         $this->is_admin = $is_admin;
         return $this;
     }
-    private $username;
-    private $password;
-    private $nom;
-    private $prenom;
-    private $birthday_date;
-    private $city;
-    private $email;
-    private $code_parrainage_perso;
-    private $code_parrain;
-    private $is_admin;
+
 
 
 }
