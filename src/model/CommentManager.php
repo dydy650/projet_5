@@ -28,7 +28,11 @@ class CommentManager extends DBManager
     public function saveComment($comment)
     {
         $req = $this->db->prepare('INSERT INTO comment(post_id, username, content, comment_at) VALUES(?, ?, ?, NOW())');
-        $affectedLines = $req->execute(array($comment->getPostId(),$comment->getUsername(),$comment->getContent()));
+        $affectedLines = $req->execute(array(
+            $comment->getPostId(),
+            $comment->getUsername(),
+            $comment->getContent()
+        ));
         return $affectedLines;
 
 

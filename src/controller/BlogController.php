@@ -161,9 +161,7 @@ class BlogController extends AbstractController
                 ->setIdCategory ($_POST['category'])
                 ->setUsername ($_SESSION['username']);
             $id = $postManager->savePost ($post);
-            echo "<pre>";
-            var_dump ($post);
-            var_dump ($id);
+           dd ($post);
             if ($id){
                 $this->addFlash('success','Votre post a été créé');
             }else{
@@ -193,7 +191,7 @@ class BlogController extends AbstractController
 
     }
 
-   /* public function addComment()
+    public function addComment()
     {
         $commentManager = new CommentManager();
         $comment = new Comment(); // je creé un Objet qui regroupe toute les infos de mon commentaire que je vais utiliser ensuite dans ma methode postComment
@@ -206,9 +204,9 @@ class BlogController extends AbstractController
             $this->addFlash('danger','Impossible d\'ajouter le commentaire');
         } else {
             $this->addFlash('success','Commentaire ajouté');
-            header ('Location: index.php?action=singlePost&id=' . $post_id);
+            header ('Location: index.php?action=actu);
         }
-    }*/
+    }
 
     public function deleteComment()
     {

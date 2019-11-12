@@ -12,13 +12,14 @@ class PostManager extends DBManager
      * @param Post $post
      * @return bool
      */
-    public function savePost($post) // On recoit le billet a enregistrer
+    public function savePost($post) // On recoit le post a enregistrer
     {
         $req = $this->db->prepare('INSERT INTO post ( id_category, username, content, post_at ) VALUES(?, ?, ?, NOW())');
         $req->execute(array(
+            $post->getIdCategory(),
             $post->getUsername(),
             $post->getContent(),
-            $post->getIdCategory()));
+        ));
         return $this->db->lastInsertId ();
 
     }
@@ -220,8 +221,9 @@ ORDER BY p.post_at DESC ');
 
 
                 $post = new Post(); // on instancie l'entité proprietaire
-                $post->setId ($row["id"]) // on hydrate avec les autres entités
-                ->setIdCategory ($row["id_category"])
+                $post
+                    ->setId ($row["id"]) // on hydrate avec les autres entités
+                    ->setIdCategory ($row["id_category"])
                     ->setUsername($row["username"])
                     ->setContent ($row["content"])
                     ->setPostAt ($row["post_at"])
