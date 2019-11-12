@@ -210,7 +210,7 @@ class BlogController extends AbstractController
             $this->addFlash('danger','Impossible d\'ajouter le commentaire');
         } else {
             $this->addFlash('success','Commentaire ajouté');
-            header ('Location: index.php?action=actualites');
+            header ('Location: '.$_SERVER['HTTP_REFERER']);
         }
     }
 /*
