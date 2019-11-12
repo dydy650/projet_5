@@ -191,23 +191,29 @@ class BlogController extends AbstractController
 
     }
 
-    public function addComment()
+    /**
+     * @param $post_id
+     * @param $username
+     * @param $content
+     */
+    public function addComment($post_id, $username, $content)
     {
         $commentManager = new CommentManager();
         $comment = new Comment(); // je creé un Objet qui regroupe toute les infos de mon commentaire que je vais utiliser ensuite dans ma methode postComment
         $comment
-            ->setUsername ($_SESSION['username'])
-            ->setContent ($_POST['responsePost'])
-            ->setPostId ($id);
+            ->setPostId ($post_id)
+            ->setUsername ($username)
+            ->setContent ($content);
+
         $affectedLines = $commentManager->saveComment($comment);
         if ($affectedLines === false) {
             $this->addFlash('danger','Impossible d\'ajouter le commentaire');
         } else {
             $this->addFlash('success','Commentaire ajouté');
-            header ('Location: index.php?action=actu);
+            header ('Location: index.php?action=actualites');
         }
     }
-
+/*
     public function deleteComment()
     {
 
@@ -221,6 +227,6 @@ class BlogController extends AbstractController
     public function signalComment(){
 
     }
-
+*/
 
 }

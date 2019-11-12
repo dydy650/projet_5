@@ -24,21 +24,6 @@ class PostManager extends DBManager
 
     }
 
-   /* public function getPosts() //on liste les posts
-    {
-        $datas =$this->db->query('SELECT p.id, p.id_category, p.username, p.content, ca.name_category, p.post_at FROM post p ORDER BY p.post_at DESC LIMIT 0, 10');
-        $posts = array();
-        $datas->setFetchMode(\PDO::FETCH_CLASS,Post::class); // on veux recupérer une class billet
-        while ($post = $datas->fetch())  // tant qu on peut lire une ligne on fait la boucle
-        {
-            $posts[] = $post; // on rajoute la ligne dans le tableau
-        }
-        $datas->closeCursor(); // on libere la memoire
-        var_dump ($posts);
-        return $posts; //le tableau est
-
-    }*/
-
     /**
      * @return array
      */
