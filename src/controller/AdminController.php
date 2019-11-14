@@ -34,6 +34,7 @@ class AdminController extends AbstractController
                     ->setEmail ($_POST['email'])
                     ->setBirthdayDate ($_POST["birthday_date"])
                     ->setCity ($_POST["city"])
+                    ->setCodeParrain ($_POST["code_parrainage"])
                     ->setCodeParrainagePerso (uniqid ());
                    /* if (
                    // $reponse = $bdd->query('SELECT COUNT (*) FROM user);');

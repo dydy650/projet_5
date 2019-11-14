@@ -63,7 +63,7 @@ switch ($page){
         break;
     case 'addComment':
         //$blogController->post ();
-        $blogController->addComment($_GET['id'], $_SESSION['username'], $_POST['contentComment']);
+        $blogController->addComment($_GET['id'], $_SESSION['username'], $_POST['contentNewComment']);
         //echo $twig->render ('myPosts.twig');
         break;
     case 'newPost':

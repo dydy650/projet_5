@@ -15,17 +15,16 @@
         <div class="col-12 col-sm-6 col-lg-8">
             <div class="mainContent">
                 {% for post in posts %}
-                    <div class="singlePost">  <p class="postCategory">{{ post.category.NameCategory }}</p>
+                    <div class="singlePost">
+                        <p class="postCategory">{{ post.category.NameCategory }}</p>
                         <p class="postUsername">{{ post.username }}</p>
-                        <p>{{ post.postAt }}</p>
-
+                        <p class="postDateAt"> {{ post.postAt }}</p>
                         <p class="postContent">{{ post.content }}</p>
-                        <br/>
                     </div><br/>
 
                     <div class="commentPart">
+                        <p><label class="titleCommentPart" for="comment"> Voir les commentaires</label></p>
                         <div class="listcommentsPart">
-                            <p><label for="comment">Commentaires</label></p>
                             {% for comment in post.comments %}
                                 <div class="comments">
                                     {{ comment.username }} <p>le {{ comment.commentAt }}</p>
@@ -36,12 +35,13 @@
                         </div>
                         <div class="writeCommentPart">
                             <form action="index.php?action=addComment&amp;id={{ post.id }}" method="post">
-                                <label for="contentComment"></label><br/>
-                                <textarea class="form-control" id="contentComment" name="contentComment"></textarea><br>
-                                <input class="btn btn-outline-secondary" type="submit" value="partager"/>
+                                <label for="contentNewComment"></label><br/>
+                                <textarea class="form-control" id="contentNewComment" name="contentNewComment" placeholder="Votre commentaire"></textarea><br>
+                                <input class="btn btn-outline-secondary" id="btnNewComment" type="submit" value="partager"/>
                             </form>
                         </div>
                     </div>
+                    <div class="postSeparation"></div>
                 {% endfor %}
             </div>
 

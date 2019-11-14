@@ -28,10 +28,15 @@ class BlogController extends AbstractController
         $this->render('./aboutUs.twig');
     }
 
+    /**
+     *
+     */
     public function parametres()
     {
+        $userManager = new UserManager();
+        $user = $userManager->getUser($_POST["username"]);
+        $this->render('./parametres.twig', array("user" => $user));
 
-        $this->render('./parametres.twig');
     }
 
     public function homeAccess()
@@ -54,22 +59,12 @@ class BlogController extends AbstractController
         }
         $userManager = new UserManager();
         $user = $userManager->getUser($_POST["username"]);
-        var_dump ($user);
         $hash = md5 ($_POST["password"]);
         if ($user instanceof User && $hash === $user->getPassword()){
             $_SESSION['username'] = $user->getUsername();
             $_SESSION['is_admin'] = $user->getIsAdmin();
-
-
-            if ($user->getIsAdmin () === "1") {
-                header ('Location:index.php?action=home');
-
-
-            } else {
-                $_SESSION['is_admin'] = $user->getIsAdmin();
-                header ('Location:index.php?action=XX');
-            }
-
+            header ('Location:index.php?action=home');
+            
         } else {
             echo('Username ou mot de passe incorrection');
         }
