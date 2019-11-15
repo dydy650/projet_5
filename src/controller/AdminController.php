@@ -3,6 +3,7 @@ namespace App\controller;
 
 use App\model\Entity\User;
 use App\model\UserManager;
+use App\model\DBManager;
 
 class AdminController extends AbstractController
 {
@@ -23,7 +24,7 @@ class AdminController extends AbstractController
         if (empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["password2"])) {
             echo 'error';
         } else {
-            if ($_POST['password'] === $_POST['password2']) {
+            if ($_POST['password'] === $_POST['password2'])  {
                 $userManager = new UserManager();
                 $user = new User;
                 $user
@@ -36,19 +37,16 @@ class AdminController extends AbstractController
                     ->setCity ($_POST["city"])
                     ->setCodeParrain ($_POST["code_parrainage"])
                     ->setCodeParrainagePerso (uniqid ());
+                dd ($user);
+
                    /* if (
-                   // $reponse = $bdd->query('SELECT COUNT (*) FROM user);');
-                   // if ($reponse >= 1)
-                    //echo "setCodeParrain";
-                //->setCodeParrain($_POST["code_parrainage"])
+                        $reponse =$this->db->query('SELECT COUNT (*) FROM user');
+                         if ($reponse >= 1)
+                    echo "setCodeParrain";
+                ->setCodeParrain($_POST["code_parrainage"])
                 else if ($reponse == 0)
                     echo "La TABLE VIDE !";
-                ->setCodeParrain(empty());
-
-
-                    /*;*/
-
-
+                ->setCodeParrain(empty());*/
 
 //Verifier si user inscris
 //si pas de user -> on créé le user en mode admin
@@ -58,13 +56,12 @@ class AdminController extends AbstractController
                 // sinon on renseigne id du parrain , et on crée le user
 
                 $result = $userManager->createUser($user);
-                var_dump ($result);
                 if ($result){
                     $this->addFlash('success','votre compte est enregistré');
                 }else{
                     $this->addFlash('danger','votre compte n\'a pas pu etre enregistré');
                 }
-                //header ('Location:index.php?action=loginPage');
+                header ('Location:index.php?action=loginPage');
             }
         }
     }

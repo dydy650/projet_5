@@ -396,7 +396,6 @@ body
 {
     background-color: #f8e3e3;
     min-height: 100px;
-    height: 100%;
 }
 .postUsername{
     color: lightpink;
@@ -473,7 +472,7 @@ body
 #contentNewPost
  {
     margin: 0;
-    background-color: darkgrey;
+    background-color: white;
  }
 
 #btnNewComment
@@ -556,21 +555,21 @@ body
 
 .meteoPart
 {
-    height: 400px;
+
     border: solid 1px;
     margin-bottom: 20px;
 }
 
 .categoryCloud
 {
-    height: 400px;
+
     border: solid 1px;
     margin-bottom: 20px;
 }
 
 .parrainagePart
 {
-    height: 400px;
+
     border: solid 1px;
     margin-bottom: 20px;
 }
@@ -610,7 +609,40 @@ body
     background-color: #f4f2f7;
 }
 
+h1
+{
+    font-family: 'Satisfy', cursive;
+}
+.contentParameters p
+{
+    color: darkslategray;
+}
 
+#pencilEdit2
+{
+    position: absolute;
+    top: 258px;
+    left: 198px;
+    color: red;
+}
+
+#pencilEdit
+{
+    position: absolute;
+    top: 210px;
+    left: 150px;
+    color: #afc9a4;
+}
+
+ a:hover #pencilEdit
+{
+   color: white;
+}
+
+a:hover #pencilEdit2
+{
+    color: white;
+}
 /*.mainContent h2:hover
 {
     background-color: #afc9a4;

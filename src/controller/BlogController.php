@@ -34,7 +34,7 @@ class BlogController extends AbstractController
     public function parametres()
     {
         $userManager = new UserManager();
-        $user = $userManager->getUser($_POST["username"]);
+        $user = $userManager->getUser($_SESSION['username']);
         $this->render('./parametres.twig', array("user" => $user));
 
     }
@@ -62,9 +62,8 @@ class BlogController extends AbstractController
         $hash = md5 ($_POST["password"]);
         if ($user instanceof User && $hash === $user->getPassword()){
             $_SESSION['username'] = $user->getUsername();
-            $_SESSION['is_admin'] = $user->getIsAdmin();
             header ('Location:index.php?action=home');
-            
+
         } else {
             echo('Username ou mot de passe incorrection');
         }
@@ -113,14 +112,11 @@ class BlogController extends AbstractController
     {
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->getCategories ();
-        //echo "<pre>";
         $this->render ('listCategories.twig', array("categories" => $categories));
     }
 
 
-    /**
-     * @param $category
-     */
+
     public function category(){
         $postManager = new PostManager;
         $posts = $postManager->getPostsWithComsByCat ($_GET['id']);

@@ -33,7 +33,7 @@ class PostManager extends DBManager
 FROM post p 
     LEFT JOIN `comment` c ON p.id = c.post_id 
     INNER JOIN category ca ON p.id_category = ca.id_category 
-ORDER BY p.post_at DESC ');
+ORDER BY p.post_at DESC');
         //requete->selection des champs par table / integration des alias / jointure avec les 2 tables
 
         $req->setFetchMode(\PDO::FETCH_ASSOC); //Retourne la ligne suivante en tant qu'un tableau indexé par le nom des colonnes

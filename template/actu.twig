@@ -4,7 +4,7 @@
    Actualités
 {% endblock %}
 {% block welcomeUser %}
-    Voici votre actualites
+    Voici votre actualité
 {% endblock %}
 {% block navbar %}
 {% endblock %}
@@ -39,12 +39,11 @@
                             </form>
                         </div>
                     </div>
-                        <?php if ({{ post.username }} === ($_GET['username']) ) { ?>
+                       <!--{# {% if post.username === "lucie" %}#}
                         <a href="index.php?action=editPost{{ post.id }}>"
                            id="btnAdminEdit" class="btn btn-light"> Modifier</a>
                         <a href="index.php?action=deletePost{{ post.id }}>"
-                           id="btnAdminDelete" class="btn btn-light"> Supprimer </a>
-                        <?php } ?>
+                           id="btnAdminDelete" class="btn btn-light"> Supprimer </a>-->
                      <div class="postSeparation"></div>
                     {% endfor %}
             </div>
@@ -66,9 +65,5 @@
         </div>
 
     </div>
-
-
-
-
 
 {% endblock %}

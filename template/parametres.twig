@@ -18,32 +18,21 @@
 
                 </div>
                 <br>
-                <h2 class="titleParameters">Général</h2>
+                <h2 class="titleParameters">Général </h2> <a href="XX" ><i id="pencilEdit" class="fas fa-pencil-alt"></i></a>
                 <div class="contentParameters">
-                    <p> nom</p> {{ user.name }}
-                    <p>prenom</p>
-                    <p> date de naissance</p>
-                    <p>id</p>
-                    <p>votre code parrainage</p>
+                    <h6>NOM : </h6> <p>{{ user.nom }}</p>
+                    <h6>PRENOM : </h6> <p>{{ user.prenom }}</p>
+                    <h6>DATE DE NAISSANCE : </h6> <p> {{ user.birthday_date_FR }} </p>
+                    <h6>VILLE : </h6><p> {{ user.city }}</p>
+                    <h6>Parraines de nouvelles pépites avec le code suivant
+                    CODE PARRAINAGE  : </h6><p>{{ user.codeParrainagePerso}}</p>
                 </div>
 
                 <h2 class="titleParameters">Connexion</h2>
                 <div class="contentParameters">
-                    <p> Identifiant</p>
-                    <p>mot de passe</p>
-                </div>
-                <h2 class="titleParameters">Posts signalés</h2>
-                <div class="contentParameters">
-                    <p>at_date</p>
-                    <p>categorie</p>
-                    <p>post</p>
-                </div>
-                <h2 class="titleParameters">Commentaire signalés</h2>
-                <div class="contentParameters">
-                    <p>at_date</p>
-                    <p>categorie</p>
-                    <p>post</p>
-                    <p>comment</p>
+                    <p>EMAIL : {{ user.email }}</p>
+                    <p>IDENTIFIANT : {{ user.username }}</p>
+                    <p>MOT DE PASSE : {{ user.password }}</p>
                 </div>
             </div>
         </div>
