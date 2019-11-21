@@ -72,6 +72,9 @@ switch ($page){
     case 'addPost':
         $blogController->addPost ();
         break;
+    case 'editUser':
+        $blogController->editUser ();
+        break;
 
 
 

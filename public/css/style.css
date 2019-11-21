@@ -319,7 +319,7 @@ body
     padding-top: 25px;
     max-width: 1200px;
     display:flex;
-    align-items: center;
+    align-items: start;
     justify-content: center;
     align-content: center;
     margin:auto;
@@ -394,7 +394,6 @@ body
 }
 .secondContent
 {
-    background-color: #f8e3e3;
     min-height: 100px;
 }
 .postUsername{
@@ -556,23 +555,61 @@ body
 .meteoPart
 {
 
-    border: solid 1px;
+    background-color: #fff5ee;
     margin-bottom: 20px;
+    border-radius: 5px;
+    height: 500px;
 }
 
 .categoryCloud
 {
 
-    border: solid 1px;
+    background-color: #fff5ee;
     margin-bottom: 20px;
+    border-radius: 5px;
+    padding: 10px;
 }
 
 .parrainagePart
 {
-
-    border: solid 1px;
+    background-color: #fff5ee;
     margin-bottom: 20px;
+    border-radius: 5px;
+    height: auto;
+    align-content: center;
+    text-align: center;
+    align-items: center;
 }
+.titleSecondPart
+{
+    font-family: 'Satisfy', cursive;
+    size: 20px;
+    text-align: center;
+    color: lightgray;
+    padding: 20px;
+
+}
+
+#codeParrainCadre
+{
+    height: 50px;
+    width: 100px;
+    border: solid 1px;
+    text-align: center;
+    display: inline-block;
+    font-weight: bold;
+    padding-top: 10px;
+    color: black;
+}
+
+.categorylistSecondPart li
+{
+    list-style: none;
+    text-align: center;
+    font-style: italic;
+}
+
+
 
 .post ul{
     margin: 15px;

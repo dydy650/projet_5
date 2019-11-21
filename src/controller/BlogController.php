@@ -28,6 +28,10 @@ class BlogController extends AbstractController
         $this->render('./aboutUs.twig');
     }
 
+    public function editUser()
+    {
+        $this->render('./editUser.twig');
+    }
     /**
      *
      */
@@ -87,7 +91,11 @@ class BlogController extends AbstractController
             $username = $_SESSION['username'];
             $postManager = new PostManager();
             $posts = $postManager->getPostsWithComsByUser($username);
-            $this->render('./myposts.twig', array("posts" => $posts));
+        $categoryManager = new CategoryManager();
+        $categories = $categoryManager->getCategories ();
+        $userManager = new UserManager();
+        $user = $userManager->getUser($_SESSION['username']);
+            $this->render('./myposts.twig', array("posts" => $posts, "categories" =>$categories, "user"=>$user));
 
 
 
@@ -98,7 +106,11 @@ class BlogController extends AbstractController
 
             $postManager = new PostManager();
             $posts = $postManager->getPostsWithComs();
-            $this->render('./actu.twig', array("posts" => $posts));
+            $categoryManager = new CategoryManager();
+            $categories = $categoryManager->getCategories ();
+            $userManager = new UserManager();
+            $user = $userManager->getUser($_SESSION['username']);
+            $this->render('./actu.twig', array("posts" => $posts, "categories" =>$categories, "user"=>$user));
 
 
 
@@ -152,13 +164,13 @@ class BlogController extends AbstractController
                 ->setIdCategory ($_POST['category'])
                 ->setUsername ($_SESSION['username']);
             $id = $postManager->savePost ($post);
-           dd ($post);
+          // dd ($post,$postManager);
             if ($id){
                 $this->addFlash('success','Votre post a été créé');
             }else{
                 $this->addFlash('danger','votre post n\'a pas pu etre enregistré');
             }
-            //header ('Location: index.php?action=home');
+            header ('Location: index.php?action=home');
 
     }
 //
@@ -205,6 +217,8 @@ class BlogController extends AbstractController
         }
     }
 /*
+ *
+ *
     public function deleteComment()
     {
 

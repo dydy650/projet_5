@@ -14,6 +14,24 @@ class UserManager extends DBManager
         return $user;
     }
 
+
+    /**
+     * @param $code_parrain
+     * @return bool
+     */
+    public function parrainExist($code_parrain)
+    {
+        $req = $this->db->prepare ('SELECT COUNT(code_parrainage_perso) FROM user WHERE code_parrain = ?');
+        $req->execute(array($code_parrain));
+        $result = $req->fetch ();
+        return $result > 0;
+
+        //
+        //verifier si le code parrain match avec le code parrain Perso dans la BDD
+        // return bolean vrai ou faux
+
+    }
+
     /**
      * @param User $user
      * @return bool vrai si utilisateur enregistre sinon faux
@@ -22,9 +40,13 @@ class UserManager extends DBManager
     {
         //je hash le password que je stock dans une variable
         $hash = md5 ($_POST["password"]);
+
         //Puis on stock le résultat dans la base de données :
-        $req = $this->db->prepare ('INSERT INTO user (username, password, nom, prenom, birthday_date, city, email, code_parrainage_perso) VALUES(:username, :password, :nom, :prenom, :birthday_date, :city, :email, :uniqid)');
-        return $req->execute (array(
+        $req = $this->db->prepare ('
+INSERT INTO user (username, password, nom, prenom, birthday_date, city, email, code_parrainage_perso, code_parrain) 
+VALUES(:username, :password, :nom, :prenom, :birthday_date, :city, :email, :code_parrainage, :code_parrainage_perso)
+');
+        return $req->execute(array(
             'username' => $user->getUsername (),
             'password' => $hash,
             'nom' => $user->getNom (),
@@ -32,18 +54,12 @@ class UserManager extends DBManager
             'birthday_date' => $user->getBirthdayDate (),
             'city' => $user->getCity (),
             'email' => $user->getEmail (),
+            'code_parrain' => $user->getCodeParrain (),
             'code_parrainage_perso' => $user->getCodeParrainagePerso ()
-
         ));
     }
 
-   /*public function checkParrainage()
-    {
-        $req = $this->db->query ('SELECT code_parrain FROM user');
-        $req->setFetchMode(\PDO::FETCH_ASSOC);
-        $codes = [];
-        while ($row = $req->fetch())
-    }*/
+
 }
 
 

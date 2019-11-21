@@ -21,7 +21,7 @@ class AdminController extends AbstractController
      */
     public function createUser()
     {
-        if (empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["password2"])) {
+        if (empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["password2"]) || empty($_POST["prenom"]) || empty($_POST["nom"]) || empty($_POST["email"]) || empty($_POST["city"]) || empty($_POST["code_parrainage"]))  {
             echo 'error';
         } else {
             if ($_POST['password'] === $_POST['password2'])  {
@@ -36,32 +36,28 @@ class AdminController extends AbstractController
                     ->setBirthdayDate ($_POST["birthday_date"])
                     ->setCity ($_POST["city"])
                     ->setCodeParrain ($_POST["code_parrainage"])
-                    ->setCodeParrainagePerso (uniqid ());
-                dd ($user);
+                    ->setCodeParrainagePerso (uniqid());
 
-                   /* if (
-                        $reponse =$this->db->query('SELECT COUNT (*) FROM user');
-                         if ($reponse >= 1)
-                    echo "setCodeParrain";
-                ->setCodeParrain($_POST["code_parrainage"])
-                else if ($reponse == 0)
-                    echo "La TABLE VIDE !";
-                ->setCodeParrain(empty());*/
+                // Verification si le code de parrainage existe dans la BDD
+               $code_parrain = $user->getCodeParrain();
+               $parrainExist = $userManager->parrainExist($code_parrain);
 
-//Verifier si user inscris
-//si pas de user -> on créé le user en mode admin
-                // si 1 ou plusieurs users on cherche le code parrainage parmi les users
-
-                //si pas de code parrainage on refuse inscription
-                // sinon on renseigne id du parrain , et on crée le user
-
-                $result = $userManager->createUser($user);
-                if ($result){
-                    $this->addFlash('success','votre compte est enregistré');
-                }else{
-                    $this->addFlash('danger','votre compte n\'a pas pu etre enregistré');
+            /// Si le code_Parrainge existe --> return "true" / J appelle la methode createUser
+                if ($parrainExist === true){
+                    $result = $userManager->createUser($user);
+                    dd ($user);
+                         if ($result){ // Si user créé dans la BDD
+                             $this->addFlash('success','votre compte est enregistré');
+                             header ('Location:index.php?action=homeAccess');
+                         }else{
+                            $this->addFlash('danger','votre compte n\'a pas pu etre enregistré');
+                             header ('Location:index.php?action=newUser');
+                         }
+                } else {
+                    $this->addFlash('warning','Code parrainage inconnu');
+                    echo 'erreur';
                 }
-                header ('Location:index.php?action=loginPage');
+
             }
         }
     }

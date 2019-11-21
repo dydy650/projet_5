@@ -4,7 +4,7 @@
    Actualités
 {% endblock %}
 {% block welcomeUser %}
-    Voici votre actualité
+    Bonjour {{ user.prenom }}
 {% endblock %}
 {% block navbar %}
 {% endblock %}
@@ -21,7 +21,7 @@
                     </div><br/>
 
                     <div class="commentPart">
-                        <p><label class="titleCommentPart" for="comment"> Voir les commentaires</label></p>
+                        <p><label class="titleCommentPart" for="comment"> Voir les commentaires ({{ post.comments|length }}) </label></p>
                         <div class="listcommentsPart">
                             {% for comment in post.comments %}
                                 <div class="comments">
@@ -53,13 +53,24 @@
         <div class="col-6 col-md-4">
             <div class="secondContent">
                 <div class="meteoPart">
-                    <h1>METEO</h1>
+                    <h2 class="titleSecondPart">Météo</h2>
+
+
                 </div>
                 <div class="categoryCloud">
-                    <h1>categories</h1>
+                    <h2 class="titleSecondPart">Categories</h2>
+                    <ul class="categorylistSecondPart">
+                        {% for category in categories %}
+                        <li><a href="index.php?action=category&id={{ category.idCategory }}"> {{ category.nameCategory}}</a></li>
+
+                        {% endfor %}
+                    </ul>
                 </div>
                 <div class="parrainagePart">
-                    <h1>parrainage</h1>
+                    <h2 class="titleSecondPart">Parrainage</h2>
+                    <p>Agrandis la communautée en parrainant une nouvelle pépite</p>
+                    <p>avec le code</p>
+                    <p id="codeParrainCadre">{{ user.codeParrainagePerso }}</p>
                 </div>
             </div>
         </div>
