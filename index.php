@@ -72,9 +72,20 @@ switch ($page){
     case 'addPost':
         $blogController->addPost ();
         break;
-    case 'editUser':
-        $blogController->editUser ();
+    case 'editUserInfo':
+        $blogController->editUserInfo ();
         break;
+    case 'editUserConnexion':
+        $blogController->editUserConnexion ();
+        break;
+    case 'updateUserInfo':
+        $id = $_GET['id'];
+        $blogController->updateUserInfo ($id);
+        break;
+    case 'updateUserConnexion':
+        $blogController->updateUserConnexion();
+        break;
+
 
 
 

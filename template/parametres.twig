@@ -18,8 +18,9 @@
 
                 </div>
                 <br>
-                <h2 class="titleParameters">Général </h2> <a href="index.php?action=editUser" ><i id="pencilEdit" class="fas fa-pencil-alt"></i></a>
+                <h2 class="titleParameters">Général </h2> <a href="index.php?action=editUserInfo&id={{ user.id }}" ><i id="pencilEdit" class="fas fa-pencil-alt"></i></a>
                 <div class="contentParameters">
+
                     <h6>NOM : </h6> <p>{{ user.nom }}</p>
                     <h6>PRENOM : </h6> <p>{{ user.prenom }}</p>
                     <h6>DATE DE NAISSANCE : </h6> <p> {{ user.birthday_date_FR }} </p>
@@ -28,7 +29,7 @@
                     CODE PARRAINAGE  : </h6><p>{{ user.codeParrainagePerso }}</p>
                 </div>
 
-                <h2 class="titleParameters">Connexion</h2>
+                <h2 class="titleParameters">Connexion</h2><a href="index.php?action=editUserConnexion&id={{ user.id }}" ><i id="pencilEdit2" class="fas fa-pencil-alt"></i></a>
                 <div class="contentParameters">
                     <p>EMAIL : {{ user.email }}</p>
                     <p>IDENTIFIANT : {{ user.username }}</p>

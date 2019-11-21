@@ -1,0 +1,47 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Parametres
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12 col-sm-6 col-lg-8" id="parametresInfos">
+            <h1>Modifiez vos informations personnelles</h1>
+            <div class="mainContent">
+            <form action="index.php?action=updateUserInfo&id={{ user.id }}" method="POST">
+                <p><label class="form-label" for="username">Identifiant</label>
+                    <input id="username" type="text" name="username" class="form-control" value="{{ user.username }}" required /></p>
+                <p><label class="form-label" for="prenom">Prénom</label>
+                    <input id="prenom" type="text" name="prenom" class="form-control" value="{{ user.prenom }}"required/></p>
+                <p><label class="form-label" for="nom">Nom</label>
+                    <input id="nom" type="text" name="nom" class="form-control" value="{{ user.nom }}" required/></p>
+                <p><label class="form-label" for="email">Adresse email</label>
+                    <input id="email" type="email" name="email" class="form-control" value="{{ user.email }}" required/></p>
+                <p><label class="form-label" for="birthday_date">Date de naissance</label>
+                    <input id="birthday_date" type="date" name="birthday_date" class="form-control" value="{{ user.birthday_date_FR}}" required/></p>
+                <p> <label class="form-label" for="city" >Ville</label><br/>
+                    <select id="city" name="city" value="{{ user.city }}" >
+                        <option value="Nantes">Nantes</option>
+                        <option value="Lyon">Lyon</option>
+                        <option value="Bordeaux">Bordeaux</option>
+                    </select></p>
+               <input class="btn btn-outline-info" type="submit" value="Mise à jour"/>
+            </form>
+        </div>
+        </div>
+        </div>
+
+
+        <div class="col-6 col-md-4">
+            <div class="secondContent">
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}

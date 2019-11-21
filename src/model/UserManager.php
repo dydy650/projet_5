@@ -14,6 +14,24 @@ class UserManager extends DBManager
         return $user;
     }
 
+    /**
+     * @param $user
+     * @return bool
+     */
+    public function updateUserInfo($user)
+    {
+        $req =  $this->db->prepare('UPDATE user SET username = ?, prenom = ?, nom = ?, birthday_date = ?, city = ?, email= ? WHERE id = ?');
+        $result = $req->execute(array(
+            $user->getUsername(),
+            $user->getPrenom(),
+            $user->getNom(),
+            $user->getBirthdayDate (),
+            $user->getCity (),
+            $user->getEmail (),
+            $user->getId(),
+        ));
+        return $result;
+    }
 
     /**
      * @param $code_parrain

@@ -1,0 +1,37 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Parametres
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-12 col-sm-6 col-lg-8" id="parametresInfos">
+            <h1>informations de connexions</h1>
+            <div class="mainContent">
+                <form action="index.php?action=updateUserConnexion" method="POST">
+                    <p><label class="form-label" for="username">Identifiant</label>
+                        <input id="username" type="text" name="username" class="form-control" value="{{ user.username }}" required/></p>
+                    <p><label class="form-label" for="password">Ancien Mot de passe</label>
+                        <input id="password" type="password" name="password" class="form-control" required/></p>
+                    <p><label class="form-label" for="password1">Nouveau Mot de passe</label>
+                        <input id="password1" type="password" name="password1" class="form-control" required/></p>
+                    <p><label class="form-label" for="password2">Retapez votre nouveau mot de passe</label>
+                        <input id="password2" type="password" name="password2" class="form-control" required/></p>
+                   <input class="btn btn-outline-info" type="submit" value="Mise à jour"/>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-6 col-md-4">
+            <div class="secondContent">
+
+            </div>
+        </div>
+
+
+    </div>
+
+
+{% endblock %}
