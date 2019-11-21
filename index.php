@@ -83,7 +83,8 @@ switch ($page){
         $blogController->updateUserInfo ($id);
         break;
     case 'updateUserConnexion':
-        $blogController->updateUserConnexion();
+        $id = $_GET['id'];
+        $blogController->updateUserConnexion($id);
         break;
 
 

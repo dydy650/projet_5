@@ -34,6 +34,21 @@ class UserManager extends DBManager
     }
 
     /**
+     * @param $user
+     * @return bool
+     */
+    public function updateUserConnexion($user)
+    {
+        $req =  $this->db->prepare('UPDATE user SET username = ?, password = ? WHERE id = ?');
+        $result = $req->execute(array(
+            $user->getUsername(),
+            $user->getPassword(),
+            $user->getId(),
+        ));
+        return $result;
+    }
+
+    /**
      * @param $code_parrain
      * @return bool
      */

@@ -35,7 +35,7 @@ class BlogController extends AbstractController
     $this->render('./editUserInfo.twig', array("user" => $user));
     }
 
-    public function updateUserInfo($id)
+    public function updateUserInfo()
     {
         $userManager = new UserManager();
         $user = new user();
@@ -56,19 +56,45 @@ class BlogController extends AbstractController
         $_SESSION['username'] = $user->getUsername();
         header ('Location:index.php?action=parametres');
     }
-    
 
-   /* public function editUserConnexion()
+    public function editUserConnexion()
     {
         $userManager = new UserManager();
         $user = $userManager->getUser($_SESSION['username']);
         $this->render('./editUserConnexion.twig', array("user" => $user));
-    }*/
-    
-    /**
-     *
-     */
-   
+    }
+
+    public function updateUserConnexion()
+    {
+        if (empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["password1"]) || empty($_POST["password2"])) {
+            throw new \Exception('error !');
+        }
+        $userManager = new UserManager();
+        $user = $userManager->getUser ($_POST["username"]);
+        $hash = md5 ($_POST["password"]);
+        if ($user instanceof User && $hash === $user->getPassword () && ($_POST["password1"]) === ($_POST["password2"])) {
+            $user = new user();
+            $hash2 = md5 ($_POST["password1"]);
+            $user
+                ->setId ($_GET['id'])
+                ->setUsername ($_POST["username"])
+                ->setPassword ($hash2);
+            //condition 1 -->si $POST_username = $user->username ET que $POST_ancienMDP = $user->password
+            //ALORS je passe à la condition 2
+            //  ET Si password 1 = password 2 alors je peux le hash
+            // Je créé ensuite une nouvelle entité que j alimente .
+
+            $update = $userManager->updateUserConnexion ($user);
+            if ($update) {
+                $this->addFlash ('success', 'Le chapitre a été modifié');
+            } else {
+                $this->addFlash ('danger', 'votre chapitre n\'a pas pu etre mis à jour');
+            }
+            $_SESSION['username'] = $user->getUsername ();
+            header ('Location:index.php?action=parametres');
+        }
+    }
+
     public function parametres()
     {
         $userManager = new UserManager();
