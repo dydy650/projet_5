@@ -412,6 +412,76 @@ body
     font-size: 50px;
     font-family: 'Satisfy', cursive;
 }
+.iconeSpace
+ {
+     float: right;
+     background-color: whitesmoke;
+     border:        0px solid #52937e;
+     border-radius: 1000px;
+     box-shadow:    0 0px #505352;
+     width:         30px;
+     height:       30px;
+     color:         #f5f5f5;
+     display:       inline-block;
+     font:          normal bold 28px/50px "Calibri", sans-serif;
+     text-align:    center;
+     margin-right: 5px;
+     align-content: center;
+
+ }
+.iconeSpace:hover
+{
+    background: #afc9a4;
+}
+.iconeSpace i
+{
+
+    color: whitesmoke;
+    position: relative;
+    left: -10px;
+    top: -14px;
+}
+
+.iconeSpace i:hover
+{
+    color: whitesmoke;
+}
+
+.iconeSpaceComm
+{
+    float: right;
+    background-color: white;
+    border:        0px solid #52937e;
+    border-radius: 1000px;
+    box-shadow:    0 0px #505352;
+    width:         30px;
+    height:       30px;
+    color:         #f5f5f5;
+    display:       inline-block;
+    font:          normal bold 28px/50px "Calibri", sans-serif;
+    text-align:    center;
+    margin-right: 5px;
+    align-content: center;
+
+}
+.iconeSpaceComm:hover
+{
+    background: #afc9a4;
+}
+.iconeSpaceComm i
+{
+
+    color: white;
+    position: relative;
+    left: -10px;
+    top: -14px;
+}
+
+.iconeSpaceComm i:hover
+{
+    color: whitesmoke;
+}
+
 .responsePost
 {
     width: 90%;
@@ -516,6 +586,10 @@ body
     border-radius: 10px;
     padding: 5px;
 }
+
+
+
+
 #avatar
 {
     height: 100px;

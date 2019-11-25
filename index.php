@@ -86,6 +86,18 @@ switch ($page){
         $id = $_GET['id'];
         $blogController->updateUserConnexion($id);
         break;
+   case 'editPost':
+       $id = $_GET['id'];
+        $blogController->editPost ($id);
+        break;
+    case 'updatePost':
+        $id = $_GET['id'];
+        $blogController->updatePost ($id);
+        break;
+    case 'deletePost':
+        $id = $_GET['id'];
+        $blogController->deletePost($id);
+        break;
 
 
 

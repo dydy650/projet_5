@@ -27,9 +27,10 @@ class AdminController extends AbstractController
             if ($_POST['password'] === $_POST['password2'])  {
                 $userManager = new UserManager();
                 $user = new User;
+                $hash = md5 ($_POST["password"]);
                 $user
                     ->setUsername ($_POST['username'])
-                    ->setPassword ($_POST["password"])
+                    ->setPassword ($hash)
                     ->setNom ($_POST["nom"])
                     ->setPrenom ($_POST["prenom"])
                     ->setEmail ($_POST['email'])
@@ -38,6 +39,7 @@ class AdminController extends AbstractController
                     ->setCodeParrain ($_POST["code_parrainage"])
                     ->setCodeParrainagePerso (uniqid());
 
+
                 // Verification si le code de parrainage existe dans la BDD
                $code_parrain = $user->getCodeParrain();
                $parrainExist = $userManager->parrainExist($code_parrain);
@@ -45,6 +47,7 @@ class AdminController extends AbstractController
             /// Si le code_Parrainge existe --> return "true" / J appelle la methode createUser
                 if ($parrainExist === true){
                     $result = $userManager->createUser($user);
+                    var_dump ($result);
                     dd ($user);
                          if ($result){ // Si user créé dans la BDD
                              $this->addFlash('success','votre compte est enregistré');

@@ -71,17 +71,14 @@ class UserManager extends DBManager
      */
     public function createUser($user) //j'enregistre un user dans la BDD user
     {
-        //je hash le password que je stock dans une variable
-        $hash = md5 ($_POST["password"]);
-
         //Puis on stock le résultat dans la base de données :
         $req = $this->db->prepare ('
-INSERT INTO user (username, password, nom, prenom, birthday_date, city, email, code_parrainage_perso, code_parrain) 
-VALUES(:username, :password, :nom, :prenom, :birthday_date, :city, :email, :code_parrainage, :code_parrainage_perso)
+INSERT INTO user (username, password, nom, prenom, birthday_date, city, email, code_parrain, code_parrainage_perso) 
+VALUES(:username, :password, :nom, :prenom, :birthday_date, :city, :email, :code_parrain, :code_parrainage_perso)
 ');
         return $req->execute(array(
             'username' => $user->getUsername (),
-            'password' => $hash,
+            'password' => $user->getPassword (),
             'nom' => $user->getNom (),
             'prenom' => $user->getPrenom (),
             'birthday_date' => $user->getBirthdayDate (),
@@ -89,10 +86,9 @@ VALUES(:username, :password, :nom, :prenom, :birthday_date, :city, :email, :code
             'email' => $user->getEmail (),
             'code_parrain' => $user->getCodeParrain (),
             'code_parrainage_perso' => $user->getCodeParrainagePerso ()
-        ));
+            ));
+
     }
-
-
 }
 
 

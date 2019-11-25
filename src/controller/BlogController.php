@@ -15,7 +15,9 @@ class BlogController extends AbstractController
     // MENU
     public function home()
     {
-        $this->render('./home.twig', array('infoSession'=>"contenu"));
+        $userManager = new UserManager();
+        $user = $userManager->getUser($_SESSION['username']);
+        $this->render('./home.twig', array('infoSession'=>"contenu", 'user'=>$user));
     }
 
     public function contact()
@@ -26,6 +28,48 @@ class BlogController extends AbstractController
     public function aboutUs()
     {
         $this->render('./aboutUs.twig');
+    }
+
+    public function editPost($id)
+    {
+        $postManager = new PostManager();
+        $post = $postManager->getPost($id);
+        $this->render('./editPost.twig', array("post" => $post));
+
+    }
+
+
+    public function updatePost($id)
+    {
+        $postManager = new PostManager();
+        $post = new Post();
+        $post
+            ->setId ($_GET['id'])
+            ->setContent ($_POST['contentNewPost'])
+            ->setIdCategory ($_POST['category']);
+        var_dump ($post);
+        $update = $postManager->updatePost ($post);
+        if ($update) {
+            $this->addFlash ('success', 'Votre post a été créé');
+        } else {
+            $this->addFlash ('danger', 'votre post n\'a pas pu etre enregistré');
+        }
+        header ('Location: index.php?action=home');
+
+    }
+
+    public function deletePost($id)
+    {
+        $postManager = new PostManager();
+        $delete = $postManager->deletePost($id);
+        if ($delete)
+        {
+            $this->addFlash('success','le chapitre a bien été supprimé');
+        }else{
+            $this->addFlash('warning','erreur le chapitre n a pas été supprimé');
+        }
+        header ('Location:index.php?action=home');
+
     }
 
     public function editUserInfo()
@@ -143,9 +187,6 @@ class BlogController extends AbstractController
 
     //POST
 
-    /**
-     *
-     */
     public function listPostsByUser()
     {
             $username = $_SESSION['username'];
@@ -183,8 +224,6 @@ class BlogController extends AbstractController
         $categories = $categoryManager->getCategories ();
         $this->render ('listCategories.twig', array("categories" => $categories));
     }
-
-
 
     public function category()
     {
@@ -230,29 +269,14 @@ class BlogController extends AbstractController
         }
         header ('Location: index.php?action=home');
     }
-
-
 //
-    public function deletePost()
-    {
 
-    }
 
-    public function updatePost()
-    {
 
-    }
 
-    public function signalPost(){
 
-    }
 
     //COMMENTAIRES
-    public function listComment()
-    {
-
-    }
-
     /**
      * @param $post_id
      * @param $username
