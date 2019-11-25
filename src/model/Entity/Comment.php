@@ -4,12 +4,32 @@ namespace App\model\Entity;
 
 class Comment
 {
+    protected $id;
+
+
     protected $post_id;
     protected $username;
     protected $content;
     protected $comment_at;
     protected $is_signaled;
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $id
+     * @return Comment
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
     /**
      * @return mixed
      */

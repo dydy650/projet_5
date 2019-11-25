@@ -67,7 +67,7 @@ class UserManager extends DBManager
 
     /**
      * @param User $user
-     * @return bool vrai si utilisateur enregistre sinon faux
+     * @return User|false  renvoi false en d echec sinon renvoi le User hydraté avec ID qui vient de recup
      */
     public function createUser($user) //j'enregistre un user dans la BDD user
     {
@@ -76,7 +76,7 @@ class UserManager extends DBManager
 INSERT INTO user (username, password, nom, prenom, birthday_date, city, email, code_parrain, code_parrainage_perso) 
 VALUES(:username, :password, :nom, :prenom, :birthday_date, :city, :email, :code_parrain, :code_parrainage_perso)
 ');
-        return $req->execute(array(
+        if( $req->execute(array(
             'username' => $user->getUsername (),
             'password' => $user->getPassword (),
             'nom' => $user->getNom (),
@@ -86,8 +86,14 @@ VALUES(:username, :password, :nom, :prenom, :birthday_date, :city, :email, :code
             'email' => $user->getEmail (),
             'code_parrain' => $user->getCodeParrain (),
             'code_parrainage_perso' => $user->getCodeParrainagePerso ()
-            ));
-
+            )))
+        {
+            $id = $this->db->lastInsertId ();
+            $user->setId ($id);
+            return $user;
+        } else {
+            return false;
+        }
     }
 }
 

@@ -46,11 +46,10 @@ class AdminController extends AbstractController
 
             /// Si le code_Parrainge existe --> return "true" / J appelle la methode createUser
                 if ($parrainExist === true){
-                    $result = $userManager->createUser($user);
-                    var_dump ($result);
-                    dd ($user);
-                         if ($result){ // Si user créé dans la BDD
+                    $user = $userManager->createUser($user);
+                         if ($user instanceof User){ // est ce que $user est bine une instance de la classe User
                              $this->addFlash('success','votre compte est enregistré');
+                             $this->addToSession('user', $user);
                              header ('Location:index.php?action=homeAccess');
                          }else{
                             $this->addFlash('danger','votre compte n\'a pas pu etre enregistré');

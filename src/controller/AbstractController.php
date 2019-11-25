@@ -1,10 +1,23 @@
 <?php
 namespace App\controller;
+use App\model\Entity\User;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 abstract class AbstractController
 {
+    protected $user;
+
+    public function __construct()
+    {
+        if(isset($_SESSION['user']))
+        {
+            $user = unserialize ($_SESSION['user']);
+            if ($user instanceof User){
+                $this->user = $user;
+            }
+        }
+    }
 
     protected function  addFlash($type, $message)
     {
@@ -14,12 +27,22 @@ abstract class AbstractController
 
     protected function render($view, $params = array())
     {
+        if ($this->user instanceof User){
+            $params['loggedUser'] = $this->user;
+        }
         $params['session']=$_SESSION;
         $path = realpath (__DIR__. '/../../template');
         $loader = new FilesystemLoader($path);
         $twig = new Environment($loader, ['cache'=>false]);
 
         echo $twig->render($view, $params);
+
+    }
+
+    protected function addToSession($key, $value)
+    {
+        $serializedValue = serialize ($value); // transforme un objet en chaine de caractere
+        $_SESSION[$key] = $serializedValue;
 
     }
 }

@@ -22,4 +22,15 @@ class CommentManager extends DBManager
 
 
     }
+
+    /**
+     * @param $id
+     * @return bool
+     */
+    public function deleteComment($id)
+    {
+        $req = $this->db->prepare("DELETE FROM comment WHERE id = ?");
+        $result = $req->execute(array($id));
+        return $result;
+    }
 }

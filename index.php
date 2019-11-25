@@ -1,5 +1,6 @@
 <?php
 session_start ();
+
 require_once 'vendor/autoload.php';
 require_once 'functions.php';
 use \App\controller\BlogController;
@@ -97,6 +98,10 @@ switch ($page){
     case 'deletePost':
         $id = $_GET['id'];
         $blogController->deletePost($id);
+        break;
+    case 'deleteComment':
+        $id = $_GET['id'];
+        $blogController->deleteComment($id);
         break;
 
 

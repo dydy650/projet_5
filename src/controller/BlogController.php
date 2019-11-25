@@ -39,6 +39,7 @@ class BlogController extends AbstractController
     }
 
 
+
     public function updatePost($id)
     {
         $postManager = new PostManager();
@@ -47,14 +48,15 @@ class BlogController extends AbstractController
             ->setId ($_GET['id'])
             ->setContent ($_POST['contentNewPost'])
             ->setIdCategory ($_POST['category']);
-        var_dump ($post);
         $update = $postManager->updatePost ($post);
         if ($update) {
             $this->addFlash ('success', 'Votre post a été créé');
+           // header ('Location: index.php?action=actualites');
         } else {
             $this->addFlash ('danger', 'votre post n\'a pas pu etre enregistré');
+            //header ('Location: index.php?action=home');
         }
-        header ('Location: index.php?action=home');
+
 
     }
 
@@ -68,8 +70,21 @@ class BlogController extends AbstractController
         }else{
             $this->addFlash('warning','erreur le chapitre n a pas été supprimé');
         }
-        header ('Location:index.php?action=home');
+        header ('Location: '.$_SERVER['HTTP_REFERER']);
 
+    }
+    public function deleteComment($id)
+    {
+        $commentManager = new CommentManager();
+        $delete = $commentManager->deleteComment($id);
+        dd ($id);
+        if ($delete)
+        {
+            $this->addFlash('success','le commentaire a bien été supprimé');
+        }else{
+            $this->addFlash('warning','erreur le commentaire n a pas été supprimé');
+        }
+        //header ('Location: '.$_SERVER['HTTP_REFERER']);
     }
 
     public function editUserInfo()
@@ -170,6 +185,7 @@ class BlogController extends AbstractController
         $hash = md5 ($_POST["password"]);
         if ($user instanceof User && $hash === $user->getPassword()){
             $_SESSION['username'] = $user->getUsername();
+            $this->addToSession('user', $user);
             header ('Location:index.php?action=home');
 
         } else {

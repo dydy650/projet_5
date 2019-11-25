@@ -10,12 +10,17 @@
 {% endblock %}
 {% block content %}
     <div class="row">
+
         <div class="col-12 col-sm-6 col-lg-8">
                 <div class="mainContent">
                     {% for post in posts %}
                     <div class="singlePost">
+                        {% set test = 2 %}
+                        {% if loggedUser.username == post.username %}
                         <a href="index.php?action=editPost&id={{ post.id }}" ><div class="iconeSpace"><i style="font-size: 15px" id="editPostIcone" class="fas fa-edit"></i></div></a>
                         <a href="index.php?action=deletePost&id={{ post.id }}" ><div class="iconeSpace"><i style="font-size: 15px" id= "deletePostIcone" class="fas fa-trash-alt"></i></div></a>
+                        {% else  %}
+                        {% endif %}
                         <p class="postCategory">{{ post.category.NameCategory }}</p>
                         <p class="postUsername">{{ post.username }}</p>
                         <p class="postDateAt"> {{ post.postAt }}</p>
@@ -27,8 +32,11 @@
                         <div class="listcommentsPart">
                             {% for comment in post.comments %}
                                 <div class="comments">
-                                    <a href="index.php?action=editComment&id={{ post.id }}" ><div class="iconeSpaceComm"><i style="font-size: 15px" id="editPostIcone" class="fas fa-edit"></i></div></a>
-                                    <a href="index.php?action=deleteComment&id={{ post.id }}" ><div class="iconeSpaceComm"><i style="font-size: 15px" id= "deletePostIcone" class="fas fa-trash-alt"></i></div></a>
+                                    {% if loggedUser.username == comment.username %}
+                                    <a href="index.php?action=editComment&id={{ comment.id }}" ><div class="iconeSpaceComm"><i style="font-size: 15px" id="editPostIcone" class="fas fa-edit"></i></div></a>
+                                    <a href="index.php?action=deleteComment&id={{ comment.id }}" ><div class="iconeSpaceComm"><i style="font-size: 15px" id= "deletePostIcone" class="fas fa-trash-alt"></i></div></a>
+                                    {% else  %}
+                                    {% endif %}
                                     {{ comment.username }} <p>le {{ comment.commentAt }}</p>
                                     -->
                                     {{ comment.content }}
@@ -74,7 +82,7 @@
                     <h2 class="titleSecondPart">Parrainage</h2>
                     <p>Agrandis la communautée en parrainant une nouvelle pépite</p>
                     <p>avec le code</p>
-                    <p id="codeParrainCadre">{{ user.codeParrainagePerso }}</p>
+                    <p id="codeParrainCadre">{{ loggedUser.codeParrainagePerso }}</p>
                 </div>
             </div>
         </div>

@@ -21,7 +21,7 @@
                     </div><br/>
 
                     <div class="commentPart">
-                        <p><label class="titleCommentPart" for="comment"> Voir les commentaires</label></p>
+                        <p><label class="titleCommentPart" for="comment"> Voir les commentaires ({{ post.comments|length }})</label></p>
                         <div class="listcommentsPart">
                             {% for comment in post.comments %}
                                 <div class="comments">

@@ -248,11 +248,14 @@ ORDER BY p.post_at DESC ');
             $post->getIdCategory(),
             $post->getContent(),
         ));
-        var_dump ($post);
         return $result;
 
     }
 
+    /**
+     * @param $id
+     * @return bool
+     */
     public function deletePost($id)
     {
         $req = $this->db->prepare("DELETE FROM post WHERE id = ?");
