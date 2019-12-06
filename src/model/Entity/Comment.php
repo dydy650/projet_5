@@ -5,8 +5,6 @@ namespace App\model\Entity;
 class Comment
 {
     protected $id;
-
-
     protected $post_id;
     protected $username;
     protected $content;

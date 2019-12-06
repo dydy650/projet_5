@@ -17,10 +17,12 @@ $twig = new \Twig\Environment($loader, ['cache'=>false,//__DIR__ . '/tmp'
 ]);
 
 // routing
+
 $page='home';
-if (isset($_GET['action'])){
-    $page= $_GET['action'];
-}
+    if (isset($_GET['action']))
+    {
+        $page= $_GET['action'];
+    }
 
 switch ($page){
     case 'home':
@@ -103,6 +105,7 @@ switch ($page){
         $id = $_GET['id'];
         $blogController->deleteComment($id);
         break;
+
 
 
 

@@ -16,9 +16,7 @@ class AdminController extends AbstractController
 
 
     //Users
-    /**
-     * @throws \Exception
-     */
+
     public function createUser()
     {
         if (empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["password2"]) || empty($_POST["prenom"]) || empty($_POST["nom"]) || empty($_POST["email"]) || empty($_POST["city"]) || empty($_POST["code_parrainage"]))  {

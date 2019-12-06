@@ -12,12 +12,13 @@ use App\model\CategoryManager;
 
 class BlogController extends AbstractController
 {
-    // MENU
+      // MENU
     public function home()
     {
+        $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
         $userManager = new UserManager();
         $user = $userManager->getUser($_SESSION['username']);
-        $this->render('./home.twig', array('infoSession'=>"contenu", 'user'=>$user));
+        $this->render('./home.twig', array('infoSession'=>"contenu", 'user'=>$user, 'page'=>$page));
     }
 
     public function contact()
@@ -38,8 +39,6 @@ class BlogController extends AbstractController
 
     }
 
-
-
     public function updatePost($id)
     {
         $postManager = new PostManager();
@@ -51,10 +50,10 @@ class BlogController extends AbstractController
         $update = $postManager->updatePost ($post);
         if ($update) {
             $this->addFlash ('success', 'Votre post a été créé');
-           // header ('Location: index.php?action=actualites');
+            header ('Location: '.$_SERVER['HTTP_REFERER']);
         } else {
             $this->addFlash ('danger', 'votre post n\'a pas pu etre enregistré');
-            //header ('Location: index.php?action=home');
+            header ('Location: index.php?action=home');
         }
 
 
@@ -73,18 +72,18 @@ class BlogController extends AbstractController
         header ('Location: '.$_SERVER['HTTP_REFERER']);
 
     }
+
     public function deleteComment($id)
     {
         $commentManager = new CommentManager();
         $delete = $commentManager->deleteComment($id);
-        dd ($id);
         if ($delete)
         {
             $this->addFlash('success','le commentaire a bien été supprimé');
         }else{
             $this->addFlash('warning','erreur le commentaire n a pas été supprimé');
         }
-        //header ('Location: '.$_SERVER['HTTP_REFERER']);
+        header ('Location: '.$_SERVER['HTTP_REFERER']);
     }
 
     public function editUserInfo()
@@ -174,6 +173,8 @@ class BlogController extends AbstractController
 
 
 //connexion
+
+
     public function login()
     {
         if (empty($_POST["username"]) || empty($_POST["password"]))
@@ -203,49 +204,97 @@ class BlogController extends AbstractController
 
     //POST
 
+    /**
+     *
+     */
     public function listPostsByUser()
     {
-            $username = $_SESSION['username'];
-            $postManager = new PostManager();
-            $posts = $postManager->getPostsWithComsByUser($username);
+        $username = $_SESSION['username'];
+        //page courante
+        $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
+        //nb de posts totals
+        $postManager = new PostManager();
+        $nb_posts_totals = $postManager->getPostCountUser ($username);        //nb de page
+        $limite = PostManager::LIMIT;
+        $nombreDePages = ceil($nb_posts_totals / $limite);
+
+
+
+        $tableIdPosts = $postManager->getIdPosts ($page, array('username' => $username));
+        $posts = $postManager->getPostsWithComsByUser($username, $tableIdPosts);
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->getCategories ();
         $userManager = new UserManager();
         $user = $userManager->getUser($_SESSION['username']);
-            $this->render('./myposts.twig', array("posts" => $posts, "categories" =>$categories, "user"=>$user));
-
-
+        $this->render('./myposts.twig', array(
+            "posts" => $posts,
+            "categories" =>$categories,
+            "user"=>$user,
+            "page" => $page,
+            "nombreDePages"=>$nombreDePages
+        ));
 
     }
 
+    /**
+     *
+     */
     public function listPostsWithComs()
     {
+       //page courante
+        $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
+        //nb de posts totals
+        $postManager = new PostManager();
+        $nb_posts_totals = $postManager->getPostCount ();        //nb de page
+        $limite = PostManager::LIMIT;
+        $nombreDePages = ceil($nb_posts_totals / $limite);
 
-            $postManager = new PostManager();
-            $posts = $postManager->getPostsWithComs();
+            $tableIdPosts = $postManager->getIdPosts ($page);
+            $posts = $postManager->getPostsWithComs($tableIdPosts);
             $categoryManager = new CategoryManager();
             $categories = $categoryManager->getCategories ();
             $userManager = new UserManager();
             $user = $userManager->getUser($_SESSION['username']);
-            $this->render('./actu.twig', array("posts" => $posts, "categories" =>$categories, "user"=>$user));
+            $this->render('./actu.twig', array(
+                "posts" => $posts,
+                "categories" =>$categories,
+                "user"=>$user,
+                "page" => $page,
+                "nombreDePages"=>$nombreDePages));
 
     }
-
 
     //----------------------------------------------------POST CATEGORIES-----------------------------------------------------
 
     public function listCategories()
     {
+        $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->getCategories ();
-        $this->render ('listCategories.twig', array("categories" => $categories));
+        $this->render ('listCategories.twig', array(
+            "categories" => $categories,
+            "page" => $page,));
     }
 
     public function category()
     {
-        $postManager = new PostManager;
-        $posts = $postManager->getPostsWithComsByCat ($_GET['id']);
-        $this->render('./category.twig', array("posts" => $posts));
+        //page courante
+        $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
+        //nb de posts totals
+        $postManager = new PostManager();
+        $nb_posts_totals = $postManager->getPostCountCat($_GET['id']);        //nb de page
+        $limite = PostManager::LIMIT;
+        $nombreDePages = ceil($nb_posts_totals / $limite);
+        //dd ($limite, $nb_posts_totals, $nombreDePages);
+
+        $tableIdPosts = $postManager->getIdPosts ($page, $_GET['id']); //
+        $posts = $postManager->getPostsWithComsByCat ($_GET['id'], $tableIdPosts);
+        dd ($posts);
+        $this->render('./category.twig', array(
+            "posts" => $posts,
+            "page" => $page,
+            "nombreDePages"=>$nombreDePages
+            ));
 
     }
 

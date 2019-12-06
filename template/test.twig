@@ -1,23 +1,26 @@
 {% extends 'layout.html.twig' %}
 
 {% block title %}
-    Actualités
+   Actualités
 {% endblock %}
 {% block welcomeUser %}
-    Vos publications
+    Bonjour {{ user.prenom }}
 {% endblock %}
 {% block navbar %}
 {% endblock %}
 {% block content %}
     <div class="row">
+<?php
+
+?>
         <div class="col-12 col-sm-6 col-lg-8">
-            <div class="mainContent">
-                {% for post in posts %}
+                <div class="mainContent">
+                    {% for post in posts %}
                     <div class="singlePost">
                         {% set test = 2 %}
                         {% if loggedUser.username == post.username %}
-                            <a href="index.php?action=editPost&id={{ post.id }}" ><div class="iconeSpace"><i style="font-size: 15px" id="editPostIcone" class="fas fa-edit"></i></div></a>
-                            <a href="index.php?action=deletePost&id={{ post.id }}" ><div class="iconeSpace"><i style="font-size: 15px" id= "deletePostIcone" class="fas fa-trash-alt"></i></div></a>
+                        <a href="index.php?action=editPost&id={{ post.id }}" ><div class="iconeSpace"><i style="font-size: 15px" id="editPostIcone" class="fas fa-edit"></i></div></a>
+                        <a href="index.php?action=deletePost&id={{ post.id }}" ><div class="iconeSpace"><i style="font-size: 15px" id= "deletePostIcone" class="fas fa-trash-alt"></i></div></a>
                         {% else  %}
                         {% endif %}
                         <p class="postCategory">{{ post.category.NameCategory }}</p>
@@ -27,13 +30,12 @@
                     </div><br/>
 
                     <div class="commentPart">
-                        <p><label class="titleCommentPart" for="comment"> Voir les commentaires ({{ post.comments|length }})</label></p>
+                        <p><label class="titleCommentPart" for="comment"> Voir les commentaires ({{ post.comments|length }}) </label></p>
                         <div class="listcommentsPart">
                             {% for comment in post.comments %}
                                 <div class="comments">
                                     {% if loggedUser.username == comment.username %}
-                                        <a href="index.php?action=editComment&id={{ comment.id }}" ><div class="iconeSpaceComm"><i style="font-size: 15px" id="editPostIcone" class="fas fa-edit"></i></div></a>
-                                        <a href="index.php?action=deleteComment&id={{ comment.id }}" ><div class="iconeSpaceComm"><i style="font-size: 15px" id= "deletePostIcone" class="fas fa-trash-alt"></i></div></a>
+                                    <a href="index.php?action=deleteComment&id={{ comment.id }}" ><div class="iconeSpaceComm"><i style="font-size: 15px" id= "deletePostIcone" class="fas fa-trash-alt"></i></div></a>
                                     {% else  %}
                                     {% endif %}
                                     {{ comment.username }} <p>le {{ comment.commentAt }}</p>
@@ -50,11 +52,17 @@
                             </form>
                         </div>
                     </div>
-                    <div class="postSeparation"></div>
-                {% endfor %}
+                       <!--{# {% if post.username === "lucie" %}#}
+                        <a href="index.php?action=editPost{{ post.id }}>"
+                           id="btnAdminEdit" class="btn btn-light"> Modifier</a>
+                        <a href="index.php?action=deletePost{{ post.id }}>"
+                           id="btnAdminDelete" class="btn btn-light"> Supprimer </a>-->
+                     <div class="postSeparation"></div>
+                    {% endfor %}
             </div>
 
         </div>
+
         <div class="col-6 col-md-4">
             <div class="secondContent">
                 <div class="meteoPart">
@@ -66,7 +74,7 @@
                     <h2 class="titleSecondPart">Categories</h2>
                     <ul class="categorylistSecondPart">
                         {% for category in categories %}
-                            <li><a href="index.php?action=category&id={{ category.idCategory }}"> {{ category.nameCategory}}</a></li>
+                        <li><a href="index.php?action=category&id={{ category.idCategory }}"> {{ category.nameCategory}}</a></li>
 
                         {% endfor %}
                     </ul>
@@ -75,30 +83,11 @@
                     <h2 class="titleSecondPart">Parrainage</h2>
                     <p>Agrandis la communautée en parrainant une nouvelle pépite</p>
                     <p>avec le code</p>
-                    <p id="codeParrainCadre">{{ user.codeParrainagePerso }}</p>
+                    <p id="codeParrainCadre">{{ loggedUser.codeParrainagePerso }}</p>
                 </div>
             </div>
         </div>
-        <div class="pagination">
 
-            {% if page > 1 %}
-                <a href="index.php?action=posts&page={{ page - 1 }}" > Page précédente</a>
-            {% else  %}
-            {% endif %}
-
-            {#j affiche au de page qu'il y a de page#}
-            {% for i in 1..nombreDePages %}
-                <div class="paginationNumber">
-                    <a href="index.php?action=posts&page={{ i }}" >{{ i }}</a>
-                </div>
-            {% endfor %}
-
-            {#si la page > i alors j affiche les pages suivantes#}
-            {% if page < nombreDePages %}
-                <a href="index.php?action=posts&page={{ page + 1 }}" > Page suivante</a>
-            {% else  %}
-            {% endif %}
-        </div>
     </div>
 
 {% endblock %}

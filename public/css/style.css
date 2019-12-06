@@ -754,6 +754,33 @@ a:hover #pencilEdit2
 {
     color: white;
 }
+
+.pagination
+{
+    margin: 10px;
+}
+
+.pagination a {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.paginationNumber a
+{
+    padding: 5px;
+
+}
+.paginationNumber a:active
+{
+    background-color: #52937e;
+    font-weight: bold;
+}
+
+.pagination a:hover:not(.active)
+{
+    font-weight: bold;
+}
+
 /*.mainContent h2:hover
 {
     background-color: #afc9a4;

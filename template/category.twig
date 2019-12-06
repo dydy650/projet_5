@@ -14,6 +14,11 @@
             <div class="mainContent">
                 {% for post in posts %}
                     <div class="singlePost">
+                        {% if loggedUser.username == post.username %}
+                            <a href="index.php?action=editPost&id={{ post.id }}" ><div class="iconeSpace"><i style="font-size: 15px" id="editPostIcone" class="fas fa-edit"></i></div></a>
+                            <a href="index.php?action=deletePost&id={{ post.id }}" ><div class="iconeSpace"><i style="font-size: 15px" id= "deletePostIcone" class="fas fa-trash-alt"></i></div></a>
+                        {% else  %}
+                        {% endif %}
                         <p class="postCategory">{{ post.category.NameCategory }}</p>
                         <p class="postUsername">{{ post.username }}</p>
                         <p class="postDateAt"> {{ post.postAt }}</p>
@@ -25,6 +30,11 @@
                         <div class="listcommentsPart">
                             {% for comment in post.comments %}
                                 <div class="comments">
+                                    {% if loggedUser.username == comment.username %}
+                                        <a href="index.php?action=editComment&id={{ comment.id }}" ><div class="iconeSpaceComm"><i style="font-size: 15px" id="editPostIcone" class="fas fa-edit"></i></div></a>
+                                        <a href="index.php?action=deleteComment&id={{ comment.id }}" ><div class="iconeSpaceComm"><i style="font-size: 15px" id= "deletePostIcone" class="fas fa-trash-alt"></i></div></a>
+                                    {% else  %}
+                                    {% endif %}
                                     {{ comment.username }} <p>le {{ comment.commentAt }}</p>
                                     -->
                                     {{ comment.content }}
@@ -51,7 +61,27 @@
             </div>
         </div>
     </div>
+    <div class="pagination">
 
+        {% if page > 1 %}
+            <a href="index.php?action=category&id={{ category.idCategory }}&page={{ page - 1 }}"> Page précédente</a>
+        {% else  %}
+        {% endif %}
+
+        {#j affiche au de page qu'il y a de page#}
+        {% for i in 1..nombreDePages %}
+            <div class="paginationNumber">
+                <a href="index.php?action=category&id={{ category.idCategory }}&page={{ i }}" >{{ i }}</a>
+            </div>
+        {% endfor %}
+
+        {#si la page > i alors j affiche les pages suivantes#}
+        {% if page < nombreDePages %}
+            <a href="index.php?action=category&id={{ category.idCategory }}&page={{ page + 1 }}" > Page suivante</a>
+        {% else  %}
+        {% endif %}
+
+    </div>
 
 
 
