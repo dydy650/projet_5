@@ -85,7 +85,7 @@ class UserManager extends DBManager
       if((preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$email)) AND
      (preg_match("#[0-9]#",$password)) AND //contient au moins un chiffre
       (preg_match("#[a-z]#",$password)) AND //contient au moins une minuscile
-      (preg_match("#[A-Z]#",$password)) 
+      (preg_match("#[A-Z]#",$password))
       /*AND //contient au moins une MAJUSCULE
       /*(preg_match ("#[^0-9]#",$prenom)) AND //que le prenom soit une chaine de caractere
       (preg_match ("[:alpha:]",$nom)) AND //que le nom soit une chaine de caractere

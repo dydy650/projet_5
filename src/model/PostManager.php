@@ -25,8 +25,14 @@ class PostManager extends DBManager
         return $this->db->lastInsertId ();
 
     }
+
+    /**
+     * @param $id_category
+     * @return int
+     */
     public function getPostCountCat($id_category)
     {
+        $id_category = intval ($id_category); // ca converti une variable en nombre entier
         $resultFoundRows = $this->db->prepare('SELECT id from post WHERE id_category = ?');
         $resultFoundRows->execute (array($id_category));
         $resultFoundRows->setFetchMode(\PDO::FETCH_ASSOC);
@@ -80,7 +86,7 @@ class PostManager extends DBManager
         {
             $tableIdPosts[]=$row['id'];
         }
-       // dd ($result, $tableIdPosts);
+        //dd ($result, $tableIdPosts);
         return $tableIdPosts;
     }
 
@@ -93,7 +99,7 @@ class PostManager extends DBManager
     public function getPostsWithComs($tableIdPosts) //Liste des posts avec leurs commentaires
 {
     $listPostsIds = implode (",", $tableIdPosts); // "1,2, 3..."
-   // dd ($listPostsIds);
+    //dd ($listPostsIds);
 
      $req =$this->db->query('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment, c.post_id, c.comment_at, c.id comment_id, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at
 FROM post p 
@@ -107,7 +113,7 @@ ORDER BY p.post_at DESC');
          $sql .= " where p.id in (".implode (",", $tableIdPosts).")"; // "1,2, 3..."
          var_dump ($sql);
      }*/
-
+//dd ($tableIdPosts);
     $req->setFetchMode(PDO::FETCH_ASSOC); //Retourne la ligne suivante en tant qu'un tableau indexé par le nom des colonnes
 
     $posts = [];

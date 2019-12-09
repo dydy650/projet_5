@@ -28,7 +28,7 @@
 
         {% block content %}<h2>ERREUR :</h2>
 
-            {% for message in app.flashes("success") %}
+            {% for message in app.session.addflash("success") %}
                 <p class="alert alert-success"> {{ message }} </p>
             {% endfor %}
 

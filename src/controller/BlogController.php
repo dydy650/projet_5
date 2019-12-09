@@ -229,7 +229,7 @@ class BlogController extends AbstractController
         $limite = PostManager::LIMIT;
         $nombreDePages = ceil($nb_posts_totals / $limite);
 
-            $tableIdPosts = $postManager->getIdPosts ($page, array('username = \'dydy\''));
+        $tableIdPosts = $postManager->getIdPosts ($page, array("username = '$username'" ));
         $posts = $postManager->getPostsWithComs($tableIdPosts);
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->getCategories ();
@@ -291,16 +291,20 @@ class BlogController extends AbstractController
         $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
         //nb de posts totals
         $postManager = new PostManager();
-        $nb_posts_totals = $postManager->getPostCountCat($_GET['id']);        //nb de page
+        $nb_posts_totals = $postManager->getPostCountCat($_GET['id']);//nb de page
+        $id_category = $_GET['id'];
         $limite = PostManager::LIMIT;
         $nombreDePages = ceil($nb_posts_totals / $limite);
+        $category = new Category();
+        $category->setIdCategory ($id_category);
 
-        $tableIdPosts = $postManager->getIdPosts ($page, array('id_category =  \'1\''));
+        $tableIdPosts = $postManager->getIdPosts ($page, array("id_category = '$id_category'" ));
         $posts = $postManager->getPostsWithComs ($tableIdPosts);
         $this->render('./category.twig', array(
             "posts" => $posts,
             "page" => $page,
-            "nombreDePages"=>$nombreDePages
+            "nombreDePages"=>$nombreDePages,
+            "category"=>$category
             ));
 
     }

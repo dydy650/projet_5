@@ -39,9 +39,10 @@
 
     <div id="container_page">
         {% block message %}
-            {% for message in app.flashes("success") %}
-                <p class="alert alert-success"> {{ message }} </p>
-            {% endfor %}
+            {% if session.message %}
+                <p class="alert alert-{{ session.message.type }}"> {{ session.message.message }} </p>
+unset chercher equivalent twig pour supprimer addflash qd on actualise la page ::::<:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+            {% endif %}
         {% endblock %}
         {% block welcomeUser %}{% endblock %}
         {% block navbar %}{% endblock %}
