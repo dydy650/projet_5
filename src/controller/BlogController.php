@@ -9,9 +9,18 @@ use App\model\UserManager;
 use App\model\PostManager;
 use App\model\CommentManager;
 use App\model\CategoryManager;
+use mysql_xdevapi\Exception;
 
 class BlogController extends AbstractController
 {
+    /**
+     * @param \Exception $e
+     */
+    public function error(\Exception $e)
+    {
+        $this->addFlash ('warning', $e->getMessage ());
+        $this->render ('./error.twig');
+    }
       // MENU
     public function home()
     {
@@ -36,7 +45,6 @@ class BlogController extends AbstractController
         $postManager = new PostManager();
         $post = $postManager->getPost($id);
         $this->render('./editPost.twig', array("post" => $post));
-
     }
 
     public function updatePost($id)
@@ -55,8 +63,6 @@ class BlogController extends AbstractController
             $this->addFlash ('danger', 'votre post n\'a pas pu etre enregistré');
             header ('Location: index.php?action=home');
         }
-
-
     }
 
     public function deletePost($id)
@@ -70,7 +76,6 @@ class BlogController extends AbstractController
             $this->addFlash('warning','erreur le chapitre n a pas été supprimé');
         }
         header ('Location: '.$_SERVER['HTTP_REFERER']);
-
     }
 
     public function deleteComment($id)
@@ -122,6 +127,9 @@ class BlogController extends AbstractController
         $this->render('./editUserConnexion.twig', array("user" => $user));
     }
 
+    /**
+     * @throws \Exception
+     */
     public function updateUserConnexion()
     {
         if (empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["password1"]) || empty($_POST["password2"])) {
@@ -175,6 +183,9 @@ class BlogController extends AbstractController
 //connexion
 
 
+    /**
+     * @throws \Exception
+     */
     public function login()
     {
         if (empty($_POST["username"]) || empty($_POST["password"]))
@@ -190,7 +201,7 @@ class BlogController extends AbstractController
             header ('Location:index.php?action=home');
 
         } else {
-            echo('Username ou mot de passe incorrection');
+            throw new \Exception('Username ou mot de passe incorrecte');
         }
     }
 
@@ -214,14 +225,12 @@ class BlogController extends AbstractController
         $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
         //nb de posts totals
         $postManager = new PostManager();
-        $nb_posts_totals = $postManager->getPostCountUser ($username);        //nb de page
+        $nb_posts_totals = $postManager->getPostCountUser ($username);  //nb de page
         $limite = PostManager::LIMIT;
         $nombreDePages = ceil($nb_posts_totals / $limite);
 
-
-
-        $tableIdPosts = $postManager->getIdPosts ($page, array('username' => $username));
-        $posts = $postManager->getPostsWithComsByUser($username, $tableIdPosts);
+            $tableIdPosts = $postManager->getIdPosts ($page, array('username = \'dydy\''));
+        $posts = $postManager->getPostsWithComs($tableIdPosts);
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->getCategories ();
         $userManager = new UserManager();
@@ -285,11 +294,9 @@ class BlogController extends AbstractController
         $nb_posts_totals = $postManager->getPostCountCat($_GET['id']);        //nb de page
         $limite = PostManager::LIMIT;
         $nombreDePages = ceil($nb_posts_totals / $limite);
-        //dd ($limite, $nb_posts_totals, $nombreDePages);
 
-        $tableIdPosts = $postManager->getIdPosts ($page, $_GET['id']); //
-        $posts = $postManager->getPostsWithComsByCat ($_GET['id'], $tableIdPosts);
-        dd ($posts);
+        $tableIdPosts = $postManager->getIdPosts ($page, array('id_category =  \'1\''));
+        $posts = $postManager->getPostsWithComs ($tableIdPosts);
         $this->render('./category.twig', array(
             "posts" => $posts,
             "page" => $page,

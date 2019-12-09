@@ -4,6 +4,7 @@ namespace App\controller;
 use App\model\Entity\User;
 use App\model\UserManager;
 use App\model\DBManager;
+use mysql_xdevapi\Exception;
 
 class AdminController extends AbstractController
 {
@@ -17,12 +18,23 @@ class AdminController extends AbstractController
 
     //Users
 
+    /**
+     *return boolean
+     */
+
+
+    /**
+     *@throws \Exception
+     */
     public function createUser()
     {
         if (empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["password2"]) || empty($_POST["prenom"]) || empty($_POST["nom"]) || empty($_POST["email"]) || empty($_POST["city"]) || empty($_POST["code_parrainage"]))  {
-            echo 'error';
+            throw new \Exception('Tous les champs ne sont pas renseignés');
         } else {
-            if ($_POST['password'] === $_POST['password2'])  {
+            $userManager = new UserManager();
+            $validDatas = $userManager->validityInfosUser ();
+            dd ($validDatas);
+            if ($validDatas = true && $_POST['password'] === $_POST['password2'])  {
                 $userManager = new UserManager();
                 $user = new User;
                 $hash = md5 ($_POST["password"]);

@@ -27,10 +27,6 @@
         {% block welcomeUser %}{% endblock %}
         {% block navbar %}{% endblock %}
         {% block message %}{% endblock %}
-        <?php if (isset($_SESSION['message'])) { ?>
-        <p class="alert alert-<?= $_SESSION['message']['type'] ?>"><?= $_SESSION['message']['message'] ?></p>
-        <?php unset($_SESSION['message']) ?>
-        <?php } ?>
         {% block content %}{% endblock %}
     </div>
 

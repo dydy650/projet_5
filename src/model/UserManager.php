@@ -2,6 +2,8 @@
 namespace App\model;
 //require_once('DBManager.php');
 use App\model\Entity\User;
+use mysql_xdevapi\Exception;
+use Twig\Node\Expression\Binary\AndBinary;
 
 class UserManager extends DBManager
 {
@@ -64,6 +66,44 @@ class UserManager extends DBManager
         // return bolean vrai ou faux
 
     }
+
+
+    /**
+     *
+     */
+    public function validityInfosUser()
+    {
+        $email = $_POST["email"];
+        $password = $_POST["password"];
+        $prenom = $_POST["prenom"];
+        $nom = $_POST["nom"];
+        $dateNaissance =$_POST["birthday_date"];
+        var_dump ($password);
+
+        // AND preg_match ("/^(?=.*\d).{8,}$/", $password))
+
+      if((preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$email)) AND
+     (preg_match("#[0-9]#",$password)) AND //contient au moins un chiffre
+      (preg_match("#[a-z]#",$password)) AND //contient au moins une minuscile
+      (preg_match("#[A-Z]#",$password)) 
+      /*AND //contient au moins une MAJUSCULE
+      /*(preg_match ("#[^0-9]#",$prenom)) AND //que le prenom soit une chaine de caractere
+      (preg_match ("[:alpha:]",$nom)) AND //que le nom soit une chaine de caractere
+      (preg_match (" \^([0-3][0-9]})(/)([0-9]{2,2})(/)([0-3]{2,2})$\ ", $dateNaissance)) AND // que la date soit en format 00/00/0000
+      (time ()- $dateNaissance > 18)) // que le user soit majeur */
+    ){
+         var_dump(time ());
+          var_dump ($dateNaissance);
+          var_dump(time () - $dateNaissance >= 18);
+          return true;
+
+      }else
+      {
+          return false;
+      }
+    }
+
+
 
     /**
      * @param User $user

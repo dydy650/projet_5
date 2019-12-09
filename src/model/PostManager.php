@@ -44,7 +44,7 @@ class PostManager extends DBManager
         return $nb_posts_totals;
     }
 
-public function getPostCount(){
+    public function getPostCount(){
     $resultFoundRows = $this->db->query('SELECT id from post');
     $nb_posts_totals = $resultFoundRows->rowCount();
 
@@ -61,21 +61,26 @@ public function getPostCount(){
         $limite = self::LIMIT;// avoir acces à la constante de classe courante
         $debut = ($page - 1) * $limite;
         $tableIdPosts =array();
-        $result = $this->db->prepare('SELECT id from post LIMIT :limite OFFSET :debut');
+        //Début de la requête
+        $result = 'SELECT id FROM post';
+        //Ajout clause WHERE s'il y en a dans le tableau
+        if (count($filters) > 0)
+        {
+            $result .= ' WHERE ' . implode(' AND ', $filters);
+        }
+        //Et on fini la requête
+        $result .= ' LIMIT :limite OFFSET :debut';
 
-        /*if (count($filters) < 0){
-            $result = $this->db->prepare('SELECT id from post LIMIT :limite OFFSET :debut');
-        }else{
-            $result = $this->db->prepare('SELECT id from post WHERE $filter LIMIT :limite OFFSET :debut');
-        }*/
-
+        $result = $this->db->prepare($result);
         $result->bindValue ('limite', $limite, PDO::PARAM_INT);
         $result->bindValue ('debut', $debut, PDO::PARAM_INT);
         $result->execute ();
+
         foreach ($result as $row)
         {
             $tableIdPosts[]=$row['id'];
         }
+       // dd ($result, $tableIdPosts);
         return $tableIdPosts;
     }
 
@@ -88,7 +93,7 @@ public function getPostCount(){
     public function getPostsWithComs($tableIdPosts) //Liste des posts avec leurs commentaires
 {
     $listPostsIds = implode (",", $tableIdPosts); // "1,2, 3..."
-    //dd ($listPostsIds);
+   // dd ($listPostsIds);
 
      $req =$this->db->query('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment, c.post_id, c.comment_at, c.id comment_id, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at
 FROM post p 
