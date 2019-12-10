@@ -31,9 +31,9 @@ class AdminController extends AbstractController
         if (empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["password2"]) || empty($_POST["prenom"]) || empty($_POST["nom"]) || empty($_POST["email"]) || empty($_POST["city"]) || empty($_POST["code_parrainage"]))  {
             throw new \Exception('Tous les champs ne sont pas renseignés');
         } else {
-            $userManager = new UserManager();
-            $validDatas = $userManager->validityInfosUser ();
-            dd ($validDatas);
+            //$userManager = new UserManager();
+            //$validDatas = $userManager->validityInfosUser ();
+            //dd ($validDatas);
             if ($validDatas = true && $_POST['password'] === $_POST['password2'])  {
                 $userManager = new UserManager();
                 $user = new User;
@@ -67,9 +67,11 @@ class AdminController extends AbstractController
                          }
                 } else {
                     $this->addFlash('warning','Code parrainage inconnu');
-                    echo 'erreur';
-                }
 
+                }
+            }else{
+                $this->addFlash('warning','mot de passe incorrecte');
+                header ('Location:index.php?action=newUser');
             }
         }
     }

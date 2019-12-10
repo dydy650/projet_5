@@ -27,7 +27,11 @@ try{
     switch ($page)
     {
         case 'home':
+            if($_SESSION['username']== NULL){
+                $blogController->homeAccess();
+            }else{
             $blogController->home();
+            }
             break;
         case '':
             $blogController->homeAccess();

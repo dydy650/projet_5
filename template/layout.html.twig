@@ -41,7 +41,8 @@
         {% block message %}
             {% if session.message %}
                 <p class="alert alert-{{ session.message.type }}"> {{ session.message.message }} </p>
-unset chercher equivalent twig pour supprimer addflash qd on actualise la page ::::<:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+unset chercher equivalent twig pour supprimer addflash qd on actualise la page
+
             {% endif %}
         {% endblock %}
         {% block welcomeUser %}{% endblock %}
@@ -76,6 +77,7 @@ unset chercher equivalent twig pour supprimer addflash qd on actualise la page :
         crossorigin="anonymous"></script>
 <script src="public/js/main.js"></script>
 <script src="public/js/jquery.js"></script>
+<script src="public/js/formulaire.js"></script>
 </body>
 </html>
 

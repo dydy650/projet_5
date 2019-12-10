@@ -27,7 +27,15 @@
         {% block welcomeUser %}{% endblock %}
         {% block navbar %}{% endblock %}
         {% block message %}{% endblock %}
-        {% block content %}{% endblock %}
+        {% block content %}
+
+            {% if session.message %}
+                <p class="alert alert-{{ session.message.type }}"> {{ session.message.message }} </p>
+                unset chercher equivalent twig pour supprimer addflash qd on actualise la page
+            {% endif %}
+
+        {% endblock %}
+
     </div>
 
 </header>
@@ -44,6 +52,14 @@
 
 
 </footer>
+<!-- jQuery -->
+<script
+        src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+        crossorigin="anonymous"></script>
+<script src="public/js/main.js"></script>
+<script src="public/js/jquery.js"></script>
+<script src="public/js/formulaire.js"></script>
 </body>
 </html>
 

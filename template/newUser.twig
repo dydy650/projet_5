@@ -5,19 +5,22 @@
 {% endblock %}
 
 {% block content %}
+    <span id="missing_info"></span>
    <form action="index.php?action=addUser" method="POST">
       <p><label class="form-label" for="username">Identifiant</label>
          <input id="username" type="text" name="username" class="form-control" required/></p>
       <p><label class="form-label" for="password">Mot de passe</label>
-         <input id="password" type="password" name="password" class="form-control" required/></p>
+         <input id="password" type="password" name="password" class="form-control" required/></p><p id="aideMdp"></p>
       <p><label class="form-label" for="password2">Retapez votre mot de passe</label>
-         <input id="password2" type="password" name="password2" class="form-control" required/></p>
+         <input id="password2" type="password" name="password2" class="form-control" onchange="verifMdp()" required/></p>
+       <p id="infoMdp"></p>
       <p><label class="form-label" for="prenom">Prénom</label>
          <input id="prenom" type="text" name="prenom" class="form-control" required/></p>
       <p><label class="form-label" for="nom">Nom</label>
          <input id="nom" type="text" name="nom" class="form-control" required/></p>
       <p><label class="form-label" for="email">Adresse email</label>
-         <input id="email" type="email" name="email" class="form-control" required/></p>
+         <input id="email" type="email" name="email" class="form-control"  onchange="verifEmail(this)" required/></p>
+       <p id="aideCourriel"></p>
       <p><label class="form-label" for="birthday_date">Date de naissance</label>
          <input id="birthday_date" type="date" name="birthday_date" class="form-control" required/></p>
       <p> <label class="form-label" for="city" >Ville</label><br/>
@@ -28,7 +31,7 @@
           </select></p>
        <p><label class="form-label" for="code_parrainage">Code Parrainage</label>
            <input id="code_parrainage" type="text" name="code_parrainage" class="form-control"/></p>
-      <input class="btn btn-outline-info" type="submit"/>
+      <input class="btn btn-outline-info" type="submit" id="bouton_envoi"/>
    </form>
 
 {% endblock %}
