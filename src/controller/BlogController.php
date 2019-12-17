@@ -171,7 +171,9 @@ class BlogController extends AbstractController
 
     public function homeAccess()
     {
+        $this->addFlash('success','votre compte est enregistré');
         $this->render('./homeAccess.twig');
+
     }
 
     public function newPost()

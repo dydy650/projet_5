@@ -30,6 +30,11 @@ abstract class AbstractController
         if ($this->user instanceof User){
             $params['loggedUser'] = $this->user; // ajout du parametre pour recupérer les données de l objet User dans la session
         }
+        if (!empty($_SESSION['message'])){
+            $message = $_SESSION['message'];
+            $params['messageFlash'] = $message; // rajouter a la liste des param qu on envoi à la vue
+            unset($_SESSION['message']);
+        }
         $params['session'] = $_SESSION;
         $path = realpath (__DIR__. '/../../template');
         $loader = new FilesystemLoader($path);
@@ -45,5 +50,6 @@ abstract class AbstractController
         $_SESSION[$key] = $serializedValue;
 
     }
+
 }
 

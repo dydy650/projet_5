@@ -16,7 +16,6 @@
         <div class="col-12 col-sm-6 col-lg-8">
                 <div class="mainContent">
                     {% for post in posts %}
-                        {{ post.id }}
                     <div class="singlePost">
                         {% set test = 2 %}
                         {% if loggedUser.username == post.username %}
@@ -59,12 +58,51 @@
             </div>
 
         </div>
+
         <div class="col-6 col-md-4">
             <div class="secondContent">
                 <div class="meteoPart">
-                    <h2 class="titleSecondPart">Météo</h2>
-                    <iframe frameborder="0" src="https://www.infoclimat.fr/public-api/mixed/iframeSLIDE?_ll=47.21725,-1.55336&_inc=WyJOYW50ZXMiLCIxOSIsIjI5OTA5NjkiLCJGUiJd&_auth=Bx0HEAR6UHIALVtsVSNXflI6BDFcKggvBnoKaV81XiNRMFQxAGRdPQJoAXxXeAQtVmQBfwA6Az4FZQBkCGNeIgd7B2EEblA7AG9bMFVjV2pSfgR7XH4IMQZ6CnJfNV41USxUMQBhXTwCcwFiV2YEMlZ7AWAAOwM6BXkAeAhkXjgHYwdmBG5QMABsWzFVYldiUn4Ee1xmCGQGMAo4X2BePVE7VGYAY11pAm0BYVdjBDlWewFjAD0DOwVjAGIIZV48B2QHfAR4UEsAHFskVSVXIVI0BCJcfghlBjsKOQ%3D%3D&_c=59c582c6658b59f8cca67e2cd7a384ea"></iframe>
+
+
+                    <h2 class="titleSecondPart">Météo Nantes</h2>
+
+
+                        <div class="row">
+                            <div class=center-block style=float:none;>
+                            <img  src="public\img\question.jpg" alt="iconemeteo" id="iconeDD">
+                            <p class="responseAPI" id="tmpDD"></p>
+                            <p class="responseAPI" id="conditionDD"></p>
+                            <p class="responseAPI" id="wdnDD"></p>
+                            </div>
+                        </div>
+
+                    <h2 class="titleSecondPart">Prévisions</h2>
+                        <div class="row">
+                            <div  class="col-sm" id="prev 1">
+                                <h4 id="dayD1"> D+1</h4>
+                                <img src="public\img\question.jpg" alt="iconemeteo" id="iconeD1">
+                                <p id="tmpD1min"></p>
+                                <p id="tmpD1max"></p>
+                            </div>
+
+                            <div  class="col-sm" id="prev 2 ">
+                                <h4 id="dayD2">D+2</h4>
+                                <img src="public\img\question.jpg" alt="iconemeteo" id="iconeD2">
+                                <p id="tmpD2min"></p>
+                                <p id="tmpD2max"></p>
+                            </div>
+
+                            <div class="col-sm" id="prev  ">
+                                <h4 id="dayD3">D+3</h4>
+                                <img src="public\img\question.jpg" alt="iconemeteo" id="iconeD3">
+                                <p id="tmpD3min"></p>
+                                <p id="tmpD3max"></p>
+                            </div>
+
+                        </div>
+
                 </div>
+
                 <div class="categoryCloud">
                     <h2 class="titleSecondPart">Categories</h2>
                     <ul class="categorylistSecondPart">

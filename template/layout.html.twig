@@ -39,10 +39,8 @@
 
     <div id="container_page">
         {% block message %}
-            {% if session.message %}
-                <p class="alert alert-{{ session.message.type }}"> {{ session.message.message }} </p>
-unset chercher equivalent twig pour supprimer addflash qd on actualise la page
-
+            {% if messageFlash %}
+                <p class="alert alert-{{ messageFlash.type }}"> {{ messageFlash.message }} </p>
             {% endif %}
         {% endblock %}
         {% block welcomeUser %}{% endblock %}
@@ -75,9 +73,12 @@ unset chercher equivalent twig pour supprimer addflash qd on actualise la page
         src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
         crossorigin="anonymous"></script>
+<script src="public/js/function.js"></script>
 <script src="public/js/main.js"></script>
 <script src="public/js/jquery.js"></script>
 <script src="public/js/formulaire.js"></script>
+<script src="public/js/meteo.js"></script>
+
 </body>
 </html>
 

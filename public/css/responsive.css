@@ -38,7 +38,7 @@
     color: #ffffff;
     text-decoration: none;
     padding: 20px 0;
-    margin: 10px;
+   margin: 10px;
 }
 .cellMenu:hover {
     border-top: 2px solid #52937E;
@@ -50,6 +50,33 @@
 /*-----------------------------------------------------------------------------RESPONSIVE--------------------------------*/
 @media only screen and (max-width :600px)
 {
+    #ex{
+        display: none;
+    }
+
+    body{
+        min-width: 320px;
+    }
+
+    #container_page{
+        align-items: center;
+    }
+    .secondContent {
+       margin-top: 15px;
+        width: 100%;
+    }
+    .categorylistSecondPart
+    {
+        font-size: small;
+
+    }
+    .titleSecondPart
+    {
+        font-size: 17px;
+    }
+    .pagination{
+       align-items: center;
+    }
     .navResponsive{
         height: 300px;
     }
@@ -73,7 +100,7 @@
 
     #logo
     {
-        top: 140px;
+        top: 100px;
         align-items: center;
         font-size: 30px;
     }
@@ -117,6 +144,7 @@
         color: dimgrey;
         box-shadow: #52937E;
     }
+
 
     #toggle2:checked + .menuResponsive
     {

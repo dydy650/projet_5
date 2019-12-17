@@ -45,7 +45,7 @@ var password2 =  document.getElementById('password2').value;
         alert("Erreur les 2 mots de passe ne correspondent pas");
     }
     document.getElementById("infoMdp").textContent = message;
-    verifMdp.preventDefault();
+    verifMdp.preventDefault(); //On utilise la fonction preventDefault de notre objet event pour empêcher le comportement par défaut de cet élément lors du clic de la souris
 }
 
 //VERIFICATION EMAIL
@@ -60,4 +60,3 @@ function verifEmail(champ) {
     }
         document.getElementById("aideCourriel").textContent = message;
 }
-  

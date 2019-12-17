@@ -253,10 +253,13 @@ body
     font-family: 'Satisfy', cursive;;
     font-style: italic;
     text-align: center;
-    border: solid 1px;
     width: 100px;
     height: 200px;
     margin: 5px;
+    padding-top: 5px;
+    background-color: white;
+    border-radius: 10px;
+    border: white;
 }
 
 .col-sm-4
@@ -632,9 +635,19 @@ body
     background-color: #fff5ee;
     margin-bottom: 20px;
     border-radius: 5px;
-    height: 500px;
+
 }
 
+
+
+
+.currentMeteo
+{
+    alignment: center;
+    align-items: center;
+    left: 40%;
+    margin: 25px;
+}
 .categoryCloud
 {
 
@@ -660,7 +673,21 @@ body
     size: 20px;
     text-align: center;
     color: lightgray;
-    padding: 20px;
+    padding-top: 20px;
+
+}
+.meteo{
+    text-align: center;
+    align-items: center;
+
+}
+
+
+#conditionDD
+{
+    font-weight: bold;
+    font-size: 20px;
+    align-content: center;
 
 }
 
@@ -781,8 +808,10 @@ a:hover #pencilEdit2
     font-weight: bold;
 }
 
+ #titrePrevision
+ {
 
-
+ }
 
 /*.mainContent h2:hover
 {
