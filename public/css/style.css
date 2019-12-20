@@ -392,8 +392,6 @@ body
 .titleCat
 {
     font-family: 'Satisfy', cursive;
-    size: 50px;
-
 }
 .secondContent
 {
@@ -561,7 +559,6 @@ body
     margin-top: 15px;
     margin-bottom: 15px;
     align-items: center;
-    position: center;
     left: 50%;
 }
 
@@ -600,8 +597,16 @@ body
     border-radius: 100%;
     background-color: #52937E;
 
-
 }
+
+#profil{
+    height: 100px;
+    width: auto;
+    border-radius: 100%;
+    left: 40px;
+    position: absolute;
+}
+
 #avatar i{
     left: 52px;
     top: 90px;
@@ -643,7 +648,6 @@ body
 
 .currentMeteo
 {
-    alignment: center;
     align-items: center;
     left: 40%;
     margin: 25px;
@@ -670,7 +674,6 @@ body
 .titleSecondPart
 {
     font-family: 'Satisfy', cursive;
-    size: 20px;
     text-align: center;
     color: lightgray;
     padding-top: 20px;
@@ -682,6 +685,10 @@ body
 
 }
 
+.buttonImg
+{   margin-top: 10px;
+    margin-bottom: 5px;
+}
 
 #conditionDD
 {
@@ -694,12 +701,12 @@ body
 #codeParrainCadre
 {
     height: 50px;
-    width: 100px;
+    width: auto;
     border: solid 1px;
     text-align: center;
     display: inline-block;
     font-weight: bold;
-    padding-top: 10px;
+    padding: 10px 2px 0 2px;
     color: black;
 }
 
@@ -722,7 +729,6 @@ body
 }
 .linkComment{
     color: #52937E;
-    size: 12px;
     font-style: italic;
     margin:5px;
 }
@@ -760,14 +766,14 @@ h1
 {
     position: absolute;
     left: 195px;
-    top:591px;
+    top:671px;
     color: #afc9a4;
 }
 
 #pencilEdit
 {
     position: absolute;
-    top: 210px;
+    top: 290px;
     left: 150px;
     color: #afc9a4;
 }

@@ -15,16 +15,14 @@
     <link href="public/css/responsive.css" rel="stylesheet"/>
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Satisfy&display=swap" rel="stylesheet">
-
-
 </head>
+
 <body>
 <img id="imageCouverture" alt="imageCouverture" src='public\img\image1.jpg'>
 <img id="imageCouvertureResponsive" alt="imageCouvertureResponsive" src='public\img\couvetureResponsive.jpg'>
     <a href="index.php?action=home" id="logo">Pépites<img id="ex" alt="ex" src='public\img\ex.jpg'></a>
 <a id="deconnexion" href="index.php?action=homeAccess">Déconnexion</a>
 <header>
-
     <div class="navResponsive">
         <label  id="toggle1" for="toggle2">&#9776;</label>
         <input type="checkbox" id="toggle2"/>
@@ -36,7 +34,6 @@
             <a class="cellMenu" id="" href="index.php?action=parametres" title="Contact">Paramètres</a>
         </div>
     </div>
-
     <div id="container_page">
         {% block message %}
             {% if messageFlash %}
@@ -48,26 +45,19 @@
 
         {% block content %}{% endblock %}
     </div>
-
 </header>
 <footer>
     <div id="footerinfo">
         <ul class="link">
             <li><a href="index.php?action=contact">Contact</a></li>
-            <li><a href="#">Parrainer une amie</a></li>
-            <li><a href="xx"> .</a></li>
             <li> <a href="#">Les pépites de Nantes</a></li>
             <li> <a href="#">Les pépites de Bordeaux</a></li>
             <li> <a href="#">Les pépites de Lyon</a></li>
         </ul>
-
     </div>
     <img alt="imageFooter" id="imageFooter" src="public\img\footer.jpg">
     <img alt="imageFooterReponsive" id="imageFooterResponsive" src="public\img\footerResponsive.jpg">
-
-
 </footer>
-
 <!-- jQuery -->
 <script
         src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -78,7 +68,6 @@
 <script src="public/js/jquery.js"></script>
 <script src="public/js/formulaire.js"></script>
 <script src="public/js/meteo.js"></script>
-
 </body>
 </html>
 

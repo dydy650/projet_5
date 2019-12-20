@@ -28,9 +28,11 @@
 
         {% block content %}<h2>ERREUR :</h2>
 
-            {% for message in app.session.addflash("success") %}
-                <p class="alert alert-success"> {{ message }} </p>
-            {% endfor %}
+            {% block message %}
+                {% if messageFlash %}
+                    <p class="alert alert-{{ messageFlash.type }}"> {{ messageFlash.message }} </p>
+                {% endif %}
+            {% endblock %}
 
         {% endblock %}
     </div>

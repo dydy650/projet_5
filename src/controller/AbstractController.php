@@ -24,7 +24,6 @@ abstract class AbstractController
         $_SESSION['message'] = ['type'=>$type, 'message'=>$message];
     }
 
-
     protected function render($view, $params = array())
     {
         if ($this->user instanceof User){

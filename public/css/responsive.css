@@ -48,6 +48,32 @@
 
 
 /*-----------------------------------------------------------------------------RESPONSIVE--------------------------------*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+
+    #logo
+    {
+        top: 20%;
+        font-size: 70px;
+        left: 36%;
+    }
+    #containerHomePage{
+        position: relative;
+    }
+    #accroche{
+        position: relative;
+        left: 30%;
+    }
+
+    #homepageLogo{
+        top: 22%;
+        left: 32%;
+        font-size: 100px;
+    }
+
+}
+
+
 @media only screen and (max-width :600px)
 {
     #ex{
@@ -142,7 +168,6 @@
     .menuResponsive a:hover{
         background-color: #afc9a4;
         color: dimgrey;
-        box-shadow: #52937E;
     }
 
 
@@ -185,7 +210,7 @@
     #containerHomePage{
         width: 100%;
         position: inherit;
-        overflow-wrap: break-spaces;
+        overflow-wrap: break-word;
         left: 0;
         border: salmon solid;
         height: auto;
@@ -202,6 +227,9 @@
         text-align: center;
     }
 
+    p{
+        font-size: 14px;
+    }
 
 
 }

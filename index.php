@@ -26,12 +26,15 @@ $page='home';
 try{
     switch ($page)
     {
+        case 'uploadFichier':
+            $adminController->uploadFichier ();
+            $adminController->existFile ();
+            break;
         case 'home':
             if($_SESSION['username']== NULL){
                 $blogController->homeAccess();
             }else{
-            $blogController->home();
-            }
+            $blogController->home();}
             break;
         case '':
             $blogController->homeAccess();
@@ -115,12 +118,6 @@ try{
     }
 }
 catch (Exception $e) {
-    //$blogController ->error($e);
-    //$this->addFlash ('warning', $e->getMessage ());
-
-    //$errorMessage = $e->getMessage ();
-
-    //echo $twig->render ('error.twig');
-    echo 'Erreur : ' . $e->getMessage ();
+    $blogController ->error($e);
 }
 

@@ -4,25 +4,17 @@ namespace App\controller;
 use App\model\Entity\User;
 use App\model\UserManager;
 use App\model\DBManager;
-use mysql_xdevapi\Exception;
+
 
 class AdminController extends AbstractController
 {
     // Access Pages
-
     public function newUser()
     {
         $this->render('./newUser.twig');
     }
 
-
     //Users
-
-    /**
-     *return boolean
-     */
-
-
     /**
      *@throws \Exception
      */
@@ -76,24 +68,34 @@ class AdminController extends AbstractController
         }
     }
 
-    public function deleteUser()
-    {
 
+    public function uploadFichier (){
+        if (isset($_FILES['monfichier']) AND $_FILES['monfichier']['error'] == 0) {
+            // Testons si le fichier n'est pas trop gros
+            if ($_FILES['monfichier']['size'] <= 1000000)
+            {
+                // Testons si l'extension est autorisée
+                $infosfichier = pathinfo($_FILES['monfichier']['name']);
+                $extension_upload = $infosfichier['extension'];
+                $extensions_autorisees = array('jpg', 'jpeg', 'gif', 'png');
+                if (in_array($extension_upload, $extensions_autorisees)) {
+                    move_uploaded_file($_FILES['monfichier']['tmp_name'], 'uploads/' .$this->user->getId ().".jpg");
+                    $this->addFlash('success',"photo de profil mise à jour !");
+                    header ('Location:index.php?action=parametres');
+                }
+            }
+        }
     }
+   /* public function existFile(){
+        $filename = 'uploads/' .$this->user->getId ().".jpg";
+        if (file_exists ($filename)){
+          return true;
+        }else{
+           return false;
+        }
+    }*/
 
-    public function signaledCommentList()
-    {
 
-    }
-
-    public function signaledPostList()
-    {
-
-    }
-
-    public function listInfo(){
-
-    }
 
 
 }

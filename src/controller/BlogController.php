@@ -9,7 +9,7 @@ use App\model\UserManager;
 use App\model\PostManager;
 use App\model\CommentManager;
 use App\model\CategoryManager;
-use mysql_xdevapi\Exception;
+
 
 class BlogController extends AbstractController
 {
@@ -29,24 +29,20 @@ class BlogController extends AbstractController
         $user = $userManager->getUser($_SESSION['username']);
         $this->render('./home.twig', array('infoSession'=>"contenu", 'user'=>$user, 'page'=>$page));
     }
-
     public function contact()
     {
         $this->render('./contact.twig');
     }
-
     public function aboutUs()
     {
         $this->render('./aboutUs.twig');
     }
-
     public function editPost($id)
     {
         $postManager = new PostManager();
         $post = $postManager->getPost($id);
         $this->render('./editPost.twig', array("post" => $post));
     }
-
     public function updatePost($id)
     {
         $postManager = new PostManager();
@@ -64,20 +60,18 @@ class BlogController extends AbstractController
             header ('Location: index.php?action=home');
         }
     }
-
     public function deletePost($id)
     {
         $postManager = new PostManager();
         $delete = $postManager->deletePost($id);
         if ($delete)
         {
-            $this->addFlash('success','le chapitre a bien été supprimé');
+            $this->addFlash('success','le post a bien été supprimé');
         }else{
-            $this->addFlash('warning','erreur le chapitre n a pas été supprimé');
+            $this->addFlash('warning','erreur le post n\'a pas été supprimé');
         }
         header ('Location: '.$_SERVER['HTTP_REFERER']);
     }
-
     public function deleteComment($id)
     {
         $commentManager = new CommentManager();
@@ -90,14 +84,12 @@ class BlogController extends AbstractController
         }
         header ('Location: '.$_SERVER['HTTP_REFERER']);
     }
-
     public function editUserInfo()
     {
     $userManager = new UserManager();
     $user = $userManager->getUser($_SESSION['username']);
     $this->render('./editUserInfo.twig', array("user" => $user));
     }
-
     public function updateUserInfo()
     {
         $userManager = new UserManager();
@@ -112,21 +104,19 @@ class BlogController extends AbstractController
             ->setCity ($_POST['city']);
         $update = $userManager->updateUserInfo($user);
         if ($update){
-            $this->addFlash('success','Le chapitre a été modifié');
+            $this->addFlash('success','Vos informations ont été modifiées');
         }else{
-            $this->addFlash('danger','votre chapitre n\'a pas pu etre mis à jour');
+            $this->addFlash('danger','Les modifications n\'ont pas pu etre mises à jour');
         }
         $_SESSION['username'] = $user->getUsername();
         header ('Location:index.php?action=parametres');
     }
-
     public function editUserConnexion()
     {
         $userManager = new UserManager();
         $user = $userManager->getUser($_SESSION['username']);
         $this->render('./editUserConnexion.twig', array("user" => $user));
     }
-
     /**
      * @throws \Exception
      */
@@ -152,39 +142,36 @@ class BlogController extends AbstractController
 
             $update = $userManager->updateUserConnexion ($user);
             if ($update) {
-                $this->addFlash ('success', 'Le chapitre a été modifié');
+                $this->addFlash ('success', 'Vos informations de commexion ont été modifiées');
             } else {
-                $this->addFlash ('danger', 'votre chapitre n\'a pas pu etre mis à jour');
+                $this->addFlash ('danger', 'Les informations  de connexion n\'ont pas pu etre mis à jour');
             }
             $_SESSION['username'] = $user->getUsername ();
             header ('Location:index.php?action=parametres');
         }
     }
 
+
     public function parametres()
     {
         $userManager = new UserManager();
         $user = $userManager->getUser($_SESSION['username']);
-        $this->render('./parametres.twig', array("user" => $user));
+        $filename = 'uploads/' .$this->user->getId ().".jpg";
+        $existFile = file_exists ($filename);
+        $this->render('./parametres.twig', array("user" => $user, "existFile"=> $existFile, "filename" => $filename));
 
     }
-
     public function homeAccess()
     {
-        $this->addFlash('success','votre compte est enregistré');
         $this->render('./homeAccess.twig');
 
     }
-
     public function newPost()
     {
         $this->render('./newPost.twig');
     }
 
-
 //connexion
-
-
     /**
      * @throws \Exception
      */
@@ -203,10 +190,9 @@ class BlogController extends AbstractController
             header ('Location:index.php?action=home');
 
         } else {
-            throw new \Exception('Username ou mot de passe incorrecte');
+            throw new \Exception('Username ou mot de passe incorrect');
         }
     }
-
     public function logout()
     {
         $_SESSION = array();
@@ -214,12 +200,7 @@ class BlogController extends AbstractController
         header ('Location:index.php?action=loginPage');
         exit();
     }
-
     //POST
-
-    /**
-     *
-     */
     public function listPostsByUser()
     {
         $username = $_SESSION['username'];
@@ -232,6 +213,10 @@ class BlogController extends AbstractController
         $nombreDePages = ceil($nb_posts_totals / $limite);
 
         $tableIdPosts = $postManager->getIdPosts ($page, array("username = '$username'" ));
+        if (empty($tableIdPosts)){
+            $this->addFlash ('warning', 'Vous n\'avez pas encore publié de post');
+            header ('Location: index.php?action=home');
+        }else{
         $posts = $postManager->getPostsWithComs($tableIdPosts);
         $categoryManager = new CategoryManager();
         $categories = $categoryManager->getCategories ();
@@ -243,13 +228,9 @@ class BlogController extends AbstractController
             "user"=>$user,
             "page" => $page,
             "nombreDePages"=>$nombreDePages
-        ));
+        ));}
 
     }
-
-    /**
-     *
-     */
     public function listPostsWithComs()
     {
        //page courante
@@ -274,9 +255,7 @@ class BlogController extends AbstractController
                 "nombreDePages"=>$nombreDePages));
 
     }
-
     //----------------------------------------------------POST CATEGORIES-----------------------------------------------------
-
     public function listCategories()
     {
         $page = (!empty($_GET['page']) ? $_GET['page'] : 1);
@@ -286,7 +265,6 @@ class BlogController extends AbstractController
             "categories" => $categories,
             "page" => $page,));
     }
-
     public function category()
     {
         //page courante
@@ -310,19 +288,6 @@ class BlogController extends AbstractController
             ));
 
     }
-
-
-
-
-    /*
- * @param $id_category
- * @param $content
-     *  @param $username
- */
-
-    /**
-     *
-     */
     public function addPost()
     {
         //une condition qui vérifie si les données $_POST sont présentes, sinon on lève une Exception
@@ -339,7 +304,7 @@ class BlogController extends AbstractController
             ->setIdCategory ($_POST['category'])
             ->setUsername ($_SESSION['username']);
         $id = $postManager->savePost ($post);
-        // dd ($post,$postManager);
+
         if ($id) {
             $this->addFlash ('success', 'Votre post a été créé');
         } else {
@@ -347,13 +312,6 @@ class BlogController extends AbstractController
         }
         header ('Location: index.php?action=home');
     }
-//
-
-
-
-
-
-
     //COMMENTAIRES
     /**
      * @param $post_id
@@ -377,22 +335,4 @@ class BlogController extends AbstractController
             header ('Location: '.$_SERVER['HTTP_REFERER']);
         }
     }
-/*
- *
- *
-    public function deleteComment()
-    {
-
-    }
-
-    public function updateComment()
-    {
-
-    }
-
-    public function signalComment(){
-
-    }
-*/
-
 }

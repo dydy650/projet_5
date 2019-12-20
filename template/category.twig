@@ -60,27 +60,27 @@
 
             </div>
         </div>
-    </div>
-    <div class="pagination">
 
-        {% if page > 1 %}
-            <a href="index.php?action=category&id={{ category.idCategory }}&page={{ page - 1 }}"> Page précédente</a>
-        {% else  %}
-        {% endif %}
+        <div class="pagination">
 
-        {#j affiche au de page qu'il y a de page#}
-        {% for i in 1..nombreDePages %}
-            <div class="paginationNumber">
-                <a href="index.php?action=category&id={{ category.idCategory }}&page={{ i }}" >{{ i }}</a>
-            </div>
-        {% endfor %}
+            {% if page > 1 %}
+                <a href="index.php?action=category&id={{ category.idCategory }}&page={{ page - 1 }}"> Page précédente</a>
+            {% else  %}
+            {% endif %}
 
-        {#si la page > i alors j affiche les pages suivantes#}
-        {% if page < nombreDePages %}
-            <a href="index.php?action=category&id={{ category.idCategory }}&page={{ page + 1 }}" > Page suivante</a>
-        {% else  %}
-        {% endif %}
+            {#j affiche au de page qu'il y a de page#}
+            {% for i in 1..nombreDePages %}
+                <div class="paginationNumber">
+                    <a href="index.php?action=category&id={{ category.idCategory }}&page={{ i }}" >{{ i }}</a>
+                </div>
+            {% endfor %}
 
+            {#si la page > i alors j affiche les pages suivantes#}
+            {% if page < nombreDePages %}
+                <a href="index.php?action=category&id={{ category.idCategory }}&page={{ page + 1 }}" > Page suivante</a>
+            {% else  %}
+            {% endif %}
+        </div>
     </div>
 
 

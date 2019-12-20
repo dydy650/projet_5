@@ -9,9 +9,10 @@ class UserManager extends DBManager
 {
     public function getUser($username) // afficher 1 user
     {
-        $req = $this->db->prepare ('SELECT id, username, nom, prenom, DATE_FORMAT(birthday_date, \'%d/%m/%Y \') AS birthday_date_FR, city, email, code_parrainage_perso, code_parrain, password,is_admin FROM user WHERE  username = ?');
+        $req = $this->db->prepare ('SELECT id, username, nom, prenom, DATE_FORMAT(birthday_date, \'%d/%m/%Y \') AS birthday_date_FR, city, email, code_parrainage_perso, code_parrain, password,is_admin 
+        FROM user WHERE  username = ?');
         $req->execute (array($username));
-        $req->setFetchMode (\PDO::FETCH_CLASS, User::class); // Ligne necessaire pour utiliser les entitiés ddans les vues
+        $req->setFetchMode (\PDO::FETCH_CLASS, User::class); //
         $user = $req->fetch ();
         return $user;
     }
@@ -60,49 +61,10 @@ class UserManager extends DBManager
         $req->execute(array($code_parrain));
         $result = $req->fetch ();
         return $result > 0;
-
-        //
         //verifier si le code parrain match avec le code parrain Perso dans la BDD
         // return bolean vrai ou faux
 
     }
-
-
-    /**
-     *
-     */
-    public function validityInfosUser()
-    {
-        $email = $_POST["email"];
-        $password = $_POST["password"];
-        $prenom = $_POST["prenom"];
-        $nom = $_POST["nom"];
-        $dateNaissance =$_POST["birthday_date"];
-        var_dump ($password);
-
-        // AND preg_match ("/^(?=.*\d).{8,}$/", $password))
-
-      if((preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#",$email)) AND
-     (preg_match("#[0-9]#",$password)) AND //contient au moins un chiffre
-      (preg_match("#[a-z]#",$password)) AND //contient au moins une minuscile
-      (preg_match("#[A-Z]#",$password))
-      /*AND //contient au moins une MAJUSCULE
-      /*(preg_match ("#[^0-9]#",$prenom)) AND //que le prenom soit une chaine de caractere
-      (preg_match ("[:alpha:]",$nom)) AND //que le nom soit une chaine de caractere
-      (preg_match (" \^([0-3][0-9]})(/)([0-9]{2,2})(/)([0-3]{2,2})$\ ", $dateNaissance)) AND // que la date soit en format 00/00/0000
-      (time ()- $dateNaissance > 18)) // que le user soit majeur */
-    ){
-         var_dump(time ());
-          var_dump ($dateNaissance);
-          var_dump(time () - $dateNaissance >= 18);
-          return true;
-
-      }else
-      {
-          return false;
-      }
-    }
-
 
 
     /**
@@ -137,15 +99,5 @@ VALUES(:username, :password, :nom, :prenom, :birthday_date, :city, :email, :code
     }
 }
 
-
-
-    /*
-     * @return mixed
-
-    public function testBdd()
-    {
-        $reponse = $bdd->query ('SELECT COUNT (*) FROM user);');
-        return $reponse;
-    } */
 
 
