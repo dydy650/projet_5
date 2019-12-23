@@ -76,7 +76,6 @@ class PostManager extends DBManager
         }
         //Et on fini la requête
         $result .= ' LIMIT :limite OFFSET :debut';
-
         $result = $this->db->prepare($result);
         $result->bindValue ('limite', $limite, PDO::PARAM_INT);
         $result->bindValue ('debut', $debut, PDO::PARAM_INT);

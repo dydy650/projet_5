@@ -1,5 +1,3 @@
-
-
 function Meteo(nantes) {
     this.nantes = nantes;
     this.citynameElt = $('#cityname');

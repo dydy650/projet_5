@@ -7,7 +7,6 @@ use Twig\Loader\FilesystemLoader;
 abstract class AbstractController
 {
     protected $user;
-
     public function __construct() // methode pour recupérer l entité User partout dans le code apres l avoir unserialisé
     {
         if(isset($_SESSION['user']))
@@ -18,7 +17,6 @@ abstract class AbstractController
             }
         }
     }
-
     protected function  addFlash($type, $message)
     {
         $_SESSION['message'] = ['type'=>$type, 'message'=>$message];
@@ -42,12 +40,10 @@ abstract class AbstractController
         echo $twig->render($view, $params);
 
     }
-
     protected function addToSession($key, $value)
     {
         $serializedValue = serialize ($value); // transforme un objet en chaine de caractere
         $_SESSION[$key] = $serializedValue;
-
     }
 
 }

@@ -23,9 +23,6 @@ class AdminController extends AbstractController
         if (empty($_POST["username"]) || empty($_POST["password"]) || empty($_POST["password2"]) || empty($_POST["prenom"]) || empty($_POST["nom"]) || empty($_POST["email"]) || empty($_POST["city"]) || empty($_POST["code_parrainage"]))  {
             throw new \Exception('Tous les champs ne sont pas renseignés');
         } else {
-            //$userManager = new UserManager();
-            //$validDatas = $userManager->validityInfosUser ();
-            //dd ($validDatas);
             if ($validDatas = true && $_POST['password'] === $_POST['password2'])  {
                 $userManager = new UserManager();
                 $user = new User;
@@ -41,11 +38,9 @@ class AdminController extends AbstractController
                     ->setCodeParrain ($_POST["code_parrainage"])
                     ->setCodeParrainagePerso (uniqid());
 
-
                 // Verification si le code de parrainage existe dans la BDD
                $code_parrain = $user->getCodeParrain();
                $parrainExist = $userManager->parrainExist($code_parrain);
-
             /// Si le code_Parrainge existe --> return "true" / J appelle la methode createUser
                 if ($parrainExist === true){
                     $user = $userManager->createUser($user);
@@ -86,16 +81,4 @@ class AdminController extends AbstractController
             }
         }
     }
-   /* public function existFile(){
-        $filename = 'uploads/' .$this->user->getId ().".jpg";
-        if (file_exists ($filename)){
-          return true;
-        }else{
-           return false;
-        }
-    }*/
-
-
-
-
 }

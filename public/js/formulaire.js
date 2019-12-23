@@ -50,8 +50,7 @@ var password2 =  document.getElementById('password2').value;
 
 //VERIFICATION EMAIL
 function verifEmail(champ) {
-    //var email =  document.getElementById('email').value;
-    // Correspond à une chaîne de la forme xxx@yyy.zzz
+
     var regexCourriel = /.+@.+\..+/;
     if (!regexCourriel.test(champ.value)){
         alert("Adresse invalide");
@@ -60,3 +59,4 @@ function verifEmail(champ) {
     }
         document.getElementById("aideCourriel").textContent = message;
 }
+// Correspond à une chaîne de la forme xxx@yyy.zzz

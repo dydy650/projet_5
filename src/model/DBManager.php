@@ -5,6 +5,7 @@ abstract class DBManager
 {
     protected $db;
 
+
     public function __construct()
     {
         try {

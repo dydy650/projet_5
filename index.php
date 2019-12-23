@@ -28,7 +28,6 @@ try{
     {
         case 'uploadFichier':
             $adminController->uploadFichier ();
-            $adminController->existFile ();
             break;
         case 'home':
             if($_SESSION['username']== NULL){

@@ -61,19 +61,16 @@ class UserManager extends DBManager
         $req->execute(array($code_parrain));
         $result = $req->fetch ();
         return $result > 0;
-        //verifier si le code parrain match avec le code parrain Perso dans la BDD
-        // return bolean vrai ou faux
-
     }
-
+    //verifier si le code parrain match avec le code parrain Perso dans la BDD
+    // return bolean vrai ou faux
 
     /**
      * @param User $user
      * @return User|false  renvoi false en d echec sinon renvoi le User hydraté avec ID qui vient de recup
      */
-    public function createUser($user) //j'enregistre un user dans la BDD user
+    public function createUser($user)
     {
-        //Puis on stock le résultat dans la base de données :
         $req = $this->db->prepare ('
 INSERT INTO user (username, password, nom, prenom, birthday_date, city, email, code_parrain, code_parrainage_perso) 
 VALUES(:username, :password, :nom, :prenom, :birthday_date, :city, :email, :code_parrain, :code_parrainage_perso)

@@ -2,8 +2,8 @@
 {
     border-color: #52937E;
     text-align: center;
-    line-height: 40px;
-    height: 70px;
+    /*line-height: 40px;
+    height: 70px;*/
 }
 
 
@@ -21,7 +21,7 @@
 #toggle1{
     margin: 0 40px 0 0;
     font-size: 26px;
-    line-height: 70px;
+    /*line-height: 70px;*/
     display: none;
     width: 25px;
     float: left;
@@ -38,8 +38,18 @@
     color: #ffffff;
     text-decoration: none;
     padding: 20px 0;
-   margin: 10px;
+    margin: 10px;
+
 }
+
+/*
+ transition: 0.3s ease;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 20px 0;
+   margin: 10px;*/
+
+
 .cellMenu:hover {
     border-top: 2px solid #52937E;
     border-bottom: 2px solid #52937E;
@@ -103,9 +113,7 @@
     .pagination{
        align-items: center;
     }
-    .navResponsive{
-        height: 300px;
-    }
+
     #imageCouvertureResponsive
     {
         display: block;
@@ -206,6 +214,10 @@
     #blockHP{
         margin: 0;
         height: auto;
+    }
+
+    #container_page{
+        margin-top: 80px;
     }
     #containerHomePage{
         width: 100%;
