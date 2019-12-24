@@ -10,7 +10,7 @@ class UserManager extends DBManager
     public function getUser($username) // afficher 1 user
     {
         $req = $this->db->prepare ('SELECT id, username, nom, prenom, DATE_FORMAT(birthday_date, \'%d/%m/%Y \') AS birthday_date_FR, city, email, code_parrainage_perso, code_parrain, password,is_admin 
-        FROM user WHERE  username = ?');
+        FROM p5_user WHERE  username = ?');
         $req->execute (array($username));
         $req->setFetchMode (\PDO::FETCH_CLASS, User::class); //
         $user = $req->fetch ();
@@ -23,7 +23,7 @@ class UserManager extends DBManager
      */
     public function updateUserInfo($user)
     {
-        $req =  $this->db->prepare('UPDATE user SET username = ?, prenom = ?, nom = ?, birthday_date = ?, city = ?, email= ? WHERE id = ?');
+        $req =  $this->db->prepare('UPDATE p5_user SET username = ?, prenom = ?, nom = ?, birthday_date = ?, city = ?, email= ? WHERE id = ?');
         $result = $req->execute(array(
             $user->getUsername(),
             $user->getPrenom(),
@@ -42,7 +42,7 @@ class UserManager extends DBManager
      */
     public function updateUserConnexion($user)
     {
-        $req =  $this->db->prepare('UPDATE user SET username = ?, password = ? WHERE id = ?');
+        $req =  $this->db->prepare('UPDATE p5_user SET username = ?, password = ? WHERE id = ?');
         $result = $req->execute(array(
             $user->getUsername(),
             $user->getPassword(),
@@ -57,7 +57,7 @@ class UserManager extends DBManager
      */
     public function parrainExist($code_parrain)
     {
-        $req = $this->db->prepare ('SELECT COUNT(code_parrainage_perso) FROM user WHERE code_parrain = ?');
+        $req = $this->db->prepare ('SELECT COUNT(code_parrainage_perso) FROM p5_user WHERE code_parrain = ?');
         $req->execute(array($code_parrain));
         $result = $req->fetch ();
         return $result > 0;
@@ -72,7 +72,7 @@ class UserManager extends DBManager
     public function createUser($user)
     {
         $req = $this->db->prepare ('
-INSERT INTO user (username, password, nom, prenom, birthday_date, city, email, code_parrain, code_parrainage_perso) 
+INSERT INTO p5_user (username, password, nom, prenom, birthday_date, city, email, code_parrain, code_parrainage_perso) 
 VALUES(:username, :password, :nom, :prenom, :birthday_date, :city, :email, :code_parrain, :code_parrainage_perso)
 ');
         if( $req->execute(array(

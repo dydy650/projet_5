@@ -12,7 +12,7 @@ class CommentManager extends DBManager
      */
     public function saveComment($comment)
     {
-        $req = $this->db->prepare('INSERT INTO comment(post_id, username, content, comment_at) VALUES(?, ?, ?, NOW())');
+        $req = $this->db->prepare('INSERT INTO p5_comment(post_id, username, content, comment_at) VALUES(?, ?, ?, NOW())');
         $affectedLines = $req->execute(array(
             $comment->getPostId(),
             $comment->getUsername(),
@@ -29,7 +29,7 @@ class CommentManager extends DBManager
      */
     public function deleteComment($id)
     {
-        $req = $this->db->prepare("DELETE FROM comment WHERE id = ?");
+        $req = $this->db->prepare("DELETE FROM p5_comment WHERE id = ?");
         $result = $req->execute(array($id));
         return $result;
     }

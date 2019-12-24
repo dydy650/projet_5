@@ -16,7 +16,7 @@ class PostManager extends DBManager
      */
     public function savePost($post) // On recoit le post a enregistrer
     {
-        $req = $this->db->prepare('INSERT INTO post ( id_category, username, content, post_at ) VALUES(?, ?, ?, NOW())');
+        $req = $this->db->prepare('INSERT INTO p5_post ( id_category, username, content, post_at ) VALUES(?, ?, ?, NOW())');
         $req->execute(array(
             $post->getIdCategory(),
             $post->getUsername(),
@@ -33,7 +33,7 @@ class PostManager extends DBManager
     public function getPostCountCat($id_category)
     {
         $id_category = intval ($id_category); // ca converti une variable en nombre entier
-        $resultFoundRows = $this->db->prepare('SELECT id from post WHERE id_category = ?');
+        $resultFoundRows = $this->db->prepare('SELECT id from p5_post WHERE id_category = ?');
         $resultFoundRows->execute (array($id_category));
         $resultFoundRows->setFetchMode(\PDO::FETCH_ASSOC);
         $nb_posts_totals = $resultFoundRows->rowCount();
@@ -43,7 +43,7 @@ class PostManager extends DBManager
 
     public function getPostCountUser($username)
     {
-        $resultFoundRows = $this->db->prepare('SELECT id from post WHERE username = ?');
+        $resultFoundRows = $this->db->prepare('SELECT id from p5_post WHERE username = ?');
         $resultFoundRows->execute (array($username));
         $resultFoundRows->setFetchMode(\PDO::FETCH_ASSOC);
         $nb_posts_totals = $resultFoundRows->rowCount();
@@ -51,7 +51,7 @@ class PostManager extends DBManager
     }
 
     public function getPostCount(){
-    $resultFoundRows = $this->db->query('SELECT id from post');
+    $resultFoundRows = $this->db->query('SELECT id from p5_post');
     $nb_posts_totals = $resultFoundRows->rowCount();
 
     return $nb_posts_totals;
@@ -68,12 +68,13 @@ class PostManager extends DBManager
         $debut = ($page - 1) * $limite;
         $tableIdPosts =array();
         //Début de la requête
-        $result = 'SELECT id FROM post';
+        $result = 'SELECT id FROM p5_post';
         //Ajout clause WHERE s'il y en a dans le tableau
         if (count($filters) > 0)
         {
             $result .= ' WHERE ' . implode(' AND ', $filters);
         }
+        $result .= ' ORDER BY post_at DESC';
         //Et on fini la requête
         $result .= ' LIMIT :limite OFFSET :debut';
         $result = $this->db->prepare($result);
@@ -101,9 +102,9 @@ class PostManager extends DBManager
     //dd ($listPostsIds);
 
      $req =$this->db->query('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment, c.post_id, c.comment_at, c.id comment_id, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at
-FROM post p 
-    LEFT JOIN `comment` c ON p.id = c.post_id 
-    INNER JOIN category ca ON p.id_category = ca.id_category 
+FROM p5_post p 
+    LEFT JOIN `p5_comment` c ON p.id = c.post_id 
+    INNER JOIN p5_category ca ON p.id_category = ca.id_category 
 WHERE p.id IN ('.$listPostsIds.')
 ORDER BY p.post_at DESC');
 // ici je recuprere les post ou les id sont les suivants
@@ -189,9 +190,9 @@ ORDER BY p.post_at DESC');
         //dd ($listPostsIds);
 
         $req =$this->db->prepare('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment , c.post_id, c.comment_at, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at
-FROM post p 
-    LEFT JOIN `comment` c ON p.id = c.post_id 
-    INNER JOIN category ca ON p.id_category = ca.id_category 
+FROM p5_post p 
+    LEFT JOIN `p5_comment` c ON p.id = c.post_id 
+    INNER JOIN p5_category ca ON p.id_category = ca.id_category 
 WHERE p.id IN ('.$listPostsIds.') AND p.username = ?
 ORDER BY p.post_at DESC 
 ');
@@ -249,8 +250,8 @@ ORDER BY p.post_at DESC
     public function getPost($id) // afficher 1 billet
     {
         $req = $this->db->prepare('SELECT p.id, p.username, p.content, p.id_category, ca.name_category, DATE_FORMAT(post_at, \'%d/%m/%Y \') 
-FROM post p 
-INNER JOIN category ca ON p.id_category = ca.id_category
+FROM p5_post p 
+INNER JOIN p5_category ca ON p.id_category = ca.id_category
 WHERE id = ?');
         $req->execute(array($id));
         $req->setFetchMode(\PDO::FETCH_CLASS,Post::class); // Ligne necessaire pour utiliser les entitiés dans les vues
@@ -264,9 +265,9 @@ WHERE id = ?');
     public function getPostsWithComsByCat($id_category, $tableIdPosts) //Liste des posts avec leurs commentaires
     {    $listPostsIds = implode (",", $tableIdPosts); // "1,2, 3..."
 
-        $req =$this->db->prepare('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment , c.post_id, c.comment_at, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at FROM post p 
-    LEFT JOIN `comment` c ON p.id = c.post_id 
-    INNER JOIN category ca ON p.id_category = ca.id_category 
+        $req =$this->db->prepare('SELECT p.id,  p.username, p.content, p.id_category, ca.name_category, c.content contentComment, c.username nameComment , c.post_id, c.comment_at, p.is_signaled, DATE_FORMAT(post_at, \'%d/%m/%Y \') AS post_at,DATE_FORMAT(comment_at, \'%d/%m/%Y \') AS comment_at FROM p5_post p 
+    LEFT JOIN `p5_comment` c ON p.id = c.post_id 
+    INNER JOIN p5_category ca ON p.id_category = ca.id_category 
 WHERE p.id_category = ? AND p.id IN ('.$listPostsIds.')
 ORDER BY p.post_at DESC ');
         //requete->selection des champs par table / integration des alias / jointure avec les 2 tables
@@ -329,7 +330,7 @@ ORDER BY p.post_at DESC ');
      */
     public function updatePost($post) // On recoit le post a enregistrer
     {
-        $req = $this->db->prepare('UPDATE post SET id_category = ?, content = ? WHERE id = ?');
+        $req = $this->db->prepare('UPDATE p5_post SET id_category = ?, content = ? WHERE id = ?');
         $result = $req->execute(array(
             $post->getIdCategory(),
             $post->getContent(),
@@ -346,7 +347,7 @@ ORDER BY p.post_at DESC ');
      */
     public function deletePost($id)
     {
-        $req = $this->db->prepare("DELETE FROM post WHERE id = ?");
+        $req = $this->db->prepare("DELETE FROM p5_post WHERE id = ?");
         $result = $req->execute(array($id));
         return $result;
     }

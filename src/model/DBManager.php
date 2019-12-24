@@ -12,7 +12,7 @@ abstract class DBManager
             $this->db = new \PDO("mysql:host=localhost;dbname=projet_5;charset=utf8",'root', '');
         }
 
-        catch(Exception $e)
+        catch(\Exception $e)
         {
             die('Erreur : '.$e->getMessage());
         }

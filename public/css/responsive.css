@@ -2,8 +2,6 @@
 {
     border-color: #52937E;
     text-align: center;
-    /*line-height: 40px;
-    height: 70px;*/
 }
 
 
@@ -104,6 +102,7 @@
     .categorylistSecondPart
     {
         font-size: small;
+        left: -100px;
 
     }
     .titleSecondPart

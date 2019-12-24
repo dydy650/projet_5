@@ -157,8 +157,9 @@ class BlogController extends AbstractController
         $userManager = new UserManager();
         $user = $userManager->getUser($_SESSION['username']);
         $filename = 'uploads/' .$this->user->getId ().".jpg";
+        $timestamp = time ();
         $existFile = file_exists ($filename);
-        $this->render('./parametres.twig', array("user" => $user, "existFile"=> $existFile, "filename" => $filename));
+        $this->render('./parametres.twig', array("user" => $user, "existFile"=> $existFile, "filename" => $filename, "timestamp" => $timestamp));
 
     }
     public function homeAccess()
